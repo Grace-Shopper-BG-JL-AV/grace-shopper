@@ -1,26 +1,43 @@
 'use strict'
-
+const {yellow, green, red} = require('chalk')
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product} = require('../server/db/models')
+const {users, products} = require('./data')
 
 async function seed() {
-  await db.sync({force: true})
-  console.log('db synced!')
-
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
-
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+  try {
+    await db.sync({force: true})
+    // seed your database here!
+    await Promise.all(
+      users.map(user => {
+        return User.create(user)
+      })
+    )
+    await Promise.all(
+      products.map(product => {
+        return Product.create(product)
+      })
+    )
+    console.log(green(`seeded successfully`))
+    const user = await User.findByPk(1)
+    const anotherUser = await User.findByPk(2)
+    const product = await Product.findByPk(1)
+    const anotherProduct = await Product.findByPk(2)
+    const andAnotherProduct = await Product.findByPk(3)
+    await user.addProduct(product)
+    await user.addProduct(anotherProduct)
+    await anotherUser.addProduct(product)
+    await anotherUser.addProduct(andAnotherProduct)
+  } catch (err) {
+    console.log(red(err))
+  }
 }
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
 async function runSeed() {
-  console.log('seeding...')
+  console.log(yellow('seeding...'))
   try {
     await seed()
   } catch (err) {
