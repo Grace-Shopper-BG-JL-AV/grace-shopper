@@ -9,7 +9,11 @@ const defaultUserImageUrl =
 const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 
   password: {
@@ -23,12 +27,20 @@ const User = db.define('user', {
 
   firstName: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 
   lastName: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   //determines whether user has admin privileges
   isAdmin: {
