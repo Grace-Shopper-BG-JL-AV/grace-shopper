@@ -8,18 +8,18 @@ const defaultImageUrl =
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    unique: true
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true
-    // }
+    unique: true,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   description: {
-    type: Sequelize.TEXT
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true
-    // }
+    type: Sequelize.TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   price: {
     type: Sequelize.FLOAT

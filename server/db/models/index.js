@@ -13,8 +13,7 @@ User.belongsToMany(Product, {
 })
 Product.belongsToMany(User, {
   through: 'User_Product',
-  as: 'Cart',
-  foreignKey: 'productId'
+  as: 'Cart'
 })
 
 /**
