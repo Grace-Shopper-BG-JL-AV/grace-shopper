@@ -36,8 +36,8 @@ export default class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
-        <Route path="/products" component={AllProducts} />
-        <Route path="/products/:id" component={SingleProduct} />
+        <Route exact path="/products" component={AllProducts} />
+        <Route exact path="/products/:id" component={SingleProduct} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/postPurchase" component={PostPurchase} />
         {/* {isLoggedIn && (
