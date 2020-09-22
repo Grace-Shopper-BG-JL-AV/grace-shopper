@@ -38,7 +38,7 @@ if (process.browser) {
 const rootReducer = combineReducers({
   products: productsReducer,
   user: userReducer,
-  singleProduct: singleProductReducer
+  product: singleProductReducer
 })
 
 export default createStore(
