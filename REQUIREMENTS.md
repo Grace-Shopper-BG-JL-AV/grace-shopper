@@ -12,7 +12,7 @@
 - [ ] add a product to my cart so I can collect my desired products in one place.
 - [ ] edit my cart if I change my mind:
     - [ ] change the quantity of a product in my cart.
-    - [ ]remove a product in my cart.
+    - [ ] remove a product in my cart.
 - [ ] No one else should be able to edit my cart except me.
 - [ ] "checkout" the items in my cart so I can purchase my desired goods.
 - [ ] Think of a typical user experience on popular websites from a guest user and logged-in user perspective.
