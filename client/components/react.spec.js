@@ -2,8 +2,8 @@ import {expect} from 'chai'
 import {mount} from 'enzyme'
 import React from 'react'
 import AllProducts, {AllProducts as UnconnectedAllProducts} from './allProducts'
-import mockAxios from '../mock-axios'
-import waitForExpect from 'wait-for-expect'
+// import mockAxios from '../mock-axios'
+// import waitForExpect from 'wait-for-expect'
 import sinon from 'sinon'
 
 describe('React specs', () => {
@@ -12,12 +12,12 @@ describe('React specs', () => {
     {id: 2, name: 'another costume', imageUrl: 'www.google.com'}
   ]
 
-  beforeEach(() => {
-    // mockAxios ensures that when our client-side code requests data from the
-    // server, the request is always successful (even if we haven't implemented)
-    // our server yet.
-    mockAxios.onGet('/api/products').replyOnce(200, products)
-  })
+  // beforeEach(() => {
+  //   // mockAxios ensures that when our client-side code requests data from the
+  //   // server, the request is always successful (even if we haven't implemented)
+  //   // our server yet.
+  //   mockAxios.onGet('/api/products').replyOnce(200, products)
+  // })
 
   describe('<AllProducts /> component', () => {
     const getProductsSpy = sinon.spy()

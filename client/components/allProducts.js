@@ -19,13 +19,15 @@ class AllProducts extends React.Component {
 
     return (
       <div>
-        <h1>Hello World!</h1>
+        <h1>All Products!</h1>
         {/* render the products created from the redux thunk */}
         {productsArr.map(product => {
           return (
             <div key={product.id}>
               <h2>{product.name}</h2>
-              <img src={product.imgUrl} />
+              <h3>{product.price}</h3>
+              <p>{product.description}</p>
+              <img src={product.imageUrl} />
             </div>
           )
         })}
