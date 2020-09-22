@@ -1,10 +1,12 @@
 //**modified from JPFP
-import {createStore, applyMiddleware} from 'redux'
+import {createStore, applyMiddleware, combineReducers} from 'redux'
 import axios from 'axios'
-import appReducer from './store'
+//import appReducer from './store'
 import {createLogger} from 'redux-logger' // https://github.com/evgenyrodionov/redux-logger
 import {composeWithDevTools} from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk' // https://github.com/gaearon/redux-thunk
+import productsReducer from './store/product'
+import userReducer from './store/user'
 
 let middleware = [
   // `withExtraArgument` gives us access to axios in our async action creators!
@@ -23,15 +25,19 @@ if (process.browser) {
  * to reset back to their initial state. This will come in
  * handy when we need to reset our redux store in between tests.
  */
-const RESET_STORE = 'RESET_STORE'
-export const resetStore = () => ({type: RESET_STORE})
-const rootReducer = (state, action) => {
-  if (action.type === RESET_STORE) {
-    state = undefined
-    return appReducer(state, action)
-  }
-  return appReducer(state, action)
-}
+//const RESET_STORE = 'RESET_STORE'
+//export const resetStore = () => ({type: RESET_STORE})
+//const rootReducer = (state, action) => {
+// if (action.type === RESET_STORE) {
+//   state = undefined
+//return appReducer(state, action)
+// }
+// return appReducer(state, action)
+//}
+const rootReducer = combineReducers({
+  products: productsReducer,
+  user: userReducer
+})
 
 export default createStore(
   rootReducer,

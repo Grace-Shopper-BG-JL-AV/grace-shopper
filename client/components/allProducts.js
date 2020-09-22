@@ -1,12 +1,12 @@
 import React from 'react'
 import {fetchProducts} from '../store/product'
-import {connect} from 'react-dom'
+import {connect} from 'react-redux'
 
-export class AllProducts extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+class AllProducts extends React.Component {
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {}
+  // }
 
   componentDidMount() {
     //dispatch the redux thunk
