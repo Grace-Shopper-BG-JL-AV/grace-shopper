@@ -8,6 +8,14 @@ const Product = require('./product')
  *    BlogPost.belongsTo(User)
  */
 
+User.belongsToMany(Product, {
+  through: 'User_Product'
+})
+Product.belongsToMany(User, {
+  through: 'User_Product',
+  as: 'Cart'
+})
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'

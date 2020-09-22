@@ -8,18 +8,18 @@ const defaultImageUrl =
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    unique: true
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
   },
   description: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.TEXT
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // }
   },
   price: {
     type: Sequelize.FLOAT
@@ -29,10 +29,12 @@ const Product = db.define('product', {
     defaultValue: defaultImageUrl
   },
   size: {
-    type: Sequelize.ARRAY(Sequelize.ENUM('small', 'medium', 'large'))
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: ['small', 'medium', 'large']
   },
   stars: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER(0, 5))
+    type: Sequelize.ARRAY(Sequelize.INTEGER(0, 5)),
+    defaultValue: []
   }
 })
 
