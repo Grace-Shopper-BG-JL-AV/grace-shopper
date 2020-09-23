@@ -22,8 +22,9 @@ class SingleProduct extends React.Component {
     return (
       <div>
         {/* render the product created from the redux thunk */}
+        <h1>Single Product!</h1>
         <h2>{singleProd.name}</h2>
-        <h2>${singleProd.price}</h2>
+        <h2>{singleProd.price}</h2>
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
       </div>
