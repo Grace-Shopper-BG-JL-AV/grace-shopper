@@ -1,8 +1,10 @@
 /* global describe beforeEach it */
-
-const {expect} = require('chai')
+const chai = require('chai')
+const expect = chai.expect
 const db = require('../index')
 const User = db.model('user')
+const chaiAsPromised = require('chai-as-promised')
+chai.use(chaiAsPromised)
 
 describe('User model', () => {
   beforeEach(() => {
@@ -42,8 +44,18 @@ describe('User model', () => {
         lastName: 'Miller'
       })
     })
+
     it('email is a string', () => {
       expect(hannah.email).to.equal('hannah@gmail.com')
+    })
+    it('email cannot be null', async () => {
+      const user = User.create({})
+      await expect(user).to.be.rejected
+    })
+    it('firstName cannot be an empty string', async () => {
+      // We also shouldn't be able to create a user with an empty name.
+      const user = User.create({firstName: ''})
+      await expect(user).to.be.rejected
     })
     it('firstName is a string', () => {
       expect(hannah.firstName).to.equal('Hannah')
