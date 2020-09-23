@@ -22,4 +22,14 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
+//admin create new product api route
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body)
+    res.json(newProduct)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router

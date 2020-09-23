@@ -9,6 +9,7 @@ import {
   Cart,
   AllProducts,
   SingleProduct,
+  AddProduct,
   Checkout,
   AllUsers,
   SingleUser,
@@ -38,6 +39,7 @@ export default class Routes extends Component {
         <Route path="/users" component={AllUsers} />
         <Route exact path="/products" component={AllProducts} />
         <Route exact path="/products/:id" component={SingleProduct} />
+        <Route path="/addProduct" component={AddProduct} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/postPurchase" component={PostPurchase} />
         {/* {isLoggedIn && (
