@@ -1,7 +1,6 @@
 import React from 'react'
 import {fetchProducts} from '../store/product'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   // constructor(props) {
@@ -20,16 +19,16 @@ class AllProducts extends React.Component {
 
     return (
       <div>
+        <h1>All Products!</h1>
         {/* render the products created from the redux thunk */}
         {productsArr.map(product => {
           return (
-            // added link to single product view
-            <Link to={`/products/${product.id}`} key={product.id}>
+            <div key={product.id}>
               <h2>{product.name}</h2>
-              <h3>${product.price}</h3>
+              <h3>{product.price}</h3>
               <p>{product.description}</p>
               <img src={product.imageUrl} />
-            </Link>
+            </div>
           )
         })}
       </div>
