@@ -1,8 +1,11 @@
 /* global describe beforeEach it */
 
-const {expect} = require('chai')
+const chai = require('chai')
+const expect = chai.expect
 const db = require('../index')
 const Product = db.model('product')
+const chaiAsPromised = require('chai-as-promised')
+chai.use(chaiAsPromised)
 
 describe('Product model', () => {
   beforeEach(() => {
@@ -21,8 +24,20 @@ describe('Product model', () => {
     it('name is a string', () => {
       expect(costume.name).to.equal('Pope')
     })
-    it('description is a long string', () => {
+    it('name cannot be null', async () => {
+      const product = Product.create({})
+      await expect(product).to.be.rejected
+    })
+    it('description is a string', () => {
       expect(costume.description).to.equal('Pope costume for a pug!')
+    })
+    it('description cannot be an empty string', async () => {
+      const product = Product.create({
+        name: 'pope',
+        description: '',
+        price: 25.0
+      })
+      await expect(product).to.be.rejected
     })
     it('price is a float', () => {
       expect(typeof costume.price).to.equal('number')

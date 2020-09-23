@@ -9,6 +9,7 @@
 ### As a customer/visitor, I want to be able to:
 
 * [ ] access a deployed version of the website so I can browse and purchase products.
+
 * [x] view all available products so I can pick from a variety.
 * [x] view a single product so I can see more details.
 * [ ] add a product to my cart so I can collect my desired products in one place.
@@ -21,6 +22,7 @@
 * You can just start with by simulating the experience of checking out with a simple confirmation page.
 * [ ] create an account so I can have a logged-in experience.
 
+
 ### As a logged-in customer, I want to be able to:
 
 * [ ] have a persistent cart so I can revisit and pick up where I left off.
@@ -31,7 +33,7 @@
 
 * [ ] have validated data to ensure reliability.
       i.e. each customer that creates an account should only be able to do so once with a single email address.
-      have full rights to make baceknd requests to add, edit, and remove products.
+* [ ] have full rights to make baceknd requests to add, edit, and remove products.
 * [ ] No one else should have access.
 * [ ] view user information.
 
