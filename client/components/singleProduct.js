@@ -6,7 +6,7 @@ import {fetchProduct} from '../store/singleProduct'
 class SingleProduct extends React.Component {
   constructor() {
     super()
-    this.handleAddToCart = this.handleAddToCart.bind(this)
+    //this.handleAddToCart = this.handleAddToCart.bind(this)
   }
   componentDidMount() {
     //dispatch the redux thunk
@@ -15,9 +15,9 @@ class SingleProduct extends React.Component {
     this.props.getProduct(num)
   }
 
-  handleAddToCart(productId) {
-    this.props.addToCart(productId)
-  }
+  // handleAddToCart(productId) {
+  //   this.props.addToCart(productId)
+  // }
 
   render() {
     //store product
@@ -31,7 +31,7 @@ class SingleProduct extends React.Component {
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
         <button
-          onClick={() => this.handleAddToCart(singleProd.id)}
+          // onClick={() => this.handleAddToCart(singleProd.id)}
           type="button"
         >
           Add to Cart
@@ -50,8 +50,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProduct: id => dispatch(fetchProduct(id)),
-    addToCart: productId => dispatch(addToCart(productId))
+    getProduct: id => dispatch(fetchProduct(id))
+    // addToCart: (productId) => dispatch(addToCart(productId)),
   }
 }
 
