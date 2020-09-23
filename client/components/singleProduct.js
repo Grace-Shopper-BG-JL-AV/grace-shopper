@@ -3,11 +3,6 @@ import {connect} from 'react-redux'
 import {fetchProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {}
-  // }
-
   componentDidMount() {
     //dispatch the redux thunk
     const num = Number(this.props.match.params.id)
@@ -26,6 +21,7 @@ class SingleProduct extends React.Component {
         <h2>${singleProd.price}</h2>
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
+        <button type="button">Add to Cart</button>
       </div>
     )
   }

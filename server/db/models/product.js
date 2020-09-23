@@ -28,6 +28,10 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     defaultValue: defaultImageUrl
   },
+  quantity: {
+    type: Sequelize.INTEGER,
+    defaultValue: 20
+  },
   size: {
     type: Sequelize.ARRAY(Sequelize.STRING),
     defaultValue: ['small', 'medium', 'large']

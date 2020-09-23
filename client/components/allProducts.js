@@ -1,17 +1,23 @@
 import React from 'react'
 import {fetchProducts} from '../store/product'
+import {addToCart} from '../store/cart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {}
-  // }
-
+  constructor() {
+    super()
+    this.handleAddToCart = this.handleAddToCart.bind(this)
+  }
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
+  }
+
+  handleAddToCart(productId) {
+    console.log('hi')
+    console.log(productId)
+    this.props.addToCart(productId)
   }
 
   render() {
@@ -24,12 +30,20 @@ class AllProducts extends React.Component {
         {productsArr.map(product => {
           return (
             // added link to single product view
-            <Link to={`/products/${product.id}`} key={product.id}>
-              <h2>{product.name}</h2>
-              <h3>${product.price}</h3>
-              <p>{product.description}</p>
-              <img src={product.imageUrl} />
-            </Link>
+            <div key={product.id}>
+              <Link to={`/products/${product.id}`}>
+                <h2>{product.name}</h2>
+                <h3>${product.price}</h3>
+                <p>{product.description}</p>
+                <img src={product.imageUrl} />
+              </Link>
+              <button
+                onClick={() => this.handleAddToCart(product.id)}
+                type="button"
+              >
+                Add to Cart
+              </button>
+            </div>
           )
         })}
       </div>
@@ -46,7 +60,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts())
+    getProducts: () => dispatch(fetchProducts()),
+    addToCart: productId => dispatch(addToCart(productId))
   }
 }
 
