@@ -19,7 +19,7 @@ export const fetchProducts = () => {
   }
 }
 
-//reducer, which gets sent to index.js to be combined
+//reducer, which gets sent to store.js to be combined
 export default function productsReducer(state = [], action) {
   switch (action.type) {
     case SET_PRODUCTS:

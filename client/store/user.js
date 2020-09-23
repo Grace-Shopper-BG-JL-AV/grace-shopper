@@ -4,6 +4,8 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+
+//one user
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
