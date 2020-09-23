@@ -14,16 +14,14 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-          {isAdmin? (
+          {isAdmin ? (
             <div>
               <Link to="/allUsers">User Information</Link>
               <Link to="/editProduct">Edit Products</Link>
               <Link to="/addProduct">Add Products</Link>
             </div>
           ) : (
-            <div>
-              {null}
-            </div>
+            <div>{null}</div>
           )}
         </div>
       ) : (
@@ -34,7 +32,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         </div>
       )}
       <Link to="/home">Home</Link>
-      <Link to="/allProducts">Costumes</Link>
+      <Link to="/products">Costumes</Link>
       <Link to="/cart">Cart</Link>
     </nav>
     <hr />
