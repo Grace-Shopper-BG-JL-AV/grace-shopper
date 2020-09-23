@@ -46,6 +46,12 @@ const products = [
     price: 20.25,
     imageUrl:
       'https://i5.walmartimages.com/asr/f83525b8-ffac-4dde-84b0-650e0cc2a276_1.a155def4b10c68c64f7cf90f0a9b7226.jpeg?odnWidth=612&odnHeight=612&odnBg=ffffff'
+  },
+  {
+    name: 'Puppy Plaid Pajama Party',
+    description: 'This is a puppy in plaid pajamas.',
+    price: 0.0,
+    imageUrl: '/image_from_ios.jpeg'
   }
 ]
 
