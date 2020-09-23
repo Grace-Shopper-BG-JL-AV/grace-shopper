@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk' // https://github.com/gaearon/redux-th
 import productsReducer from './store/product'
 import userReducer from './store/user'
 import singleProductReducer from './store/singleProduct'
+import usersReducer from './store/allUsers'
 
 let middleware = [
   // `withExtraArgument` gives us access to axios in our async action creators!
@@ -35,10 +36,12 @@ if (process.browser) {
 // }
 // return appReducer(state, action)
 //}
+
 const rootReducer = combineReducers({
   products: productsReducer,
   user: userReducer,
-  product: singleProductReducer
+  product: singleProductReducer,
+  users: usersReducer
 })
 
 export default createStore(

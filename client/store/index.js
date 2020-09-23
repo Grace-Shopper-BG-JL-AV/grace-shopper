@@ -1,10 +1,14 @@
+// import productsReducer from './store/product'
+// import userReducer from './store/user'
+// import singleProductReducer from './store/singleProduct'
+// import usersReducer from './store/allUsers'
 // import {combineReducers} from 'redux'
-// import productsReducer from './product'
-// import userReducer from './user'
 
-// const appReducer = combineReducers({
+// const rootReducer = combineReducers({
 //   products: productsReducer,
-//   user: userReducer
+//   user: userReducer,
+//   product: singleProductReducer,
+//   users: usersReducer,
 // })
 
-// export default appReducer
+// export default rootReducer
