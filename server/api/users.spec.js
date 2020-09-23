@@ -12,11 +12,12 @@ describe('User routes', () => {
   })
 
   describe('/api/users/', () => {
-    const codysEmail = 'cody@puppybook.com'
-
     beforeEach(() => {
       return User.create({
-        email: codysEmail
+        email: 'betsy@gmail.com',
+        password: '456',
+        firstName: 'Betsy',
+        lastName: 'Groton'
       })
     })
 
@@ -26,7 +27,7 @@ describe('User routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(codysEmail)
+      expect(res.body[0].email).to.be.equal('betsy@gmail.com')
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')

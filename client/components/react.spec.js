@@ -1,56 +1,26 @@
 import {expect} from 'chai'
-import {mount} from 'enzyme'
 import React from 'react'
-import AllProducts, {AllProducts as UnconnectedAllProducts} from './allProducts'
+import AllProducts from './allProducts'
 // import mockAxios from '../mock-axios'
 // import waitForExpect from 'wait-for-expect'
 import sinon from 'sinon'
+import {JSDOM} from 'jsdom'
+import {mount, render, shallow, configure} from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+import Routes from '../routes'
+import {Route} from 'react-router-dom'
 
-describe('React specs', () => {
-  const products = [
-    {id: 1, name: 'dog costume', imageUrl: 'www.google.com'},
-    {id: 2, name: 'another costume', imageUrl: 'www.google.com'}
-  ]
+// describe('All Products', () => {
+//   it('should render the all products page', () => {
+//     const wrapper = shallow(<Routes />)
+//     expect(
+//       wrapper.find(<Route path="/products" component={AllProducts} />)
+//     ).to.have.length(1)
+//   })
 
-  // beforeEach(() => {
-  //   // mockAxios ensures that when our client-side code requests data from the
-  //   // server, the request is always successful (even if we haven't implemented)
-  //   // our server yet.
-  //   mockAxios.onGet('/api/products').replyOnce(200, products)
-  // })
-
-  describe('<AllProducts /> component', () => {
-    const getProductsSpy = sinon.spy()
-
-    afterEach(() => {
-      getProductsSpy.resetHistory()
-    })
-
-    it('renders the products passed in as props', () => {
-      const wrapper = mount(
-        <UnconnectedAllProducts
-          products={products}
-          getProducts={getProductsSpy}
-        />
-      )
-      expect(wrapper.text()).to.include('dog costume')
-      expect(wrapper.text()).to.include('another costume')
-      // The test is expecting an image for each product, with src set to the
-      // product's imageUrl
-      const images = wrapper.find('img').map(node => node.get(0).props.src)
-      expect(images).to.include.members(['www.google.com', 'www.google.com'])
-    })
-
-    // it('calls this.props.getProducts after mount', async () => {
-    //   mount(
-    //     <UnconnectedAllProducts
-    //       products={products}
-    //       getProducts={getProductsSpy}
-    //     />
-    //   )
-    //   await waitForExpect(() => {
-    //     expect(getProductsSpy).to.have.been.called
-    //   })
-    // })
-  })
-})
+//   it('calls componentDidMount', () => {
+//     sinon.spy(AllProducts.prototype, 'componentDidMount')
+//     const wrapper = mount(<allProducts />)
+//     expect(AllProducts.prototype.componentDidMount.calledOnce).to.equal(true)
+//   })
+// })
