@@ -35,7 +35,7 @@ if (process.browser) {
 // }
 // return appReducer(state, action)
 //}
-export const rootReducer = combineReducers({
+const rootReducer = combineReducers({
   products: productsReducer,
   user: userReducer,
   product: singleProductReducer
