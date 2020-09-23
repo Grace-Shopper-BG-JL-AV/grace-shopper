@@ -46,10 +46,7 @@ export default function productsReducer(state = [], action) {
         {
           name: action.input.name,
           description: action.input.description,
-          price: action.input.price,
-          imageUrl: action.input.imageUrl,
-          size: action.input.size,
-          stars: action.input.stars
+          id: action.input.id
         }
       ]
     default:

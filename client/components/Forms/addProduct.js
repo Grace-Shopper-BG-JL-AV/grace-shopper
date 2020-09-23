@@ -1,12 +1,10 @@
 import React from 'react'
 
-//*****i haven't attached this to a main component yet due to permissions, but i set it up so it will be very easy to manage the state on that main component. just would need to write a handlechange/handlesubmit function and add each category to the local state, and connect to the redux store--REDUX is already written in the product.js file :) */
-
 const AddProduct = props => {
   return (
     <div>
       <h2>Admin Only: Add a Product</h2>
-      <form>
+      <form onSubmit={props.handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
           name="name"
@@ -22,7 +20,7 @@ const AddProduct = props => {
           value={props.description}
           onChange={props.handleChange}
         />
-
+        {/* 
         <label htmlFor="price">Price:</label>
         <input
           name="price"
@@ -53,7 +51,7 @@ const AddProduct = props => {
           type="text"
           value={props.stars}
           onChange={props.handleChange}
-        />
+        /> */}
 
         <button type="submit">Add Product</button>
       </form>

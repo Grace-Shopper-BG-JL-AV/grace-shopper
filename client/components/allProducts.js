@@ -1,17 +1,46 @@
 import React from 'react'
-import {fetchProducts} from '../store/product'
+import {fetchProducts, addProductToDb} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import AddProduct from './Forms/addProduct'
 
 class AllProducts extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {}
-  // }
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      description: ''
+      // price: '',
+      // imageUrl: '',
+      // size: '',
+      // stars: '',
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.add(this.state)
+    this.setState({
+      name: '',
+      description: ''
+      // price: '',
+      // imageUrl: '',
+      // size: '',
+      // stars: '',
+    })
   }
 
   render() {
@@ -32,6 +61,17 @@ class AllProducts extends React.Component {
             </Link>
           )
         })}
+
+        <AddProduct
+          {...this.state}
+          name={this.state.name}
+          description={this.state.description}
+          // price={this.state.price}
+          // size={this.state.size}
+          // stars={this.state.stars}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
@@ -46,7 +86,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts())
+    getProducts: () => dispatch(fetchProducts()),
+    add: stateObj => dispatch(addProductToDb(stateObj))
   }
 }
 
