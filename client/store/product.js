@@ -12,10 +12,12 @@ export const setProducts = products => {
 }
 
 //thunk to get all of the products
-export const fetchProducts = () => {
-  return async dispatch => {
+export const fetchProducts = () => async dispatch => {
+  try {
     const response = await axios.get('/api/products')
     dispatch(setProducts(response.data))
+  } catch (err) {
+    console.error(err)
   }
 }
 

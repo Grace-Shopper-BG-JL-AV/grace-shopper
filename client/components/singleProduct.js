@@ -22,12 +22,11 @@ class SingleProduct extends React.Component {
   render() {
     //store product
     const singleProd = this.props.product
-
     return (
       <div>
         {/* render the product created from the redux thunk */}
         <h2>{singleProd.name}</h2>
-        <h2>${singleProd.price}</h2>
+        <h2>${singleProd.price / 100}</h2>
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
         <button
