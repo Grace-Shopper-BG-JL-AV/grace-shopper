@@ -15,8 +15,12 @@ export const setUsers = users => {
 //thunk to get all of the products
 export const fetchUsers = () => {
   return async dispatch => {
-    const response = await axios.get('/api/users')
-    dispatch(setUsers(response.data))
+    try {
+      const response = await axios.get('/api/users')
+      dispatch(setUsers(response.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

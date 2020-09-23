@@ -23,16 +23,24 @@ export const addProduct = input => {
 //thunk to get all of the products
 export const fetchProducts = () => {
   return async dispatch => {
-    const response = await axios.get('/api/products')
-    dispatch(setProducts(response.data))
+    try {
+      const response = await axios.get('/api/products')
+      dispatch(setProducts(response.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
 //thunk to add product to db
 export const addProductToDb = productObj => {
   return async dispatch => {
-    const response = await axios.post('/api/products/', productObj)
-    dispatch(addProduct(response.data))
+    try {
+      const response = await axios.post('/api/products/', productObj)
+      dispatch(addProduct(response.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
