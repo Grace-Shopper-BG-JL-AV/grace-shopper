@@ -1,9 +1,10 @@
-const app = require('../index')
+import app from '../index'
 
 let chai = require('chai')
 let chaiHttp = require('chai-http')
 
 chai.use(chaiHttp)
+chai.should()
 
 describe('GET routes', function() {
   it('/api/products should get all products', done => {
@@ -11,8 +12,8 @@ describe('GET routes', function() {
     chai
       .request(app)
       .get('/api/products')
-      .end((error, response) => {
-        response.should.have.status(200)
+      .end((error, res) => {
+        res.should.have.status(200)
         //still need to make sure the correct data is being fetched
         done(error)
       })
@@ -22,8 +23,8 @@ describe('GET routes', function() {
     chai
       .request(app)
       .get('/api/products/1')
-      .end((err, result) => {
-        result.should.have.status(200)
+      .end((err, res) => {
+        res.should.have.status(200)
         //still need to make sure the correct data is being fetched
         done(err)
       })
