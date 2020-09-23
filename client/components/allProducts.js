@@ -1,5 +1,5 @@
 import React from 'react'
-import {fetchProducts, addProductToDb} from '../store/product'
+import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
@@ -58,6 +58,16 @@ class AllProducts extends React.Component {
               <h3>${product.price}</h3>
               <p>{product.description}</p>
               <img src={product.imageUrl} />
+
+              <button
+                type="submit"
+                onClick={e => {
+                  e.preventDefault()
+                  this.props.delete(product.id)
+                }}
+              >
+                x
+              </button>
             </Link>
           )
         })}
@@ -87,7 +97,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getProducts: () => dispatch(fetchProducts()),
-    add: stateObj => dispatch(addProductToDb(stateObj))
+    add: stateObj => dispatch(addProductToDb(stateObj)),
+    delete: id => dispatch(deleteProduct(id))
   }
 }
 

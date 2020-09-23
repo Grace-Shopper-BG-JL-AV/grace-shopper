@@ -3,6 +3,7 @@ import axios from 'axios'
 //action type
 const SET_PRODUCTS = 'SET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
+const DELETE_PRODUCT = 'DELETE_PRODUCT'
 
 //action creator
 export const setProducts = products => {
@@ -35,6 +36,22 @@ export const addProductToDb = productObj => {
   }
 }
 
+//thunk to delete product from db
+export const deleteProduct = id => {
+  return async (dispatch, getState) => {
+    try {
+      await axios.delete(`/api/products/${id}`)
+      dispatch({
+        type: DELETE_PRODUCT,
+        id,
+        state: getState
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 //reducer, which gets sent to store.js to be combined
 export default function productsReducer(state = [], action) {
   switch (action.type) {
@@ -48,6 +65,12 @@ export default function productsReducer(state = [], action) {
           description: action.input.description,
           id: action.input.id
         }
+      ]
+    case DELETE_PRODUCT:
+      return [
+        ...state.filter(product => {
+          return product.id !== action.id
+        })
       ]
     default:
       return state

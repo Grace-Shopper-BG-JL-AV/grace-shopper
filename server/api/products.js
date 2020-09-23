@@ -43,4 +43,18 @@ router.put('/:productId', async (req, res, next) => {
   }
 })
 
+//admin delete product api route
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    await Product.destroy({
+      where: {
+        id: req.params.productId
+      }
+    })
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
