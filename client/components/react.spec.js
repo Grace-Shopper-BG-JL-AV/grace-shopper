@@ -1,23 +1,34 @@
 import {expect} from 'chai'
 import {mount} from 'enzyme'
 import React from 'react'
-import AllProducts, {AllProducts as UnconnectedAllProducts} from './allProducts'
+import {AllProducts as UnconnectedAllProducts} from './allProducts'
 // import mockAxios from '../mock-axios'
 // import waitForExpect from 'wait-for-expect'
 import sinon from 'sinon'
 
 describe('React specs', () => {
   const products = [
-    {id: 1, name: 'dog costume', imageUrl: 'www.google.com'},
-    {id: 2, name: 'another costume', imageUrl: 'www.google.com'}
+    {
+      id: 1,
+      name: 'Puppy Mermaid',
+      description: 'This is the puppy mermaid costume.',
+      price: 25,
+      imageUrl:
+        'https://media1.popsugar-assets.com/files/thumbor/SB70R-f3IPPLQIaFkfiJNXUklKw/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/08/27/976/n/45222255/bdcfccc5d33228c3_91i-GqxdEpL._AC_UL640_QL65_/i/Ariel-Dog-Halloween-Costume.jpg',
+      size: ['small', 'medium', 'large'],
+      stars: []
+    },
+    {
+      id: 2,
+      name: 'Puppy Sunflower',
+      description: 'This is the puppy sunflower costume.',
+      price: 50.99,
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/51tZYAEi6RL._AC_UX425_.jpg',
+      size: ['small', 'medium', 'large'],
+      stars: []
+    }
   ]
-
-  // beforeEach(() => {
-  //   // mockAxios ensures that when our client-side code requests data from the
-  //   // server, the request is always successful (even if we haven't implemented)
-  //   // our server yet.
-  //   mockAxios.onGet('/api/products').replyOnce(200, products)
-  // })
 
   describe('<AllProducts /> component', () => {
     const getProductsSpy = sinon.spy()
@@ -40,17 +51,5 @@ describe('React specs', () => {
       const images = wrapper.find('img').map(node => node.get(0).props.src)
       expect(images).to.include.members(['www.google.com', 'www.google.com'])
     })
-
-    // it('calls this.props.getProducts after mount', async () => {
-    //   mount(
-    //     <UnconnectedAllProducts
-    //       products={products}
-    //       getProducts={getProductsSpy}
-    //     />
-    //   )
-    //   await waitForExpect(() => {
-    //     expect(getProductsSpy).to.have.been.called
-    //   })
-    // })
   })
 })
