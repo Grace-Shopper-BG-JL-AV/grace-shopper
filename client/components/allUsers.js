@@ -3,6 +3,8 @@ import {fetchUsers} from '../store/allUsers'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
+//we will need to sort out permissions!!!!! haven't done that yet!!!
+
 class AllUsers extends React.Component {
   // constructor(props) {
   //   super(props)
@@ -18,9 +20,9 @@ class AllUsers extends React.Component {
     //store products in usersArr
     const usersArr = this.props.users
 
+    //is admin? display below. otherwise display "not found"
     return (
       <div>
-        {/* render the users created from the redux thunk */}
         {usersArr.map(user => {
           return (
             // added link to single user view--do we need single user?? can admin add/delete single users?
