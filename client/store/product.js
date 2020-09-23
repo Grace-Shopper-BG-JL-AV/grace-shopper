@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //action type
 const SET_PRODUCTS = 'SET_PRODUCTS'
-const ADD_PRODUCT = 'ADD_PRODUCTS'
+const ADD_PRODUCT = 'ADD_PRODUCT'
 
 //action creator
 export const setProducts = products => {

@@ -32,4 +32,15 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+//admin edit product api route
+router.put('/:productId', async (req, res, next) => {
+  try {
+    const oneProduct = await Product.findByPk(req.params.productId)
+    const updateProd = await oneProduct.update(req.body)
+    res.json(updateProd)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
