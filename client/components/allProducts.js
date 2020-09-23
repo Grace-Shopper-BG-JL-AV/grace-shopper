@@ -15,8 +15,6 @@ class AllProducts extends React.Component {
   }
 
   handleAddToCart(productId) {
-    console.log('hi')
-    console.log(productId)
     this.props.addToCart(productId)
   }
 
