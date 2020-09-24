@@ -47,7 +47,7 @@ class SingleProduct extends React.Component {
         <h2>${singleProd.price / 100}</h2>
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
-
+        <button type="button">Add to cart</button>
         {/* ***need to add permissions for only admin */}
         <EditProduct
           {...this.state}
@@ -64,7 +64,8 @@ class SingleProduct extends React.Component {
 //connect to redux store
 const mapStateToProps = state => {
   return {
-    product: state.product
+    product: state.product,
+    user: state.user
   }
 }
 

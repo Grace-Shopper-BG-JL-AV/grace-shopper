@@ -1,7 +1,12 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Cart = db.define('cart')
+const Cart = db.define('cart', {
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
+  }
+})
 
 const OrderProducts = db.define('orderProduct', {
   price: {

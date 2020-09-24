@@ -2,8 +2,8 @@ const users = [
   {
     email: 'jroyankfan42@gmail.com',
     password: '123',
-    firstName: 'Jackie',
-    lastName: 'Levine'
+    firstName: 'Jack',
+    lastName: 'Lev'
   },
   {
     email: 'betsy@gmail.com',
