@@ -1,11 +1,9 @@
 const router = require('express').Router()
-//assuming the db model is called Product
-const {Product, User} = require('../db/models')
-const {Cart, OrderProducts} = require('../db/models/cart')
-const {users} = require('../../script/data')
+const {Product} = require('../db/models')
+const isAdmin = require('../auth/apiRouteMiddleware')
 
 //all products api route
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const products = await Product.findAll()
     res.json(products)
@@ -15,7 +13,7 @@ router.get('/', async (req, res, next) => {
 })
 
 //single products api route
-router.get('/:productId', async (req, res, next) => {
+router.get('/:productId', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.productId)
     res.json(product)
@@ -25,7 +23,7 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 //admin create new product api route
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body)
     res.json(newProduct)
@@ -35,7 +33,7 @@ router.post('/', async (req, res, next) => {
 })
 
 //admin edit product api route
-router.put('/:productId', async (req, res, next) => {
+router.put('/:productId', isAdmin, async (req, res, next) => {
   try {
     const oneProduct = await Product.findByPk(req.params.productId)
     const updateProd = await oneProduct.update(req.body)
@@ -46,7 +44,7 @@ router.put('/:productId', async (req, res, next) => {
 })
 
 //admin delete product api route
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', isAdmin, async (req, res, next) => {
   try {
     await Product.destroy({
       where: {

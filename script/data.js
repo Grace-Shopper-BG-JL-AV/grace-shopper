@@ -9,7 +9,8 @@ const users = [
     email: 'betsy@gmail.com',
     password: '456',
     firstName: 'Betsy',
-    lastName: 'Groton'
+    lastName: 'Groton',
+    isAdmin: true
   },
   {
     email: 'ashley@gmail.com',
