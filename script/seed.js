@@ -1,5 +1,5 @@
 'use strict'
-const {yellow, green, red} = require('chalk')
+//const {yellow, green, red} = require('chalk')
 const db = require('../server/db')
 const {User, Product} = require('../server/db/models')
 const {users, products} = require('./data')
@@ -18,7 +18,7 @@ async function seed() {
         return Product.create(product)
       })
     )
-    console.log(green(`seeded successfully`))
+    console.log(`seeded successfully`)
     // const user = await User.findByPk(1)
     // const anotherUser = await User.findByPk(2)
     // const product = await Product.findByPk(1)
@@ -29,7 +29,7 @@ async function seed() {
     // await anotherUser.addProduct(product)
     // await anotherUser.addProduct(andAnotherProduct)
   } catch (err) {
-    console.log(red(err))
+    console.log(err)
   }
 }
 
@@ -37,7 +37,7 @@ async function seed() {
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
 async function runSeed() {
-  console.log(yellow('seeding...'))
+  console.log('seeding...')
   try {
     await seed()
   } catch (err) {
