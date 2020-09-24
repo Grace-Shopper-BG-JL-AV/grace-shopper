@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
+const isAdmin = require('../auth/apiRouteMiddleware')
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
