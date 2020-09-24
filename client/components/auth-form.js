@@ -8,6 +8,7 @@ import {auth} from '../store/user'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+  console.log('name', name)
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -79,9 +80,15 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const firstName = evt.target.firstName.value
-      const lastName = evt.target.lastName.value
-      dispatch(auth(email, password, formName, firstName, lastName))
+
+      if (formName === 'login') {
+        dispatch(auth(email, password, formName))
+      } else {
+        const firstName = evt.target.firstName.value
+        const lastName = evt.target.lastName.value
+
+        dispatch(auth(email, password, formName, firstName, lastName))
+      }
     }
   }
 }

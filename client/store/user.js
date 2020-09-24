@@ -41,13 +41,16 @@ export const auth = (
   lastName
 ) => async dispatch => {
   let res
+  let object
+
+  if (method === 'login') {
+    object = {email, password}
+  } else {
+    object = {email, password, firstName, lastName}
+  }
+
   try {
-    res = await axios.post(`/auth/${method}`, {
-      email,
-      password,
-      firstName,
-      lastName
-    })
+    res = await axios.post(`/auth/${method}`, object)
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
