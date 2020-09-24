@@ -2,19 +2,27 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout} from '../store/user'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>HALLOWOOF COSTUMES</h1>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
+          {/* {isAdmin ? (
+            <div>
+              <Link to="/allUsers">User Information</Link>
+              <Link to="/editProduct">Edit Products</Link>
+              <Link to="/addProduct">Add Products</Link>
+            </div>
+          ) : (
+            <div>{null}</div>
+          )} */}
         </div>
       ) : (
         <div>
@@ -23,6 +31,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      <Link to="/home">Home</Link>
+      <Link to="/products">Costumes</Link>
+      <Link to="/cart">Cart</Link>
     </nav>
     <hr />
   </div>

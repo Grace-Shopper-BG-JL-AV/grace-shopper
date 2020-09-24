@@ -4,6 +4,8 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+
+//one user
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
@@ -21,19 +23,36 @@ const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
-export const me = () => async dispatch => {
-  try {
-    const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
-  } catch (err) {
-    console.error(err)
+export const me = () => {
+  return async dispatch => {
+    try {
+      const res = await axios.get('/auth/me')
+
+      dispatch(getUser(res.data || defaultUser))
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (
+  email,
+  password,
+  method,
+  firstName,
+  lastName
+) => async dispatch => {
   let res
+  let object
+
+  if (method === 'login') {
+    object = {email, password}
+  } else {
+    object = {email, password, firstName, lastName}
+  }
+
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    res = await axios.post(`/auth/${method}`, object)
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
@@ -59,7 +78,7 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function userReducer(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
