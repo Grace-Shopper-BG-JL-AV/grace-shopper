@@ -29,10 +29,10 @@
 
 ### As an administrator, I want to be able to:
 
-* [ ] have validated data to ensure reliability.
+* [x] have validated data to ensure reliability.
       i.e. each customer that creates an account should only be able to do so once with a single email address.
 * [x] have full rights to make baceknd requests to add, edit, and remove products.
-* [ ] No one else should have access.
+* [x] No one else should have access.
 * [x] view user information.
 
 ### As an engineer, I want to:
