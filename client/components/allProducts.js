@@ -1,22 +1,48 @@
 import React from 'react'
-import {fetchProducts} from '../store/product'
-//import {addToCart} from '../store/cart'
+
+import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import AddProduct from './Forms/addProduct'
 
 class AllProducts extends React.Component {
-  constructor() {
-    super()
-    //this.handleAddToCart = this.handleAddToCart.bind(this)
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      description: ''
+      // price: '',
+      // imageUrl: '',
+      // size: '',
+      // stars: '',
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
   }
 
-  // handleAddToCart(productId) {
-  //   this.props.addToCart(productId)
-  // }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.add(this.state)
+    this.setState({
+      name: '',
+      description: ''
+      // price: '',
+      // imageUrl: '',
+      // size: '',
+      // stars: '',
+    })
+  }
 
   render() {
     //store products in productsArr
@@ -28,22 +54,36 @@ class AllProducts extends React.Component {
         {productsArr.map(product => {
           return (
             // added link to single product view
-            <div key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <h2>{product.name}</h2>
-                <h3>${product.price / 100}</h3>
-                <p>{product.description}</p>
-                <img src={product.imageUrl} />
-              </Link>
+
+            <Link to={`/products/${product.id}`} key={product.id}>
+              <h2>{product.name}</h2>
+              <h3>${product.price}</h3>
+              <p>{product.description}</p>
+              <img src={product.imageUrl} />
+
               <button
-                // onClick={() => this.handleAddToCart(product.id)}
-                type="button"
+                type="submit"
+                onClick={e => {
+                  e.preventDefault()
+                  this.props.delete(product.id)
+                }}
               >
-                Add to Cart
+                x
               </button>
-            </div>
+            </Link>
           )
         })}
+
+        <AddProduct
+          {...this.state}
+          name={this.state.name}
+          description={this.state.description}
+          // price={this.state.price}
+          // size={this.state.size}
+          // stars={this.state.stars}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
@@ -58,8 +98,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts())
-    // addToCart: (productId) => dispatch(addToCart(productId)),
+    getProducts: () => dispatch(fetchProducts()),
+    add: stateObj => dispatch(addProductToDb(stateObj)),
+    delete: id => dispatch(deleteProduct(id))
   }
 }
 

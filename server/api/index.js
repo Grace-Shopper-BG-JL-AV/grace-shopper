@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+//mounted the users api route
 router.use('/users', require('./users'))
 //mounted the products api route
 router.use('/products', require('./products'))

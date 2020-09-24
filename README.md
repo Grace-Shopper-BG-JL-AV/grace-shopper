@@ -1,4 +1,24 @@
-Wireframes: https://app.diagrams.net/#G1-hORoSktM7TPRxlJawlRQjB3itsncn69
+# HalloWOOF!
+
+Welcome to our grace shopper e-commerce site! We decided to build a dog halloween costume store, for all of your dog halloween costume needs :) Whether you have a big dog, a tiny dog, or no dog at all, come take a look at our store!
+
+In our store, you should be able to log in/log out, have a shopping cart that persists between uses, and add/edit/delete/checkout from your cart. If you're an admin, you can add/edit/delete products from the store and you can view all users information. If you don't have a login, that's ok! Sign in with google or browse as a guest! All of our users data is safe and secure :)
+
+# Collaborators
+
+Ashley Valenzuela, Jackie Feit, and Betsy Groton
+
+# Link to wireframes
+
+https://app.diagrams.net/#G1-hORoSktM7TPRxlJawlRQjB3itsncn69
+
+# Link to deployed site!
+
+.
+.
+.
+.
+//delete below after finished
 
 # Boilermaker
 

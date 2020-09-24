@@ -1,23 +1,41 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addToCart} from '../store/cart'
-import {fetchProduct} from '../store/singleProduct'
+
+import {fetchProduct, updateProduct} from '../store/singleProduct'
+import EditProduct from './Forms/editProduct'
 
 class SingleProduct extends React.Component {
-  constructor() {
-    super()
-    //this.handleAddToCart = this.handleAddToCart.bind(this)
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      description: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   componentDidMount() {
     //dispatch the redux thunk
     const num = Number(this.props.match.params.id)
-
     this.props.getProduct(num)
   }
 
-  // handleAddToCart(productId) {
-  //   this.props.addToCart(productId)
-  // }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const num = Number(this.props.match.params.id)
+    this.props.updateProduct(num, this.state)
+    this.setState({
+      name: '',
+      description: ''
+    })
+  }
 
   render() {
     //store product
@@ -29,12 +47,15 @@ class SingleProduct extends React.Component {
         <h2>${singleProd.price / 100}</h2>
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
-        <button
-          // onClick={() => this.handleAddToCart(singleProd.id)}
-          type="button"
-        >
-          Add to Cart
-        </button>
+
+        {/* ***need to add permissions for only admin */}
+        <EditProduct
+          {...this.state}
+          name={this.state.name}
+          description={this.state.description}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
@@ -49,8 +70,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProduct: id => dispatch(fetchProduct(id))
-    // addToCart: (productId) => dispatch(addToCart(productId)),
+    getProduct: id => dispatch(fetchProduct(id)),
+    updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj))
   }
 }
 

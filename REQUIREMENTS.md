@@ -9,8 +9,8 @@
 ### As a customer/visitor, I want to be able to:
 
 * [ ] access a deployed version of the website so I can browse and purchase products.
-* [ ] view all available products so I can pick from a variety.
-* [ ] view a single product so I can see more details.
+* [x] view all available products so I can pick from a variety.
+* [x] view a single product so I can see more details.
 * [ ] add a product to my cart so I can collect my desired products in one place.
 * [ ] edit my cart if I change my mind:
   * [ ] change the quantity of a product in my cart.
@@ -31,9 +31,9 @@
 
 * [ ] have validated data to ensure reliability.
       i.e. each customer that creates an account should only be able to do so once with a single email address.
-* [ ] have full rights to make baceknd requests to add, edit, and remove products.
+* [x] have full rights to make baceknd requests to add, edit, and remove products.
 * [ ] No one else should have access.
-* [ ] view user information.
+* [x] view user information.
 
 ### As an engineer, I want to:
 
