@@ -1,14 +1,14 @@
 import React from 'react'
-//import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 
 class Cart extends React.Component {
   render() {
-    //const cartProducts = this.props.cartProducts
+    const cartProducts = this.props.user.carts
     return (
       <div>
         <h1>Items in your cart:</h1>
 
-        {/* {cartProducts.length ? (
+        {cartProducts.length ? (
           cartProducts.map(product => {
             return (
               // added link to single product view
@@ -20,19 +20,18 @@ class Cart extends React.Component {
               </div>
             )
           })
-        ) : ( */}
-        <div>No items in your cart right now!</div>
-
-        {/* )} */}
+        ) : (
+          <div>No items in your cart right now!</div>
+        )}
       </div>
     )
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     cartProducts: state.cart,
-//   }
-// }
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
 
-export default Cart
+export default connect(mapStateToProps)(Cart)

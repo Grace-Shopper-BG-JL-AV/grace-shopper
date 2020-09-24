@@ -18,10 +18,8 @@ Cart.hasMany(OrderProducts)
 OrderProducts.belongsTo(Cart)
 
 //OrderProducts and Product associations
-OrderProducts.hasMany(Product)
-Product.belongsToMany(OrderProducts, {
-  through: 'Product_OrderProducts'
-})
+Product.hasMany(OrderProducts)
+OrderProducts.belongsTo(Product)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
