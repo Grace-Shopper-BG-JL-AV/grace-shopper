@@ -72,6 +72,33 @@ describe('Cart model', () => {
       })
       expect(cartWithOrders.orderProducts.length).to.equal(1)
     })
+    it('OrderProduct quantity can be increased', async () => {
+      let quantity = newOrderProduct.quantity + 1
+      await newOrderProduct.update({quantity: quantity})
+      await newOrderProduct.save()
+      expect(newOrderProduct.quantity).to.equal(3)
+    })
+    it('Cart can be deleted', async () => {
+      await user.addCart(newCart)
+      await newCart.addOrderProduct(newOrderProduct)
+      let id = user.id
+      let userWithCart = await User.findByPk(id, {
+        include: [Cart]
+      })
+      let cartId = newCart.id
+      let cartWithProduct = await Cart.findByPk(cartId, {
+        include: [OrderProducts]
+      })
+      expect(userWithCart.carts.length).to.equal(1)
+      expect(cartWithProduct.orderProducts.length).to.equal(1)
+    })
+    it('Cart can be deleted', async () => {
+      let beforeDelete = await Cart.findAll()
+      expect(beforeDelete.length).to.equal(1)
+      await newCart.destroy()
+      let afterDelete = await Cart.findAll()
+      expect(afterDelete).to.deep.equal([])
+    })
   })
   // end describe('Product model')
 })
