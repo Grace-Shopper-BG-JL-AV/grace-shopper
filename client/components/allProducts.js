@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -53,6 +54,7 @@ class AllProducts extends React.Component {
         {productsArr.map(product => {
           return (
             // added link to single product view
+
             <Link to={`/products/${product.id}`} key={product.id}>
               <h2>{product.name}</h2>
               <h3>${product.price}</h3>
