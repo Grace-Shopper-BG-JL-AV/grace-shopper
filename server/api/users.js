@@ -20,7 +20,7 @@ router.put('/:userId/:productId/add', async (req, res, next) => {
   try {
     let userId = req.params.userId
     let productId = req.params.productId
-    const currentUser = User.findByPk(userId, {
+    const currentUser = await User.findByPk(userId, {
       include: [Cart]
     })
     let currentCart = await Cart.findOrCreate({
@@ -32,15 +32,21 @@ router.put('/:userId/:productId/add', async (req, res, next) => {
     })
     let currentProduct = await Product.findByPk(productId)
 
-    let currentOrderProduct = await OrderProducts.findOrCreate({
+    let currentOrderProduct = await OrderProducts.findOne({
       where: {
         productId: productId,
-        price: currentProduct.price,
         cartId: currentCart[0].dataValues.id
       }
     })
-    await currentOrderProduct.increment('quantity', {by: 1})
-    await currentOrderProduct.save()
+
+    if (currentOrderProduct) {
+      let newQuantity = currentOrderProduct.quantity + 1
+      await currentOrderProduct.update({quantity: newQuantity})
+    }
+    // await currentOrderProduct.increment('quantity', {by: 1})
+    // await currentOrderProduct.save()
+
+    console.log('currentUser: ', currentUser)
 
     // let currentProduct = Product.findByPk(productId)
 
