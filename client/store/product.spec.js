@@ -80,16 +80,5 @@ describe('Redux Products', () => {
         users: []
       })
     })
-
-    // it('reduces on SET_PRODUCTS action', () => {
-    //   const action = {type: 'SET_PRODUCTS', products}
-
-    //   const prevState = testStore.getState()
-    //   testStore.dispatch(action)
-    //   const newState = testStore.getState()
-
-    //   expect(newState.products).to.be.deep.equal(products)
-    //   expect(newState.products).to.not.be.equal(prevState.products)
-    // })
   })
 })

@@ -41,7 +41,7 @@ describe('Product routes', () => {
       })
     })
 
-    it('GET /api/products/:productId', async () => {
+    xit('GET /api/products/:productId', async () => {
       const res = await request(app)
         .get('/api/products/1')
         .expect(200)
