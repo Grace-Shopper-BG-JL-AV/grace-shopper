@@ -56,13 +56,15 @@ class AllProducts extends React.Component {
     const productsArr = this.props.products
 
     return (
-      <div>
-        {/* render the products created from the redux thunk */}
-        {productsArr.map(product => {
-          return (
-            <div key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <h2>{product.name}</h2>
+      <div className="page-wrapper">
+        <div className="row">
+          {/* render the products created from the redux thunk */}
+          {productsArr.map(product => {
+            return (
+              <div key={product.id} className="column">
+                <Link to={`/products/${product.id}`}>
+                  <h2 id="product">{product.name}</h2>
+                </Link>
                 <h3>${product.price / 100}</h3>
                 <p>{product.description}</p>
                 <img src={product.imageUrl} />
@@ -76,28 +78,29 @@ class AllProducts extends React.Component {
                 >
                   x
                 </button>
-              </Link>
-              <button
-                value={product.id}
-                onClick={this.handleAddToCart}
-                type="button"
-              >
-                Add to cart
-              </button>
-            </div>
-          )
-        })}
 
-        <AddProduct
-          {...this.state}
-          name={this.state.name}
-          description={this.state.description}
-          // price={this.state.price}
-          // size={this.state.size}
-          // stars={this.state.stars}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
+                <button
+                  value={product.id}
+                  onClick={this.handleAddToCart}
+                  type="button"
+                >
+                  Add to cart
+                </button>
+              </div>
+            )
+          })}
+
+          <AddProduct
+            {...this.state}
+            name={this.state.name}
+            description={this.state.description}
+            // price={this.state.price}
+            // size={this.state.size}
+            // stars={this.state.stars}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
       </div>
     )
   }
