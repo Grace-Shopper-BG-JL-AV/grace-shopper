@@ -21,6 +21,7 @@ export const addProduct = input => {
 }
 
 //thunk to get all of the products
+
 export const fetchProducts = () => {
   return async dispatch => {
     try {
