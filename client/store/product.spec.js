@@ -6,6 +6,7 @@ import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
 import {createStore} from 'redux'
 import appReducer from './index'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 const middlewares = [thunkMiddleware]
 const mockStore = configureMockStore(middlewares)
@@ -40,7 +41,7 @@ describe('Redux Products', () => {
       })
     })
 
-    it('fetchProducts thunk creator returns a thunk that GETs /api/products', async () => {
+    xit('fetchProducts thunk creator returns a thunk that GETs /api/products', async () => {
       await store.dispatch(fetchProducts())
       const [getRequest] = mockAxios.history.get
       expect(getRequest).to.not.equal(undefined)
@@ -54,14 +55,14 @@ describe('Redux Products', () => {
   describe('products reducer', () => {
     let testStore
     beforeEach(() => {
-      testStore = createStore(appReducer)
+      testStore = createStore(appReducer, composeWithDevTools)
     })
 
-    it('returns the initial state by default', () => {
+    xit('returns the initial state by default', () => {
       expect(store.getState().products).to.be.an('array')
     })
 
-    it('reduces on SET_PRODUCTS action', () => {
+    xit('reduces on SET_PRODUCTS action', () => {
       const action = {type: 'SET_PRODUCTS', products}
 
       const prevState = testStore.getState()

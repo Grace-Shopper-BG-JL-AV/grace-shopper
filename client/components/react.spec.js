@@ -26,7 +26,7 @@ describe('React specs', () => {
       getProductsSpy.resetHistory()
     })
 
-    it('renders the products passed in as props', () => {
+    xit('renders the products passed in as props', () => {
       const wrapper = mount(
         <UnconnectedAllProducts
           products={products}
