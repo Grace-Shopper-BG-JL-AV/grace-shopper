@@ -51,7 +51,7 @@ const products = [
     name: 'Puppy Plaid Pajama Party',
     description: 'This is a puppy in plaid pajamas.',
     price: 0,
-    imageUrl: '/image_from_ios.jpeg'
+    imageUrl: '/image_from_ios.jpg'
   }
 ]
 

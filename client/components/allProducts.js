@@ -65,10 +65,10 @@ class AllProducts extends React.Component {
                 <Link to={`/products/${product.id}`}>
                   <h2 id="product">{product.name}</h2>
                 </Link>
-                <h3>${product.price / 100}</h3>
-                <p>{product.description}</p>
                 <img src={product.imageUrl} />
 
+                <p>{product.description}</p>
+                <h3>${product.price / 100}</h3>
                 <button
                   type="submit"
                   onClick={e => {
@@ -76,7 +76,7 @@ class AllProducts extends React.Component {
                     this.props.delete(product.id)
                   }}
                 >
-                  x
+                  delete
                 </button>
 
                 <button
@@ -90,16 +90,18 @@ class AllProducts extends React.Component {
             )
           })}
 
-          <AddProduct
-            {...this.state}
-            name={this.state.name}
-            description={this.state.description}
-            // price={this.state.price}
-            // size={this.state.size}
-            // stars={this.state.stars}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-          />
+          <div className="addProduct">
+            <AddProduct
+              {...this.state}
+              name={this.state.name}
+              description={this.state.description}
+              // price={this.state.price}
+              // size={this.state.size}
+              // stars={this.state.stars}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
+          </div>
         </div>
       </div>
     )

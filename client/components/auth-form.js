@@ -10,21 +10,25 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
   console.log('name', name)
   return (
-    <div>
+    <div className="page-wrapper">
       <form onSubmit={handleSubmit} name={name}>
         {displayName === 'Sign Up' ? (
-          <div>
-            <div>
-              <label htmlFor="firstName">
-                <small>First name</small>
-              </label>
-              <input name="firstName" type="firstName" />
-            </div>
-            <div>
-              <label htmlFor="lastName">
-                <small>Last name</small>
-              </label>
-              <input name="lastName" type="lastName" />
+          <div className="row">
+            <div className="column">
+              <div>
+                <div>
+                  <label htmlFor="firstName">
+                    <small>First name</small>
+                  </label>
+                  <input name="firstName" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="lastName">
+                    <small>Last name</small>
+                  </label>
+                  <input name="lastName" type="text" />
+                </div>
+              </div>
             </div>
           </div>
         ) : null}
@@ -38,7 +42,7 @@ const AuthForm = props => {
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <input name="password" type="text" />
         </div>
         <div>
           <button type="submit">{displayName}</button>
