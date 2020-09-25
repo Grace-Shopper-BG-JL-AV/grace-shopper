@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {logout} from '../store/user'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <h1>HALLOWOOF COSTUMES</h1>
-    <nav>
+    <nav className="text-link">
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -27,13 +27,13 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/signup">Sign Up</NavLink>
         </div>
       )}
-      <Link to="/home">Home</Link>
-      <Link to="/products">Costumes</Link>
-      <Link to="/cart">Cart</Link>
+      <NavLink to="/home">Home</NavLink>
+      <NavLink to="/products">Costumes</NavLink>
+      <NavLink to="/cart">Cart</NavLink>
     </nav>
     <hr />
   </div>

@@ -3,19 +3,93 @@ body {
 }
 
 a {
+  color: rgb(1, 17, 109);
+  padding: 1em 1.5em;
   text-decoration: none;
+}
+
+a:hover {
+  color: #c5f0fd;
+}
+
+/* this isn't working yet */
+a.product:hover {
+  background-color: #c5f0fd;
 }
 
 label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+nav {
+  align-items: center;
+  background-color: #8de3fd;
+  z-index: 2;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  height: 50px;
+  padding: 5px;
+  justify-content: space-between;
+  font-size: 25px;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 1em;
+}
+
+.text-link {
+  color: white;
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: black;
+  font-size: 40px;
+}
+
+h2 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: black;
+  font-size: 30px;
+}
+
+h3 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: black;
+  font-size: 20px;
+}
+
+img {
+  max-height: 300px;
+  max-width: 300px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* trying to do flexbox */
+.page-wrapper {
+  display: flex;
+  margin: 15px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
 }

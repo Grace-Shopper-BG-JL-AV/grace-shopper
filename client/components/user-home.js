@@ -11,9 +11,9 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome {isLoggedIn && `, ${email}`}</h3>
+      <h2>Welcome {isLoggedIn && `, ${email}`}</h2>
       <img src="https://www.dhresource.com/0x0/f2/albu/g6/M01/E4/44/rBVaSFuaE02AZ_wNAAGNJrvv_zI981.jpg/winter-dog-halloween-costume-christmas-dog.jpg" />
-      <h4>Our Mission</h4>
+      <h3>Our Mission</h3>
       <p>
         Here at Hallowoof Costumes we strive to provide the funnest halloween
         costumes for your furry dog friend while also making a positive impact
