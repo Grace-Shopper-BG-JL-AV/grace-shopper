@@ -2,21 +2,31 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import AllUsers from './allUsers'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email, isLoggedIn} = props
+  const {email, isLoggedIn, isAdmin} = props
+  console.log('props', props)
 
-  return (
+  return isAdmin ? (
+    <div>
+      <h1>{`Welcome back, ${email}`}</h1>
+      <h3>Here are all of Hallowoof's users:</h3>
+      <AllUsers />
+
+      <Link to="/products">View and add products to the store</Link>
+      <Link to="/products/:id">Update a product</Link>
+    </div>
+  ) : (
     <div className="page-wrapper">
       <div className="row2">
         <div className="column2">
-          {/* <div className="orange-column2"> */}
-          <h2>Welcome {isLoggedIn && `, ${email}`}</h2>
+          {/* this is messed up... */}
+          <h2>{`Welcome ${isLoggedIn ? `, ${email}` : `to Hallowoof`}`}</h2>
           <h3>Our Mission</h3>
-          {/* </div> */}
         </div>
         <div className="column2">
           <div className="blue-column2">
@@ -46,7 +56,8 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    isAdmin: state.user.isAdmin
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
+
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
@@ -54,6 +55,7 @@ class AllProducts extends React.Component {
   render() {
     //store products in productsArr
     const productsArr = this.props.products
+    console.log('user', this.props)
 
     return (
       <div>
@@ -75,39 +77,45 @@ class AllProducts extends React.Component {
                   <p>{product.description}</p>
                   <h3>${product.price / 100}</h3>
                 </div>
-                <button
-                  type="submit"
-                  onClick={e => {
-                    e.preventDefault()
-                    this.props.delete(product.id)
-                  }}
-                >
-                  delete
-                </button>
-
-                <button
-                  value={product.id}
-                  onClick={this.handleAddToCart}
-                  type="button"
-                >
-                  Add to cart
-                </button>
+                {/* if the user is an admin, show the delete product button, otherwise show add to cart button */}
+                {this.props.user.isAdmin ? (
+                  <button
+                    type="submit"
+                    onClick={e => {
+                      e.preventDefault()
+                      this.props.delete(product.id)
+                    }}
+                  >
+                    delete
+                  </button>
+                ) : (
+                  <button
+                    value={product.id}
+                    onClick={this.handleAddToCart}
+                    type="button"
+                  >
+                    Add to cart
+                  </button>
+                )}
               </div>
             )
           })}
-
-          <div className="addProduct">
-            <AddProduct
-              {...this.state}
-              name={this.state.name}
-              description={this.state.description}
-              // price={this.state.price}
-              // size={this.state.size}
-              // stars={this.state.stars}
-              handleChange={this.handleChange}
-              handleSubmit={this.handleSubmit}
-            />
-          </div>
+          {this.props.user.isAdmin ? (
+            <div className="addProduct">
+              <AddProduct
+                {...this.state}
+                name={this.state.name}
+                description={this.state.description}
+                // price={this.state.price}
+                // size={this.state.size}
+                // stars={this.state.stars}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+              />
+            </div>
+          ) : (
+            <div> </div>
+          )}
         </div>
       </div>
     )

@@ -47,6 +47,7 @@ class SingleProduct extends React.Component {
   render() {
     //store product
     const singleProd = this.props.product
+
     return (
       <div>
         {/* render the product created from the redux thunk */}
@@ -61,14 +62,19 @@ class SingleProduct extends React.Component {
         >
           Add to cart
         </button>
-        {/* ***need to add permissions for only admin */}
-        <EditProduct
-          {...this.state}
-          name={this.state.name}
-          description={this.state.description}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
+
+        {/* if you're an admin you can edit a product */}
+        {this.props.user.isAdmin ? (
+          <EditProduct
+            {...this.state}
+            name={this.state.name}
+            description={this.state.description}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        ) : (
+          <div> </div>
+        )}
       </div>
     )
   }
