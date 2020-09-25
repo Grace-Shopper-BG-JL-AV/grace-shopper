@@ -63,7 +63,7 @@ class AllProducts extends React.Component {
             return (
               <div key={product.id} className="column">
                 <Link to={`/products/${product.id}`}>
-                  <h2 id="product">{product.name}</h2>
+                  <h4 id="product">{product.name}</h4>
                 </Link>
                 <img src={product.imageUrl} />
 
