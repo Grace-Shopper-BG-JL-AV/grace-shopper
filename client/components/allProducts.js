@@ -56,19 +56,25 @@ class AllProducts extends React.Component {
     const productsArr = this.props.products
 
     return (
-      <div className="page-wrapper">
-        <div className="row">
+      <div>
+        <div className="all-preview-container">
           {/* render the products created from the redux thunk */}
           {productsArr.map(product => {
             return (
-              <div key={product.id} className="column">
+              <div key={product.id} className="product-preview-container">
                 <Link to={`/products/${product.id}`}>
-                  <h4 id="product">{product.name}</h4>
+                  <div className="artwork-preview-image">
+                    <img
+                      className="product-preview-image"
+                      src={product.imageUrl}
+                    />
+                  </div>
                 </Link>
-                <img src={product.imageUrl} />
-
-                <p>{product.description}</p>
-                <h3>${product.price / 100}</h3>
+                <div className="product-preview-text">
+                  <h3 id="product">{product.name}</h3>
+                  <p>{product.description}</p>
+                  <h3>${product.price / 100}</h3>
+                </div>
                 <button
                   type="submit"
                   onClick={e => {

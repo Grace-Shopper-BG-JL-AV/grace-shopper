@@ -13,10 +13,10 @@ export const UserHome = props => {
     <div className="page-wrapper">
       <div className="row2">
         <div className="column2">
-          <div className="orange-column2">
-            <h2>Welcome {isLoggedIn && `, ${email}`}</h2>
-            <h3>Our Mission</h3>
-          </div>
+          {/* <div className="orange-column2"> */}
+          <h2>Welcome {isLoggedIn && `, ${email}`}</h2>
+          <h3>Our Mission</h3>
+          {/* </div> */}
         </div>
         <div className="column2">
           <div className="blue-column2">
@@ -30,11 +30,10 @@ export const UserHome = props => {
               worries! All our handsome dog models are also up for adoption at a
               pet adoption center near you. Contact us for more information.{' '}
             </p>
-
-            <img src="https://www.dhresource.com/0x0/f2/albu/g6/M01/E4/44/rBVaSFuaE02AZ_wNAAGNJrvv_zI981.jpg/winter-dog-halloween-costume-christmas-dog.jpg" />
             <h3>
               <Link to="/products">Shop costumes</Link>
             </h3>
+            <img src="https://www.dhresource.com/0x0/f2/albu/g6/M01/E4/44/rBVaSFuaE02AZ_wNAAGNJrvv_zI981.jpg/winter-dog-halloween-costume-christmas-dog.jpg" />
           </div>
         </div>
       </div>
