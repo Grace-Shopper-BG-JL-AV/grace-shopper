@@ -27,7 +27,7 @@ class AllUsers extends React.Component {
           return (
             // added link to single user view--do we need single user?? can admin add/delete single users?
             <div key={user.id}>
-              <h2>{user.email}</h2>
+              <p>{user.email}</p>
             </div>
           )
         })}
