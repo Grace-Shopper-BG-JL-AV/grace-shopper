@@ -56,19 +56,25 @@ class AllProducts extends React.Component {
     const productsArr = this.props.products
 
     return (
-      <div className="page-wrapper">
-        <div className="row">
+      <div>
+        <div className="all-preview-container">
           {/* render the products created from the redux thunk */}
           {productsArr.map(product => {
             return (
-              <div key={product.id} className="column">
+              <div key={product.id} className="product-preview-container">
                 <Link to={`/products/${product.id}`}>
-                  <h2 id="product">{product.name}</h2>
+                  <div className="artwork-preview-image">
+                    <img
+                      className="product-preview-image"
+                      src={product.imageUrl}
+                    />
+                  </div>
                 </Link>
-                <h3>${product.price / 100}</h3>
-                <p>{product.description}</p>
-                <img src={product.imageUrl} />
-
+                <div className="product-preview-text">
+                  <h3 id="product">{product.name}</h3>
+                  <p>{product.description}</p>
+                  <h3>${product.price / 100}</h3>
+                </div>
                 <button
                   type="submit"
                   onClick={e => {
@@ -76,7 +82,7 @@ class AllProducts extends React.Component {
                     this.props.delete(product.id)
                   }}
                 >
-                  x
+                  delete
                 </button>
 
                 <button
@@ -90,16 +96,18 @@ class AllProducts extends React.Component {
             )
           })}
 
-          <AddProduct
-            {...this.state}
-            name={this.state.name}
-            description={this.state.description}
-            // price={this.state.price}
-            // size={this.state.size}
-            // stars={this.state.stars}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-          />
+          <div className="addProduct">
+            <AddProduct
+              {...this.state}
+              name={this.state.name}
+              description={this.state.description}
+              // price={this.state.price}
+              // size={this.state.size}
+              // stars={this.state.stars}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
+          </div>
         </div>
       </div>
     )
