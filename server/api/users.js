@@ -38,30 +38,17 @@ router.put('/:userId/:productId/add', async (req, res, next) => {
         cartId: currentCart[0].dataValues.id
       }
     })
-
+    console.log('currentOrderProduct: ', currentOrderProduct)
     if (currentOrderProduct) {
       let newQuantity = currentOrderProduct.quantity + 1
       await currentOrderProduct.update({quantity: newQuantity})
+    } else {
+      OrderProducts.create({
+        price: currentProduct.price,
+        cartId: currentCart[0].dataValues.id,
+        productId: productId
+      })
     }
-    // await currentOrderProduct.increment('quantity', {by: 1})
-    // await currentOrderProduct.save()
-
-    console.log('currentUser: ', currentUser)
-
-    // let currentProduct = Product.findByPk(productId)
-
-    // let currentOrderProducts = currentCart.dataValues.orderProducts
-    // currentOrderProducts.forEach((orderProduct) => {
-    //   if (
-    //     orderProduct.productId === productId &&
-    //     orderProduct.cartId === currentCart.id
-    //   ) {
-    //     let newQuantity = orderProduct.quantity + 1
-    //     orderProduct.update({quantity: newQuantity})
-    //   } else {
-    //     currentCart.addOrderProduct(currentProduct)
-    //   }
-    // })
     res.json(currentUser)
   } catch (err) {
     next(err)
@@ -78,5 +65,26 @@ router.put('/:userId/:productId/add', async (req, res, next) => {
 //     next(err)
 //   }
 // })
+
+router.get('/:id/cart', async (req, res, next) => {
+  try {
+    let id = req.params.id
+    const currentCart = await Cart.findOne({
+      where: {
+        userId: id,
+        isActive: true
+      }
+    })
+    const orderProducts = await OrderProducts.findAll({
+      where: {
+        cartId: currentCart.id
+      },
+      include: [Product]
+    })
+    res.json(orderProducts)
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router
