@@ -15,7 +15,6 @@ export const UserHome = props => {
         <div className="column2">
           <div className="orange-column2">
             <h2>Welcome {isLoggedIn && `, ${email}`}</h2>
-
             <h3>Our Mission</h3>
           </div>
         </div>
