@@ -15,8 +15,8 @@ class Cart extends React.Component {
       this.props.getCartProducts(this.state.userId)
       this.props.getUser()
     } else {
-      const storedProducts = sessionStorage.getItem('storedProducts')
-      this.props.getStorageCartProducts(storedProducts)
+      const storedProducts = sessionStorage.getItem('products')
+      this.props.getStorageCartProducts(JSON.parse(storedProducts))
     }
   }
 

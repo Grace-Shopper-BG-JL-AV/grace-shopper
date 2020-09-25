@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
 import {add} from '../store/user'
+import {fetchProduct} from '../store/singleProduct'
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class AllProducts extends React.Component {
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
-    // this.props.getGuestProducts()
+    //this.props.getGuestProducts()
   }
 
   handleChange(event) {
@@ -40,11 +41,7 @@ class AllProducts extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    if (this.props.user.id) {
-      this.props.add(this.state)
-    } else {
-      sessionStorage.setItem('')
-    }
+    this.props.add(this.state) // do want this to happen
     this.setState({
       name: '',
       description: ''
@@ -55,9 +52,21 @@ class AllProducts extends React.Component {
     })
   }
 
-  handleAddToCart(event) {
+  async handleAddToCart(event) {
     let productId = Number(event.target.value)
-    this.props.addToCart(this.props.user.id, productId)
+    await this.props.getProduct(productId)
+    if (this.props.user.id) {
+      console.log('this.props.product', this.props.product)
+
+      this.props.addToCart(this.props.user.id, productId)
+    } else {
+      const arr = []
+      arr.push(this.props.product)
+      sessionStorage.setItem(
+        'products',
+        JSON.stringify({products: {products: arr}})
+      )
+    }
   }
 
   render() {
@@ -119,17 +128,19 @@ class AllProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     products: state.products,
-    user: state.user
+    user: state.user,
+    product: state.product
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts()),
-    add: stateObj => dispatch(addProductToDb(stateObj)),
-    delete: id => dispatch(deleteProduct(id)),
-    addToCart: (userId, productId) => dispatch(add(userId, productId))
+    getProducts: () => dispatch(fetchProducts()), //rendering
+    add: stateObj => dispatch(addProductToDb(stateObj)), // for admin permissions
+    delete: id => dispatch(deleteProduct(id)), //rendering
+    addToCart: (userId, productId) => dispatch(add(userId, productId)),
     //getGuestProducts: () => dispatch(fetchGuestProducts()),
+    getProduct: productId => dispatch(fetchProduct(productId))
   }
 }
 

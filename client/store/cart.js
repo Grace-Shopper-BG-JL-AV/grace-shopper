@@ -16,7 +16,7 @@ export const setCartProducts = products => {
 export const fetchCartProducts = userId => {
   return async dispatch => {
     const response = await axios.get(`/api/users/${userId}/cart`)
-    console.log('RESOPONE', response.data)
+    console.log('RESPONSE', response.data)
     dispatch(setCartProducts(response.data))
   }
 }
