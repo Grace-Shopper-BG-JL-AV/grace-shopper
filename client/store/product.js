@@ -4,6 +4,7 @@ import axios from 'axios'
 const SET_PRODUCTS = 'SET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
+const SET_GUEST_PRODUCTS = 'SET_GUEST_PRODUCTS'
 
 //action creator
 export const setProducts = products => {
@@ -30,6 +31,13 @@ export const fetchProducts = () => {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export const fetchGuestProducs = products => {
+  return {
+    type: SET_GUEST_PRODUCTS,
+    products
   }
 }
 
@@ -81,6 +89,8 @@ export default function productsReducer(state = [], action) {
           return product.id !== action.id
         })
       ]
+    case SET_GUEST_PRODUCTS:
+      return action.products
     default:
       return state
   }

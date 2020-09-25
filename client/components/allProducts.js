@@ -1,6 +1,10 @@
 import React from 'react'
-
-import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
+import {
+  fetchProducts,
+  addProductToDb,
+  deleteProduct,
+  fetchGuestProducts
+} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
@@ -25,6 +29,7 @@ class AllProducts extends React.Component {
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
+    // this.props.getGuestProducts()
   }
 
   handleChange(event) {
@@ -35,7 +40,11 @@ class AllProducts extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.add(this.state)
+    if (this.props.user.id) {
+      this.props.add(this.state)
+    } else {
+      sessionStorage.setItem('')
+    }
     this.setState({
       name: '',
       description: ''
@@ -120,6 +129,7 @@ const mapDispatchToProps = dispatch => {
     add: stateObj => dispatch(addProductToDb(stateObj)),
     delete: id => dispatch(deleteProduct(id)),
     addToCart: (userId, productId) => dispatch(add(userId, productId))
+    //getGuestProducts: () => dispatch(fetchGuestProducts()),
   }
 }
 

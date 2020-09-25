@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCartProducts} from '../store/cart'
+import {fetchCartProducts, fetchStorageCartProducts} from '../store/cart'
 import {me} from '../store/user'
 
 class Cart extends React.Component {
@@ -11,11 +11,17 @@ class Cart extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.getCartProducts(this.state.userId)
-    this.props.getUser()
+    if (this.state.userId) {
+      this.props.getCartProducts(this.state.userId)
+      this.props.getUser()
+    } else {
+      const storedProducts = sessionStorage.getItem('storedProducts')
+      this.props.getStorageCartProducts(storedProducts)
+    }
   }
+
   render() {
-    const cartProducts = this.props.cart
+    const cartProducts = this.props.cart || []
     console.log('cartProducts: ', cartProducts)
     return (
       <div>
@@ -55,7 +61,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
-    getUser: () => dispatch(me())
+    getUser: () => dispatch(me()),
+    getStorageCartProducts: storedProducts =>
+      dispatch(fetchStorageCartProducts(storedProducts))
   }
 }
 
