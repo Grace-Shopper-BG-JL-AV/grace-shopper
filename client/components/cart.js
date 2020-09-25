@@ -18,10 +18,10 @@ class Cart extends React.Component {
             return (
               // added link to single product view
               <div key={product.id}>
-                <h2>{product.name}</h2>
-                <h3>${product.price / 100}</h3>
-                <p>{product.description}</p>
-                <img src={product.imageUrl} />
+                <h2>{product.product.name}</h2>
+                <h3>${product.product.price / 100}</h3>
+                <p>{product.product.description}</p>
+                <img src={product.product.imageUrl} />
               </div>
             )
           })
