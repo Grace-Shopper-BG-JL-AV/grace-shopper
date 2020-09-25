@@ -1,39 +1,67 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCartProducts} from '../store/cart'
+import {fetchCartProducts, updateQuantity, deleteProducts} from '../store/cart'
 import {me} from '../store/user'
 
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      userId: this.props.user.id
-    }
+    this.handleChange = this.handleChange.bind(this)
+    //this.handleRemove = this.handleRemove.bind(this)
   }
-  componentDidMount() {
-    this.props.getCartProducts(this.state.userId)
-    this.props.getUser()
+
+  async componentDidMount() {
+    await this.props.getUser()
+    await this.props.getCartProducts(this.props.user.id)
   }
+
+  handleChange(event) {
+    let newQuantity = Number(event.target.value)
+    this.props.changeCartQuantity(Number(event.target.id), newQuantity)
+  }
+
+  // async handleRemove(event) {
+  //   let orderId = Number(event.target.id)
+  //   let cartId = this.props.cart[0].cartId
+  //   await this.props.deleteProducts(cartId, orderId)
+  // }
+
   render() {
-    const cartProducts = this.props.cart
-    console.log('cartProducts: ', cartProducts)
+    let cartProducts
+    if (this.props.cart.id) {
+      cartProducts = this.props.cart.orderProducts
+    }
     return (
       <div>
         <h1>Items in your cart:</h1>
 
-        {cartProducts.length ? (
+        {cartProducts ? (
           cartProducts.map(product => {
             return (
               // added link to single product view
               <div key={product.id}>
                 <h2>{product.product.name}</h2>
-                <p>
-                  Total Price: $
-                  {product.product.price / 100 * product.quantity}
-                </p>
-                <p>Quantity: {product.quantity}</p>
+                <p>Total Price: ${product.price / 100 * product.quantity}</p>
+                <select
+                  id={product.id}
+                  label="Quantity: "
+                  onChange={this.handleChange}
+                >
+                  <option selected>{product.quantity}</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
                 <p>{product.product.description}</p>
                 <img src={product.product.imageUrl} />
+                <button
+                  id={product.id}
+                  //onClick={this.handleRemove}
+                  type="button"
+                >
+                  Remove all from cart!
+                </button>
               </div>
             )
           })
@@ -55,7 +83,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
-    getUser: () => dispatch(me())
+    getUser: () => dispatch(me()),
+    changeCartQuantity: (orderProductId, newQuantity) =>
+      dispatch(updateQuantity(orderProductId, newQuantity))
+    // deleteProducts: (cartId, orderProductId) => {
+    //   dispatch(deleteProducts(cartId, orderProductId))
+    // },
   }
 }
 
