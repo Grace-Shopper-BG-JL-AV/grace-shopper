@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
 import {fetchProduct, updateProduct} from '../store/singleProduct'
 import EditProduct from './Forms/editProduct'
+import {add} from '../store/user'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class SingleProduct extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
   componentDidMount() {
@@ -36,6 +39,11 @@ class SingleProduct extends React.Component {
     })
   }
 
+  async handleAddToCart(event) {
+    let productId = Number(event.target.value)
+    await this.props.addToCart(this.props.user.id, productId)
+  }
+
   render() {
     //store product
     const singleProd = this.props.product
@@ -44,18 +52,29 @@ class SingleProduct extends React.Component {
       <div>
         {/* render the product created from the redux thunk */}
         <h2>{singleProd.name}</h2>
-        <h2>${singleProd.price}</h2>
+        <h2>${singleProd.price / 100}</h2>
         <p>{singleProd.description}</p>
         <img src={singleProd.imageUrl} />
+        <button
+          value={singleProd.id}
+          onClick={this.handleAddToCart}
+          type="button"
+        >
+          Add to cart
+        </button>
 
-        {/* ***need to add permissions for only admin */}
-        <EditProduct
-          {...this.state}
-          name={this.state.name}
-          description={this.state.description}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
+        {/* if you're an admin you can edit a product */}
+        {this.props.user.isAdmin ? (
+          <EditProduct
+            {...this.state}
+            name={this.state.name}
+            description={this.state.description}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        ) : (
+          <div> </div>
+        )}
       </div>
     )
   }
@@ -64,14 +83,16 @@ class SingleProduct extends React.Component {
 //connect to redux store
 const mapStateToProps = state => {
   return {
-    product: state.product
+    product: state.product,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getProduct: id => dispatch(fetchProduct(id)),
-    updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj))
+    updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj)),
+    addToCart: (userId, productId) => dispatch(add(userId, productId))
   }
 }
 

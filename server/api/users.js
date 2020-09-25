@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Product} = require('../db/models')
+const {Cart, OrderProducts} = require('../db/models/cart')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -15,4 +16,95 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id/cart', async (req, res, next) => {
+  try {
+    let id = req.params.id
+    const currentCart = await Cart.findOne({
+      where: {
+        userId: id,
+        isActive: true
+      },
+      include: {
+        model: OrderProducts,
+        include: [Product]
+      }
+    })
+    res.json(currentCart)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:userId/:productId/add', async (req, res, next) => {
+  try {
+    let userId = req.params.userId
+    let productId = req.params.productId
+    const currentUser = await User.findByPk(userId, {
+      include: [Cart]
+    })
+    let currentCart = await Cart.findOrCreate({
+      where: {
+        userId: userId,
+        isActive: true
+      },
+      include: [OrderProducts]
+    })
+    let currentProduct = await Product.findByPk(productId)
+
+    let currentOrderProduct = await OrderProducts.findOne({
+      where: {
+        productId: productId,
+        cartId: currentCart[0].dataValues.id
+      }
+    })
+    console.log('currentOrderProduct: ', currentOrderProduct)
+    if (currentOrderProduct) {
+      let newQuantity = currentOrderProduct.quantity + 1
+      await currentOrderProduct.update({quantity: newQuantity})
+    } else {
+      OrderProducts.create({
+        price: currentProduct.price,
+        cartId: currentCart[0].dataValues.id,
+        productId: productId
+      })
+    }
+    res.json(currentUser)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:orderProductsId', async (req, res, next) => {
+  try {
+    let order = await OrderProducts.findByPk(req.params.orderProductsId)
+    await order.update(req.body)
+    await order.save()
+    let updatedCart = await Cart.findByPk(order.cartId, {
+      include: {
+        model: OrderProducts,
+        include: [Product]
+      }
+    })
+    res.json(updatedCart)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// router.put('/:cartId/:orderProductsId', async (req, res, next) => {
+//   try {
+//     const orderProducts = await OrderProducts.findByPk(
+//       req.params.orderProductsId
+//     )
+//     const cart = await Cart.findByPk(req.params.cartId, {
+//       include: [OrderProducts],
+//     })
+//     await cart.removeOrderProduct(orderProducts)
+//     await cart.save()
+//     await cart.reload()
+//     res.json(cart)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 module.exports = router

@@ -10,42 +10,52 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
   console.log('name', name)
   return (
-    <div>
+    <div className="page-wrapper">
       <form onSubmit={handleSubmit} name={name}>
         {displayName === 'Sign Up' ? (
-          <div>
-            <div>
-              <label htmlFor="firstName">
-                <small>First name</small>
-              </label>
-              <input name="firstName" type="firstName" />
-            </div>
-            <div>
-              <label htmlFor="lastName">
-                <small>Last name</small>
-              </label>
-              <input name="lastName" type="lastName" />
+          <div className="row">
+            <div className="column">
+              <div>
+                <div>
+                  <label htmlFor="firstName">
+                    <small>First name</small>
+                  </label>
+                  <input name="firstName" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="lastName">
+                    <small>Last name</small>
+                  </label>
+                  <input name="lastName" type="text" />
+                </div>
+              </div>
             </div>
           </div>
         ) : null}
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
+        <div className="row">
+          <div className="column">
+            <div>
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <input name="email" type="text" />
+            </div>
+            <div>
+              <label htmlFor="password">
+                <small>Password</small>
+              </label>
+              <input name="password" type="text" />
+            </div>
+          </div>
         </div>
         <div>
           <button type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
+        <a className="signUp" href="/auth/google">
+          {displayName} with Google
+        </a>
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }
