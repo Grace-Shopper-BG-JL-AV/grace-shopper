@@ -15,7 +15,7 @@ const OrderProducts = db.define('orderProduct', {
   quantity: {
     type: Sequelize.INTEGER,
     //tbd!
-    defaultValue: 0
+    defaultValue: 1
   },
   totalPrice: {
     type: Sequelize.INTEGER,
