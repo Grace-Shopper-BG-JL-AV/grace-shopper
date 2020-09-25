@@ -16,6 +16,25 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id/cart', async (req, res, next) => {
+  try {
+    let id = req.params.id
+    const currentCart = await Cart.findOne({
+      where: {
+        userId: id,
+        isActive: true
+      },
+      include: {
+        model: OrderProducts,
+        include: [Product]
+      }
+    })
+    res.json(currentCart)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/:userId/:productId/add', async (req, res, next) => {
   try {
     let userId = req.params.userId
@@ -55,36 +74,37 @@ router.put('/:userId/:productId/add', async (req, res, next) => {
   }
 })
 
-// router.put('/:id/remove', async (req, res, next) => {
-//   try {
-//     const user = await User.findByPk(req.params.id, {
-//       include: [Cart],
-//     })
-//     res.json(user)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
-router.get('/:id/cart', async (req, res, next) => {
+router.put('/:orderProductsId', async (req, res, next) => {
   try {
-    let id = req.params.id
-    const currentCart = await Cart.findOne({
-      where: {
-        userId: id,
-        isActive: true
+    let order = await OrderProducts.findByPk(req.params.orderProductsId)
+    await order.update(req.body)
+    await order.save()
+    let updatedCart = await Cart.findByPk(order.cartId, {
+      include: {
+        model: OrderProducts,
+        include: [Product]
       }
     })
-    const orderProducts = await OrderProducts.findAll({
-      where: {
-        cartId: currentCart.id
-      },
-      include: [Product]
-    })
-    res.json(orderProducts)
+    res.json(updatedCart)
   } catch (err) {
     next(err)
   }
 })
 
+// router.put('/:cartId/:orderProductsId', async (req, res, next) => {
+//   try {
+//     const orderProducts = await OrderProducts.findByPk(
+//       req.params.orderProductsId
+//     )
+//     const cart = await Cart.findByPk(req.params.cartId, {
+//       include: [OrderProducts],
+//     })
+//     await cart.removeOrderProduct(orderProducts)
+//     await cart.save()
+//     await cart.reload()
+//     res.json(cart)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 module.exports = router
