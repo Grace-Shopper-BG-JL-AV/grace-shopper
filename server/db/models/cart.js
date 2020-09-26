@@ -18,7 +18,7 @@ const OrderProducts = db.define('orderProduct', {
     defaultValue: 1
   },
   totalPrice: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.VIRTUAL,
     get() {
       return this.price * this.quantity
     }

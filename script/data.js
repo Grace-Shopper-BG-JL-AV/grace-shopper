@@ -52,7 +52,13 @@ const products = [
     name: 'Puppy Plaid Pajama Party',
     description: 'This is a puppy in plaid pajamas.',
     price: 0,
-    imageUrl: '/image_from_ios.jpg'
+    imageUrl: 'image_from_ios.jpg'
+  },
+  {
+    name: 'Daddy, Doggie Hawaiian Beachday',
+    description: 'This is a puppy in a Hawaiian shirt matching with her daddy.',
+    price: 0,
+    imageUrl: 'daddy_doggie_hawaiian.jpg'
   }
 ]
 
