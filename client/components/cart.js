@@ -37,7 +37,7 @@ class Cart extends React.Component {
     return (
       <div>
         <h1>Items in your cart:</h1>
-        {cartProducts.length ? (
+        {cartProducts ? (
           <Link to="/checkout">
             <button type="button">Checkout!</button>
           </Link>
@@ -75,7 +75,7 @@ class Cart extends React.Component {
             )
           })
         ) : (
-          <div>No items in your cart right now!</div>
+          <div />
         )}
       </div>
     )
