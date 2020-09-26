@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
+import swal from 'sweetalert'
 import {fetchProduct, updateProduct} from '../store/singleProduct'
 import EditProduct from './Forms/editProduct'
 import {add} from '../store/user'
@@ -33,6 +33,11 @@ class SingleProduct extends React.Component {
     event.preventDefault()
     const num = Number(this.props.match.params.id)
     this.props.updateProduct(num, this.state)
+    swal({
+      title: 'Awesome!',
+      text: 'Your item has been updated in the store',
+      icon: 'success'
+    })
     this.setState({
       name: '',
       description: ''
@@ -42,6 +47,11 @@ class SingleProduct extends React.Component {
   async handleAddToCart(event) {
     let productId = Number(event.target.value)
     await this.props.addToCart(this.props.user.id, productId)
+    swal({
+      title: 'Hooray!',
+      text: 'You added a product to your cart!',
+      icon: 'success'
+    })
   }
 
   render() {

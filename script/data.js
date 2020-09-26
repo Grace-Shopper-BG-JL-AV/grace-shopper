@@ -1,9 +1,27 @@
-const users = [
+const faker = require('faker')
+
+const createFakeUser = () => ({
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName()
+})
+
+const users = []
+const desiredUsers = 20
+//seeded the database with 20 users
+for (let i = 0; i < desiredUsers; i++) {
+  users.push(createFakeUser())
+}
+
+//kept the 3 of us as administrators...change your admin functions to test
+const admin = [
   {
     email: 'jroyankfan42@gmail.com',
     password: '123',
     firstName: 'Jack',
-    lastName: 'Lev'
+    lastName: 'Lev',
+    isAdmin: true
   },
   {
     email: 'betsy@gmail.com',
@@ -16,17 +34,25 @@ const users = [
     email: 'ashley@gmail.com',
     password: 'mynameisashley',
     firstName: 'Ash',
-    lastName: 'Valenz'
-  },
-  {
-    email: 'noahfeit@gmail.com',
-    password: 'emmieshungry',
-    firstName: 'Noah',
-    lastName: 'Feit'
+    lastName: 'Valenz',
+    isAdmin: true
   }
 ]
 
-const products = [
+admin.map(person => {
+  users.push(person)
+})
+
+const createFakeProduct = () => ({
+  name: faker.commerce.productName(),
+  description: faker.commerce.productDescription(),
+  price: faker.random.number(),
+  imageUrl: faker.image.cats()
+})
+
+const products = []
+
+const puppyCostumes = [
   {
     name: 'Puppy Mermaid',
     description: 'This is the puppy mermaid costume.',
@@ -55,5 +81,15 @@ const products = [
     imageUrl: '/image_from_ios.jpg'
   }
 ]
+
+puppyCostumes.map(costume => {
+  products.push(costume)
+})
+
+const desiredProducts = 100
+//seeded the database with 100 products
+for (let i = 0; i < desiredProducts; i++) {
+  products.push(createFakeProduct())
+}
 
 module.exports = {users, products}
