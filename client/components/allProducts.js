@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
 import {add} from '../store/user'
+import swal from 'sweetalert'
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -37,6 +38,11 @@ class AllProducts extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.add(this.state)
+    swal({
+      title: 'Great!',
+      text: 'Your item has been added to the store!',
+      icon: 'success'
+    })
     this.setState({
       name: '',
       description: ''
@@ -50,6 +56,11 @@ class AllProducts extends React.Component {
   handleAddToCart(event) {
     let productId = Number(event.target.value)
     this.props.addToCart(this.props.user.id, productId)
+    swal({
+      title: 'Hooray!',
+      text: 'Your item has been added to your cart!',
+      icon: 'success'
+    })
   }
 
   render() {
@@ -84,6 +95,11 @@ class AllProducts extends React.Component {
                     onClick={e => {
                       e.preventDefault()
                       this.props.delete(product.id)
+                      swal({
+                        title: 'Warning!',
+                        text: 'Your item has been deleted from the store',
+                        icon: 'warning'
+                      })
                     }}
                   >
                     delete
