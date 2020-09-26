@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 
 import {connect} from 'react-redux'
