@@ -1,20 +1,21 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Rajdhani', sans-serif;
+  color: #533900;
 }
 
 a {
-  color: rgb(1, 17, 109);
+  color: #bb8104;
   padding: 1em 1.5em;
   text-decoration: none;
 }
 
 a:hover {
-  color: #c5f0fd;
+  color: #fdcf6b;
 }
 
 /* this isn't working yet */
 a.product:hover {
-  background-color: #c5f0fd;
+  background-color: #c28708;
 }
 
 label {
@@ -28,7 +29,7 @@ form div {
 
 nav {
   align-items: center;
-  background-color: #8de3fd;
+  background-color: #e7c57c;
   z-index: 2;
   color: #ffffff;
   text-decoration: none;
@@ -37,7 +38,7 @@ nav {
   padding: 5px;
   justify-content: space-between;
   font-size: 25px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Homemade Apple', cursive;
   margin: 1em;
 }
 
@@ -48,23 +49,33 @@ nav {
 
 h1 {
   text-align: center;
-  font-family: 'Courier New', Courier, monospace;
-  color: black;
+  font-family: 'Monoton', cursive;
+  color: #fbad05;
   font-size: 40px;
 }
 
 h2 {
   text-align: center;
-  font-family: 'Courier New', Courier, monospace;
-  color: black;
+  font-family: 'Homemade Apple', cursive;
+
   font-size: 30px;
 }
 
-h3 {
+h3,
+.signUp {
   text-align: center;
-  font-family: 'Courier New', Courier, monospace;
-  color: black;
+  font-family: 'Homemade Apple', cursive;
+
   font-size: 20px;
+  background-color: #f6e6c3;
+}
+
+h4 {
+  text-align: center;
+  font-family: 'Rajdhani', sans-serif;
+
+  font-size: 20px;
+  background-color: #f6e6c3;
 }
 
 img {
@@ -78,12 +89,16 @@ img {
 .page-wrapper {
   display: flex;
   margin: 15px;
+  text-align: center;
+  background-color: #f6e6c3;
 }
 
 .row {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-wrap: wrap;
+  text-align: center;
   width: 100%;
 }
 
@@ -92,4 +107,133 @@ img {
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
+  border: black solid 1px;
+  background-color: #f6e6c3;
+}
+
+/* one column many rows */
+.row2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column2 {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+}
+
+.orange-column2 {
+  height: 100px;
+}
+
+.blue-column2 {
+  height: 100px;
+}
+
+#bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  z-index: -8;
+  width: 200%;
+  height: 200%;
+}
+#bg img {
+  position: absolute;
+  z-index: -8;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  min-height: 50%;
+}
+
+.addProduct {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f6e6c3;
+}
+
+/* form stuff */
+form {
+  font-size: 110%;
+}
+label {
+  display: block;
+  color: saddlebrown;
+  margin: 16px 0 3px;
+}
+
+input[type='text'] {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: rgb(253, 253, 253);
+  border: solid 1px tan;
+  font-family: 'Lucida Console', monospace;
+}
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+fieldset {
+  border: none;
+  margin: 20px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid tan;
+}
+
+/* BUTTONS */
+button[type='submit'] {
+  background-color: #fbad05;
+  color: #f6e6c3;
+  border: rgb(66, 38, 2) solid 0.1em;
+  padding: 6px 20px;
+  font-size: 110%;
+  border-radius: 10px;
+  font-family: 'Homemade Apple', cursive;
+  width: 150px;
+  justify-content: center;
+}
+
+button[type='submit']:hover {
+  background-color: #ffffff;
+}
+
+/* flexbox on all products */
+.all-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-preview-container {
+  display: flex;
+  flex: 1 1 30%;
+  margin-left: 10px;
+  margin-right: 10px;
+  flex-direction: column;
+  padding-top: 8%;
+  background-color: #f6e6c3;
+  height: 20%;
+  width: 15%;
+}
+
+.product-preview-text {
+  font-size: 12px;
+  text-align: center;
+}
+
+.product-preview-image {
+  width: 80%;
+  height: 60%;
+  max-height: 200px;
+  max-width: 200px;
+  border-radius: 5px;
+  margin-right: 10px;
 }

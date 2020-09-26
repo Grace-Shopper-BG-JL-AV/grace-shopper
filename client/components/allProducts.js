@@ -72,52 +72,67 @@ class AllProducts extends React.Component {
   render() {
     //store products in productsArr
     const productsArr = this.props.products
+    console.log('user', this.props)
 
     return (
-      <div className="page-wrapper">
-        <div className="row">
+      <div>
+        <div className="all-preview-container">
           {/* render the products created from the redux thunk */}
           {productsArr.map(product => {
             return (
-              <div key={product.id} className="column">
+              <div key={product.id} className="product-preview-container">
                 <Link to={`/products/${product.id}`}>
-                  <h2 id="product">{product.name}</h2>
+                  <div className="artwork-preview-image">
+                    <img
+                      className="product-preview-image"
+                      src={product.imageUrl}
+                    />
+                  </div>
                 </Link>
-                <h3>${product.price / 100}</h3>
-                <p>{product.description}</p>
-                <img src={product.imageUrl} />
-
-                <button
-                  type="submit"
-                  onClick={e => {
-                    e.preventDefault()
-                    this.props.delete(product.id)
-                  }}
-                >
-                  x
-                </button>
-
-                <button
-                  value={product.id}
-                  onClick={this.handleAddToCart}
-                  type="button"
-                >
-                  Add to cart
-                </button>
+                <div className="product-preview-text">
+                  <h3 id="product">{product.name}</h3>
+                  <p>{product.description}</p>
+                  <h3>${product.price / 100}</h3>
+                </div>
+                {/* if the user is an admin, show the delete product button, otherwise show add to cart button */}
+                {this.props.user.isAdmin ? (
+                  <button
+                    type="submit"
+                    onClick={e => {
+                      e.preventDefault()
+                      this.props.delete(product.id)
+                    }}
+                  >
+                    delete
+                  </button>
+                ) : (
+                  <button
+                    value={product.id}
+                    onClick={this.handleAddToCart}
+                    type="button"
+                  >
+                    Add to cart
+                  </button>
+                )}
               </div>
             )
           })}
-
-          <AddProduct
-            {...this.state}
-            name={this.state.name}
-            description={this.state.description}
-            // price={this.state.price}
-            // size={this.state.size}
-            // stars={this.state.stars}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-          />
+          {this.props.user.isAdmin ? (
+            <div className="addProduct">
+              <AddProduct
+                {...this.state}
+                name={this.state.name}
+                description={this.state.description}
+                // price={this.state.price}
+                // size={this.state.size}
+                // stars={this.state.stars}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+              />
+            </div>
+          ) : (
+            <div> </div>
+          )}
         </div>
       </div>
     )

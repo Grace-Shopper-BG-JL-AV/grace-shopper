@@ -9,7 +9,8 @@ const users = [
     email: 'betsy@gmail.com',
     password: '456',
     firstName: 'Betsy',
-    lastName: 'Groton'
+    lastName: 'Groton',
+    isAdmin: true
   },
   {
     email: 'ashley@gmail.com',
@@ -51,7 +52,7 @@ const products = [
     name: 'Puppy Plaid Pajama Party',
     description: 'This is a puppy in plaid pajamas.',
     price: 0,
-    imageUrl: '/image_from_ios.jpeg'
+    imageUrl: '/image_from_ios.jpg'
   }
 ]
 
