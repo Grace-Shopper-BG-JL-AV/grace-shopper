@@ -37,9 +37,13 @@ class Cart extends React.Component {
     return (
       <div>
         <h1>Items in your cart:</h1>
-        <Link to="/checkout">
-          <button type="button">Checkout!</button>
-        </Link>
+        {cartProducts.length ? (
+          <Link to="/checkout">
+            <button type="button">Checkout!</button>
+          </Link>
+        ) : (
+          <div>No items in your cart right now!</div>
+        )}
         {cartProducts ? (
           cartProducts.map(product => {
             return (

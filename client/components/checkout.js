@@ -7,6 +7,7 @@ class Checkout extends React.Component {
   constructor() {
     super()
     this.handlePurchase = this.handlePurchase.bind(this)
+    this.calculateCost = this.calculateCost.bind(this)
   }
 
   async componentDidMount() {
@@ -17,12 +18,22 @@ class Checkout extends React.Component {
   handlePurchase(event) {
     event.preventDefault()
     this.props.purchase(this.props.cart.id)
+    this.props.history.replace('/postPurchase')
+  }
+
+  calculateCost() {
+    let cost = 0
+    this.props.cart.orderProducts.forEach(product => {
+      cost = cost + product.totalPrice
+    })
+    return cost / 100
   }
 
   render() {
     return (
       <div>
         <h1>Checkout</h1>
+        <h2>Total cost: {this.calculateCost()}</h2>
         <button onClick={this.handlePurchase} type="button">
           Purchase
         </button>
