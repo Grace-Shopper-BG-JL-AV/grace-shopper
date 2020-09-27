@@ -41,11 +41,13 @@ class Cart extends React.Component {
       cartProducts = this.props.cart.orderProducts
     }
     return (
-      <div>
+      <div className="cart">
         <h1>Items in your cart:</h1>
         {cartProducts ? (
           <Link to="/checkout">
-            <button type="button">Checkout!</button>
+            <button type="submit" className="checkoutButton">
+              Checkout!
+            </button>
           </Link>
         ) : (
           <div>No items in your cart right now!</div>
@@ -54,28 +56,40 @@ class Cart extends React.Component {
           cartProducts.map(product => {
             return (
               // added link to single product view
-              <div key={product.id}>
-                <h2>{product.product.name}</h2>
-                <p>Total Price: ${product.totalPrice / 100}</p>
-                <select
-                  id={product.id}
-                  label="Quantity: "
-                  onChange={this.handleChange}
-                >
-                  <option selected>{product.quantity}</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-                <p>{product.product.description}</p>
-                <img src={product.product.imageUrl} />
+              <div key={product.id} className="product-preview-container">
+                <Link to={`/products/${product.id}`}>
+                  <div className="product-preview-image">
+                    <img
+                      src={product.product.imageUrl}
+                      className="product-preview-image"
+                    />
+                  </div>
+                </Link>
+
+                <div className="product-preview-text">
+                  <h3 id="product">{product.product.name}</h3>
+                  <p>{product.product.description}</p>
+
+                  <p>Total Price: ${product.totalPrice / 100}</p>
+                  <select
+                    id={product.id}
+                    label="Quantity: "
+                    onChange={this.handleChange}
+                  >
+                    <option selected>{product.quantity}</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+
                 <button
                   id={product.id}
                   onClick={this.handleRemove}
-                  type="button"
+                  type="submit"
                 >
-                  Remove all from cart!
+                  Remove this item from cart
                 </button>
               </div>
             )

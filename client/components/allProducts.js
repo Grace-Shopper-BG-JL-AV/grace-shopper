@@ -75,7 +75,7 @@ class AllProducts extends React.Component {
       return (
         <div key={product.id} className="product-preview-container">
           <Link to={`/products/${product.id}`}>
-            <div className="artwork-preview-image">
+            <div className="product-preview-image">
               <img className="product-preview-image" src={product.imageUrl} />
             </div>
           </Link>
@@ -104,7 +104,7 @@ class AllProducts extends React.Component {
             <button
               value={product.id}
               onClick={this.handleAddToCart}
-              type="button"
+              type="submit"
             >
               Add to cart
             </button>
@@ -135,8 +135,11 @@ class AllProducts extends React.Component {
       <div>
         {/* pagination */}
         <ul id="page-numbers">{renderPageNumbers}</ul>
+        {/* this next div is rendering the all products code from above */}
         <div className="all-preview-container">
           {renderProducts}
+          {/* pagination again so it displays again at the bottom too */}
+          <ul id="page-numbers">{renderPageNumbers}</ul>
 
           {this.props.user.isAdmin ? (
             <div className="addProduct">

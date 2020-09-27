@@ -37,10 +37,14 @@ class Checkout extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="cart">
         <h1>Checkout</h1>
         <h2>Total cost: {this.calculateCost()}</h2>
-        <button onClick={this.handlePurchase} type="button">
+        <button
+          onClick={this.handlePurchase}
+          type="submit"
+          className="checkoutButton"
+        >
           Purchase
         </button>
       </div>

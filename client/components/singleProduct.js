@@ -59,16 +59,23 @@ class SingleProduct extends React.Component {
     const singleProd = this.props.product
 
     return (
-      <div>
+      <div className="product-preview-container">
         {/* render the product created from the redux thunk */}
-        <h2>{singleProd.name}</h2>
-        <h2>${singleProd.price / 100}</h2>
-        <p>{singleProd.description}</p>
-        <img src={singleProd.imageUrl} />
+        <div className="product-preview-image">
+          <img className="product-preview-image" src={singleProd.imageUrl} />
+        </div>
+
+        <div className="product-preview-text">
+          <h3>{singleProd.name}</h3>
+
+          <p>{singleProd.description}</p>
+          <h3>${singleProd.price / 100}</h3>
+        </div>
+
         <button
           value={singleProd.id}
           onClick={this.handleAddToCart}
-          type="button"
+          type="submit"
         >
           Add to cart
         </button>

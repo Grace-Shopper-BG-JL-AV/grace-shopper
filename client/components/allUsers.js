@@ -19,10 +19,10 @@ class AllUsers extends React.Component {
 
     //is admin? display below. otherwise display "not found"
     return (
-      <div>
+      <div className="allUsers">
         {usersArr.map(user => {
           return (
-            // added link to single user view--do we need single user?? can admin add/delete single users?
+            // do we need single user??
             <div key={user.id}>
               <p>{user.email}</p>
             </div>

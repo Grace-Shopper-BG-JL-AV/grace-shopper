@@ -12,7 +12,7 @@ export const UserHome = props => {
   console.log('props', props)
 
   return isAdmin ? (
-    <div>
+    <div className="allUsers">
       <h1>{`Welcome back, ${email}`}</h1>
       <h3>Here are all of Hallowoof's users:</h3>
       <AllUsers />

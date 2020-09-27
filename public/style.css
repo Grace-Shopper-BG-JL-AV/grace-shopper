@@ -70,6 +70,12 @@ h3,
   background-color: #f6e6c3;
 }
 
+.allUsers,
+.cart,
+.singleProduct {
+  background-color: #f6e6c3;
+}
+
 h4 {
   text-align: center;
   font-family: 'Rajdhani', sans-serif;
@@ -204,6 +210,11 @@ button[type='submit'] {
 
 button[type='submit']:hover {
   background-color: #ffffff;
+}
+
+/* cant figure this out lol */
+.checkoutButton {
+  background-color: green;
 }
 
 /* flexbox on all products */
