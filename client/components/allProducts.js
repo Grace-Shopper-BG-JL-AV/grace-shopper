@@ -1,11 +1,11 @@
 import React from 'react'
 import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
-
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
 import {add} from '../store/user'
 import swal from 'sweetalert'
+import {addToGuestCartInRedux} from '../store/cart'
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -37,11 +37,13 @@ class AllProducts extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.add(this.state)
+    
     swal({
       title: 'Great!',
       text: 'Your item has been added to the store!',
       icon: 'success'
     })
+    
     this.setState({
       name: '',
       description: ''
@@ -51,10 +53,18 @@ class AllProducts extends React.Component {
       // stars: '',
     })
   }
-
-  handleAddToCart(event) {
+  
+  async handleAddToCart(event) {
     let productId = Number(event.target.value)
-    this.props.addToCart(this.props.user.id, productId)
+    const product = this.props.product
+
+    await this.props.getProduct(productId)
+    if (this.props.user.id) {
+      this.props.addToCart(this.props.user.id, productId)
+    } else {
+      this.props.addToGuestCart(product, productId)
+    }
+    
     swal({
       title: 'Hooray!',
       text: 'Your item has been added to your cart!',
@@ -65,8 +75,6 @@ class AllProducts extends React.Component {
   render() {
     //store products in productsArr
     const productsArr = this.props.products
-    console.log('user', this.props)
-
     return (
       <div>
         <div className="all-preview-container">
@@ -139,18 +147,22 @@ class AllProducts extends React.Component {
 
 //connect to redux store
 const mapStateToProps = state => {
+  console.log('products', state.products)
   return {
     products: state.products,
-    user: state.user
+    user: state.user,
+    product: state.product
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts()),
+    getProducts: () => dispatch(fetchProducts()), 
     add: stateObj => dispatch(addProductToDb(stateObj)),
-    delete: id => dispatch(deleteProduct(id)),
-    addToCart: (userId, productId) => dispatch(add(userId, productId))
+    delete: id => dispatch(deleteProduct(id)), 
+    addToCart: (userId, productId) => dispatch(add(userId, productId)),
+    addToGuestCart: (product, productId) =>
+      dispatch(addToGuestCartInRedux(product, productId)),
   }
 }
 

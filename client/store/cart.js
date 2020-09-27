@@ -35,11 +35,60 @@ export const purchase = products => {
   }
 }
 
-//thunk to get all of the cart products
+//thunk to get all of the user cart products
 export const fetchCartProducts = userId => {
   return async dispatch => {
     const response = await axios.get(`/api/users/${userId}/cart`)
     dispatch(setCartProducts(response.data))
+  }
+}
+
+export const setStorageCartProducts = products => {
+  console.log('products in thunk!', products)
+  return dispatch => {
+    dispatch(setCartProducts(products))
+  }
+}
+
+export const addToGuestCartInRedux = (product, productId) => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+    let updatedProducts
+
+    if (storageProducts) {
+      product.id = productId
+      storageProducts = JSON.parse(storageProducts)
+      updatedProducts = {
+        orderProducts: [
+          ...storageProducts.orderProducts,
+          {
+            id: productId,
+            price: 0,
+            product,
+            productId,
+            quantity: 1,
+            totalPrice: 0
+          }
+        ]
+      }
+      localStorage.setItem('storageProducts', JSON.stringify(updatedProducts))
+    } else {
+      product.id = productId
+      updatedProducts = {
+        orderProducts: [
+          {
+            id: productId,
+            price: 0,
+            product,
+            productId,
+            quantity: 1,
+            totalPrice: 0
+          }
+        ]
+      }
+      localStorage.setItem('storageProducts', JSON.stringify(updatedProducts))
+    }
+    dispatch(setCartProducts(updatedProducts))
   }
 }
 
