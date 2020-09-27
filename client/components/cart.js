@@ -20,7 +20,7 @@ class Cart extends React.Component {
       this.props.getCartProducts(this.props.user.id)
       this.props.getUser()
     } else {
-      const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
+      const storageProducts = localStorage.getItem('storageProducts')
       if (storageProducts) {
         this.props.setStorageCartProducts(JSON.parse(storageProducts))
       }
@@ -47,7 +47,6 @@ class Cart extends React.Component {
 
         {cartProducts ? (
           cartProducts.map(product => {
-            console.log('product in map', product)
             return (
               // added link to single product view
               <div key={product.id}>
