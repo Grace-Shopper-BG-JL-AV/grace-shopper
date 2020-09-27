@@ -1,15 +1,11 @@
 import React from 'react'
-import {
-  fetchProducts,
-  addProductToDb,
-  deleteProduct,
-  fetchGuestProducts
-} from '../store/product'
+import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
 import {add} from '../store/user'
 import {fetchProduct} from '../store/singleProduct'
+import {addToGuestCartInRedux} from '../store/cart'
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -51,28 +47,28 @@ class AllProducts extends React.Component {
       // stars: '',
     })
   }
-
+  //i am setting cart items here, not iterating thru them hereso just look at handleaddtocart
   async handleAddToCart(event) {
     let productId = Number(event.target.value)
     await this.props.getProduct(productId)
+    const product = this.props.product
+    console.log('PRODUCT', product)
     if (this.props.user.id) {
-      console.log('this.props.product', this.props.product)
-
+      console.log('hello User')
       this.props.addToCart(this.props.user.id, productId)
     } else {
-      const arr = []
-      arr.push(this.props.product)
-      sessionStorage.setItem(
-        'products',
-        JSON.stringify({products: {products: arr}})
-      )
+      console.log('hello guest')
+
+      this.props.addToGuestCart(product, productId)
     }
   }
 
   render() {
     //store products in productsArr
     const productsArr = this.props.products
-    console.log('user', this.props)
+
+    console.log('this.props.products', this.props.products)
+    //console.log('this.props.products.orderProducts', this.props.products.orderProducts)
 
     return (
       <div>
@@ -141,6 +137,7 @@ class AllProducts extends React.Component {
 
 //connect to redux store
 const mapStateToProps = state => {
+  console.log('products', state.products)
   return {
     products: state.products,
     user: state.user,
@@ -154,6 +151,8 @@ const mapDispatchToProps = dispatch => {
     add: stateObj => dispatch(addProductToDb(stateObj)), // for admin permissions
     delete: id => dispatch(deleteProduct(id)), //rendering
     addToCart: (userId, productId) => dispatch(add(userId, productId)),
+    addToGuestCart: (product, productId) =>
+      dispatch(addToGuestCartInRedux(product, productId)),
     //getGuestProducts: () => dispatch(fetchGuestProducts()),
     getProduct: productId => dispatch(fetchProduct(productId))
   }

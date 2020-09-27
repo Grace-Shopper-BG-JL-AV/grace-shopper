@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {
   fetchCartProducts,
-  fetchStorageCartProducts,
+  setStorageCartProducts,
   updateQuantity,
   deleteProducts
 } from '../store/cart'
@@ -16,12 +16,14 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.userId) {
-      this.props.getCartProducts(this.state.userId)
+    if (this.props.user.id) {
+      this.props.getCartProducts(this.props.user.id)
       this.props.getUser()
     } else {
-      const storedProducts = sessionStorage.getItem('products')
-      this.props.getStorageCartProducts(JSON.parse(storedProducts))
+      const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
+      if (storageProducts) {
+        this.props.setStorageCartProducts(JSON.parse(storageProducts))
+      }
     }
   }
 
@@ -37,17 +39,15 @@ class Cart extends React.Component {
   // }
 
   render() {
-    let cartProducts
-    if (this.props.cart.id) {
-      cartProducts = this.props.cart.orderProducts || []
-      console.log('cartProducts: ', cartProducts)
-    }
+    let cartProducts = this.props.cart.orderProducts || []
+
     return (
       <div>
         <h1>Items in your cart:</h1>
 
         {cartProducts ? (
           cartProducts.map(product => {
+            console.log('product in map', product)
             return (
               // added link to single product view
               <div key={product.id}>
@@ -95,8 +95,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
     getUser: () => dispatch(me()),
-    getStorageCartProducts: storedProducts =>
-      dispatch(fetchStorageCartProducts(storedProducts)),
+    setStorageCartProducts: storageProducts =>
+      dispatch(setStorageCartProducts(storageProducts)),
     changeCartQuantity: (orderProductId, newQuantity) =>
       dispatch(updateQuantity(orderProductId, newQuantity))
     // deleteProducts: (cartId, orderProductId) => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
 import {fetchProduct, updateProduct} from '../store/singleProduct'
 import EditProduct from './Forms/editProduct'
 import {add} from '../store/user'
