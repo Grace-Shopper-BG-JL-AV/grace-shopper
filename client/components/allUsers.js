@@ -1,9 +1,6 @@
 import React from 'react'
 import {fetchUsers} from '../store/allUsers'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-
-//we will need to sort out permissions!!!!! haven't done that yet!!!
 
 class AllUsers extends React.Component {
   // constructor(props) {
