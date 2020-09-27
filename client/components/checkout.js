@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {makePurchase, fetchCartProducts} from '../store/cart'
 import {me} from '../store/user'
+import swal from 'sweetalert'
 
 class Checkout extends React.Component {
   constructor() {
@@ -19,6 +20,11 @@ class Checkout extends React.Component {
     event.preventDefault()
     this.props.purchase(this.props.cart.id)
     this.props.history.replace('/postPurchase')
+    swal({
+      title: 'Hooray!',
+      text: 'Your purchase has been completed!',
+      icon: 'success'
+    })
   }
 
   calculateCost() {

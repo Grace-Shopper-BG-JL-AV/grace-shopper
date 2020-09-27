@@ -49,7 +49,7 @@ class SingleProduct extends React.Component {
     await this.props.addToCart(this.props.user.id, productId)
     swal({
       title: 'Hooray!',
-      text: 'You added a product to your cart!',
+      text: 'Your item has been added to your cart!',
       icon: 'success'
     })
   }

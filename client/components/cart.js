@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchCartProducts, updateQuantity, deleteProducts} from '../store/cart'
 import {me} from '../store/user'
+import swal from 'sweetalert'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -27,6 +28,11 @@ class Cart extends React.Component {
     console.log('cart: ', this.props.cart)
     let cartId = this.props.cart.id
     await this.props.deleteProducts(cartId, orderId)
+    // swal({
+    //   title: 'Warning!',
+    //   text: 'Your items have been deleted from your cart',
+    //   icon: 'warning',
+    // })
   }
 
   render() {
