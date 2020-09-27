@@ -23,9 +23,9 @@
 
 ### As a logged-in customer, I want to be able to:
 
-* [ ] have a persistent cart so I can revisit and pick up where I left off.
+* [x] have a persistent cart so I can revisit and pick up where I left off.
 * [ ] Logged-in-user across multiple devices: I'm logged in on my mobile device and add some items to my cart. When I open the browser on my laptop and log in, I want to see those items in my cart.
-* [ ] No one else should be able to edit my cart except me.
+* [x] No one else should be able to edit my cart except me.
 
 ### As an administrator, I want to be able to:
 

@@ -6,13 +6,14 @@ import {
   updateQuantity,
   deleteProducts
 } from '../store/cart'
+import {Link} from 'react-router-dom'
 import {me} from '../store/user'
 
 class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
-    //this.handleRemove = this.handleRemove.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {
@@ -32,11 +33,13 @@ class Cart extends React.Component {
     this.props.changeCartQuantity(Number(event.target.id), newQuantity)
   }
 
-  // async handleRemove(event) {
-  //   let orderId = Number(event.target.id)
-  //   let cartId = this.props.cart[0].cartId
-  //   await this.props.deleteProducts(cartId, orderId)
-  // }
+  async handleRemove(event) {
+    event.preventDefault()
+    let orderId = Number(event.target.id)
+    console.log('cart: ', this.props.cart)
+    let cartId = this.props.cart.id
+    await this.props.deleteProducts(cartId, orderId)
+  }
 
   render() {
     let cartProducts = this.props.cart.orderProducts || []
@@ -44,7 +47,13 @@ class Cart extends React.Component {
     return (
       <div>
         <h1>Items in your cart:</h1>
-
+        {cartProducts ? (
+          <Link to="/checkout">
+            <button type="button">Checkout!</button>
+          </Link>
+        ) : (
+          <div>No items in your cart right now!</div>
+        )}
         {cartProducts ? (
           cartProducts.map(product => {
             console.log('product in map', product)
@@ -52,7 +61,7 @@ class Cart extends React.Component {
               // added link to single product view
               <div key={product.id}>
                 <h2>{product.product.name}</h2>
-                <p>Total Price: ${product.price / 100 * product.quantity}</p>
+                <p>Total Price: ${product.totalPrice / 100}</p>
                 <select
                   id={product.id}
                   label="Quantity: "
@@ -68,7 +77,7 @@ class Cart extends React.Component {
                 <img src={product.product.imageUrl} />
                 <button
                   id={product.id}
-                  //onClick={this.handleRemove}
+                  onClick={this.handleRemove}
                   type="button"
                 >
                   Remove all from cart!
@@ -77,7 +86,7 @@ class Cart extends React.Component {
             )
           })
         ) : (
-          <div>No items in your cart right now!</div>
+          <div />
         )}
       </div>
     )
@@ -98,10 +107,10 @@ const mapDispatchToProps = dispatch => {
     setStorageCartProducts: storageProducts =>
       dispatch(setStorageCartProducts(storageProducts)),
     changeCartQuantity: (orderProductId, newQuantity) =>
-      dispatch(updateQuantity(orderProductId, newQuantity))
-    // deleteProducts: (cartId, orderProductId) => {
-    //   dispatch(deleteProducts(cartId, orderProductId))
-    // },
+      dispatch(updateQuantity(orderProductId, newQuantity)),
+    deleteProducts: (cartId, orderProductId) => {
+      dispatch(deleteProducts(cartId, orderProductId))
+    }
   }
 }
 

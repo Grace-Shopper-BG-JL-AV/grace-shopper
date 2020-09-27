@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
 import {add} from '../store/user'
-import {fetchProduct} from '../store/singleProduct'
+import swal from 'sweetalert'
 import {addToGuestCartInRedux} from '../store/cart'
 
 class AllProducts extends React.Component {
@@ -26,7 +26,6 @@ class AllProducts extends React.Component {
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
-    //this.props.getGuestProducts()
   }
 
   handleChange(event) {
@@ -37,7 +36,14 @@ class AllProducts extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.add(this.state) // do want this to happen
+    this.props.add(this.state)
+    
+    swal({
+      title: 'Great!',
+      text: 'Your item has been added to the store!',
+      icon: 'success'
+    })
+    
     this.setState({
       name: '',
       description: ''
@@ -47,29 +53,28 @@ class AllProducts extends React.Component {
       // stars: '',
     })
   }
-  //i am setting cart items here, not iterating thru them hereso just look at handleaddtocart
+  
   async handleAddToCart(event) {
     let productId = Number(event.target.value)
-    await this.props.getProduct(productId)
     const product = this.props.product
-    console.log('PRODUCT', product)
+
+    await this.props.getProduct(productId)
     if (this.props.user.id) {
-      console.log('hello User')
       this.props.addToCart(this.props.user.id, productId)
     } else {
-      console.log('hello guest')
-
       this.props.addToGuestCart(product, productId)
     }
+    
+    swal({
+      title: 'Hooray!',
+      text: 'Your item has been added to your cart!',
+      icon: 'success'
+    })
   }
 
   render() {
     //store products in productsArr
     const productsArr = this.props.products
-
-    console.log('this.props.products', this.props.products)
-    //console.log('this.props.products.orderProducts', this.props.products.orderProducts)
-
     return (
       <div>
         <div className="all-preview-container">
@@ -97,6 +102,11 @@ class AllProducts extends React.Component {
                     onClick={e => {
                       e.preventDefault()
                       this.props.delete(product.id)
+                      swal({
+                        title: 'Warning!',
+                        text: 'Your item has been deleted from the store',
+                        icon: 'warning'
+                      })
                     }}
                   >
                     delete
@@ -147,14 +157,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts()), //rendering
-    add: stateObj => dispatch(addProductToDb(stateObj)), // for admin permissions
-    delete: id => dispatch(deleteProduct(id)), //rendering
+    getProducts: () => dispatch(fetchProducts()), 
+    add: stateObj => dispatch(addProductToDb(stateObj)),
+    delete: id => dispatch(deleteProduct(id)), 
     addToCart: (userId, productId) => dispatch(add(userId, productId)),
     addToGuestCart: (product, productId) =>
       dispatch(addToGuestCartInRedux(product, productId)),
-    //getGuestProducts: () => dispatch(fetchGuestProducts()),
-    getProduct: productId => dispatch(fetchProduct(productId))
   }
 }
 
