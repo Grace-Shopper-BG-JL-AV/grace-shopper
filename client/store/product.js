@@ -1,9 +1,9 @@
 import axios from 'axios'
-
 //action type
 const SET_PRODUCTS = 'SET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
+//const SET_GUEST_PRODUCTS = 'SET_GUEST_PRODUCTS'
 
 //action creator
 export const setProducts = products => {
@@ -32,6 +32,14 @@ export const fetchProducts = () => {
     }
   }
 }
+
+// export const fetchGuestProducts = () => {
+//   return dispatch => {
+//     let storageProducts = localStorage.getItem('storageProducts')
+//     storageProducts = JSON.parse(storageProducts)
+//     dispatch(setProducts(storageProducts))
+//   }
+// }
 
 //thunk to add product to db
 export const addProductToDb = productObj => {

@@ -1,7 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {
+  fetchCartProducts,
+  setStorageCartProducts,
+  updateQuantity,
+  deleteProducts
+} from '../store/cart'
 import {Link} from 'react-router-dom'
-import {fetchCartProducts, updateQuantity, deleteProducts} from '../store/cart'
 import {me} from '../store/user'
 import swal from 'sweetalert'
 
@@ -12,9 +17,16 @@ class Cart extends React.Component {
     this.handleRemove = this.handleRemove.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.getUser()
-    await this.props.getCartProducts(this.props.user.id)
+  componentDidMount() {
+    if (this.props.user.id) {
+      this.props.getCartProducts(this.props.user.id)
+      this.props.getUser()
+    } else {
+      const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
+      if (storageProducts) {
+        this.props.setStorageCartProducts(JSON.parse(storageProducts))
+      }
+    }
   }
 
   handleChange(event) {
@@ -36,10 +48,8 @@ class Cart extends React.Component {
   }
 
   render() {
-    let cartProducts
-    if (this.props.cart) {
-      cartProducts = this.props.cart.orderProducts
-    }
+    let cartProducts = this.props.cart.orderProducts || []
+
     return (
       <div className="cart">
         <h1>Items in your cart:</h1>
@@ -54,6 +64,7 @@ class Cart extends React.Component {
         )}
         {cartProducts ? (
           cartProducts.map(product => {
+            console.log('product in map', product)
             return (
               // added link to single product view
               <div key={product.id} className="product-preview-container">
@@ -113,6 +124,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
     getUser: () => dispatch(me()),
+    setStorageCartProducts: storageProducts =>
+      dispatch(setStorageCartProducts(storageProducts)),
     changeCartQuantity: (orderProductId, newQuantity) =>
       dispatch(updateQuantity(orderProductId, newQuantity)),
     deleteProducts: (cartId, orderProductId) => {
