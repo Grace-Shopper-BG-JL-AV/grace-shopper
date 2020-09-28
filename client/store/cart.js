@@ -51,7 +51,6 @@ export const setStorageCartProducts = products => {
 }
 
 export const addToGuestCartInRedux = (product, productId) => {
-  console.log('PRODUCT', product)
   return dispatch => {
     let storageProducts = localStorage.getItem('storageProducts')
     let updatedProducts
