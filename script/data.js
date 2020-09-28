@@ -35,7 +35,7 @@ const admin = [
     password: 'mynameisashley',
     firstName: 'Ash',
     lastName: 'Valenz',
-    isAdmin: true
+    isAdmin: false
   }
 ]
 

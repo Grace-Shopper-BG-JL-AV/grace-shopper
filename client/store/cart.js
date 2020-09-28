@@ -22,6 +22,7 @@ export const changeQuantity = products => {
 }
 
 export const removeProducts = products => {
+  console.log('products', products)
   return {
     type: REMOVE_PRODUCTS,
     products
@@ -51,7 +52,6 @@ export const setStorageCartProducts = products => {
 }
 
 export const addToGuestCartInRedux = (product, productId) => {
-  console.log('PRODUCT', product)
   return dispatch => {
     let storageProducts = localStorage.getItem('storageProducts')
     let updatedProducts
@@ -110,6 +110,23 @@ export const deleteProducts = (cartId, orderProductsId) => {
       `/api/users/${cartId}/${orderProductsId}`
     )
     dispatch(removeProducts(response.data))
+  }
+}
+
+export const deleteStorageProducts = orderProductId => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+    console.log('storageProducts', storageProducts)
+
+    storageProducts = JSON.parse(storageProducts)
+    console.log('orderProductId', orderProductId)
+    console.log('storageProducts after parse', storageProducts)
+    storageProducts.orderProducts = storageProducts.orderProducts.filter(
+      product => product.id !== orderProductId
+    )
+    localStorage.setItem('storageProducts', storageProducts)
+    console.log('storageProducts', storageProducts)
+    dispatch(removeProducts(storageProducts))
   }
 }
 

@@ -4,7 +4,8 @@ import {
   fetchCartProducts,
   setStorageCartProducts,
   updateQuantity,
-  deleteProducts
+  deleteProducts,
+  deleteStorageProducts
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
@@ -21,7 +22,7 @@ class Cart extends React.Component {
       this.props.getCartProducts(this.props.user.id)
       this.props.getUser()
     } else {
-      const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
+      const storageProducts = localStorage.getItem('storageProducts')
       if (storageProducts) {
         this.props.setStorageCartProducts(JSON.parse(storageProducts))
       }
@@ -37,11 +38,19 @@ class Cart extends React.Component {
     event.preventDefault()
     let orderId = Number(event.target.id)
     let cartId = this.props.cart.id
-    await this.props.deleteProducts(cartId, orderId)
+
+    if (cartId) {
+      await this.props.deleteProducts(cartId, orderId)
+    } else {
+      this.props.deleteStorageProducts(orderId)
+    }
   }
 
   render() {
-    let cartProducts = this.props.cart.orderProducts || []
+    let cartProducts
+    if (this.props.cart) {
+      cartProducts = this.props.cart.orderProducts || []
+    }
 
     return (
       <div>
@@ -109,6 +118,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateQuantity(orderProductId, newQuantity)),
     deleteProducts: (cartId, orderProductId) => {
       dispatch(deleteProducts(cartId, orderProductId))
+    },
+    deleteStorageProducts: orderId => {
+      dispatch(deleteStorageProducts(orderId))
     }
   }
 }
