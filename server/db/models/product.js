@@ -22,7 +22,8 @@ const Product = db.define('product', {
     }
   },
   price: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   },
   imageUrl: {
     type: Sequelize.STRING,

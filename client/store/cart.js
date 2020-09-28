@@ -44,7 +44,6 @@ export const fetchCartProducts = userId => {
 }
 
 export const setStorageCartProducts = products => {
-  console.log('products in thunk!', products)
   return dispatch => {
     dispatch(setCartProducts(products))
   }
@@ -59,6 +58,7 @@ export const addToGuestCartInRedux = (product, productId) => {
       product.id = productId
       storageProducts = JSON.parse(storageProducts)
       updatedProducts = {
+        isActive: true,
         orderProducts: [
           ...storageProducts.orderProducts,
           {
@@ -75,6 +75,7 @@ export const addToGuestCartInRedux = (product, productId) => {
     } else {
       product.id = productId
       updatedProducts = {
+        isActive: true,
         orderProducts: [
           {
             id: productId,
@@ -112,6 +113,21 @@ export const deleteProducts = (cartId, orderProductsId) => {
   }
 }
 
+//thunk to remove products from guest cart
+export const deleteStorageProducts = orderProductId => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+
+    storageProducts = JSON.parse(storageProducts)
+    storageProducts.orderProducts = storageProducts.orderProducts.filter(
+      product => product.id !== orderProductId
+    )
+    dispatch(removeProducts(storageProducts))
+    storageProducts = JSON.stringify(storageProducts)
+    localStorage.setItem('storageProducts', storageProducts)
+  }
+}
+
 //thunk to purchase
 export const makePurchase = cartId => {
   return async dispatch => {
@@ -119,6 +135,17 @@ export const makePurchase = cartId => {
       isActive: false
     })
     dispatch(purchase(response.data))
+  }
+}
+
+export const makeGuestPurchase = () => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+
+    storageProducts = JSON.parse(storageProducts)
+    storageProducts.isActive = false
+    dispatch(purchase(storageProducts))
+    localStorage.clear()
   }
 }
 
