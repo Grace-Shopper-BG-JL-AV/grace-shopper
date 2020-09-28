@@ -1,4 +1,4 @@
-import React from 'react'
+import React from './node_modules/react'
 
 //need to connect to the singleProduct and add permissions aspect. handlechange, handleupdate, and attach name and description to the local state. need to connect to the redux store**
 
