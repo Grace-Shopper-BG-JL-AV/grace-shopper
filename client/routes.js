@@ -16,6 +16,7 @@ import {
   PostPurchase,
   EditProduct
 } from './components'
+import Home from './components/home'
 import {me} from './store/user'
 
 /**
@@ -32,8 +33,10 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/home" component={UserHome} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/home" component={Home} />
         <Route path="/login" component={Login} />
+
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
         <Route path="/users" component={AllUsers} />
@@ -42,16 +45,18 @@ class Routes extends Component {
         <Route path="/addProduct" component={AddProduct} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/postPurchase" component={PostPurchase} />
+        <Route path="/users" component={AllUsers} />
+        <Route path="/users/:id" component={SingleUser} />
+        <Route path="/products/edit/:id" component={EditProduct} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/users" component={AllUsers} />
-            <Route path="/users/:id" component={SingleUser} />
-            <Route path="/products/edit/:id" component={EditProduct} />
+
+            <Route path="/userHome" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+
+        <Route component={Home} />
       </Switch>
     )
   }
