@@ -55,7 +55,8 @@ class Routes extends Component {
             <Route path="/userHome" component={UserHome} />
           </Switch>
         )}
-
+        {/* if a user navigates to a page that doesn't exist, render not found */}
+        <Route path="*" render={() => <h1>Not Found!</h1>} />
         <Route component={Home} />
       </Switch>
     )
