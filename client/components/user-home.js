@@ -3,52 +3,111 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AllUsers from './allUsers'
+import {updateUser} from '../store/user'
+import swal from 'sweetalert'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email, isLoggedIn, isAdmin} = props
-  console.log('props', props)
+class UserHome extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      firstName: '',
+      lastName: '',
+      imageUrl: '',
+      email: ''
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-  return isAdmin ? (
-    <div className="allUsers">
-      <h1>{`Welcome back, ${email}`}</h1>
-      <h3>Here are all of Hallowoof's users:</h3>
-      <AllUsers />
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
 
-      <Link to="/products">View and add products to the store</Link>
-      <Link to="/products/:id">Update a product</Link>
-    </div>
-  ) : (
-    <div className="page-wrapper">
-      <div className="row2">
-        <div className="column2">
-          {/* this is messed up... */}
-          <h2>{`Welcome ${isLoggedIn ? `, ${email}` : `to Hallowoof`}`}</h2>
-          <h3>Our Mission</h3>
-        </div>
-        <div className="column2">
-          <div className="blue-column2">
-            <p>
-              Here at Hallowoof Costumes we strive to provide the funnest
-              halloween costumes for your furry dog friend while also making a
-              positive impact for these kind creatures by sending half the
-              proceeds to local animal shelters. We have all costume tastes
-              ranging from magical to downright spooky. Want to try out more of
-              these costumes but don't have another special dog in your life? No
-              worries! All our handsome dog models are also up for adoption at a
-              pet adoption center near you. Contact us for more information.
-            </p>
-            <h3>
-              <Link to="/products">Shop costumes</Link>
-            </h3>
-            <img src="https://www.dhresource.com/0x0/f2/albu/g6/M01/E4/44/rBVaSFuaE02AZ_wNAAGNJrvv_zI981.jpg/winter-dog-halloween-costume-christmas-dog.jpg" />
-          </div>
-        </div>
+  handleSubmit(event) {
+    event.preventDefault()
+    const num = this.props.id
+    this.props.updateUser(num, this.state)
+    swal({
+      title: 'Awesome!',
+      text: 'Your info has been updated!',
+      icon: 'success'
+    })
+    this.setState({
+      firstName: '',
+      lastName: '',
+      imageUrl: '',
+      email: ''
+    })
+  }
+
+  render() {
+    const {email, firstName, lastName, imageUrl, isAdmin} = this.props
+    console.log(this.props)
+
+    return isAdmin ? (
+      <div className="allUsers">
+        <h2>{`Welcome back, ${firstName} ${lastName}`}</h2>
+        <img src={imageUrl} />
+
+        <Link to="/products">View and add products to the store</Link>
+
+        <Link to="/products/:id">Update a product</Link>
+
+        <h3>Here are all of Hallowoof's users:</h3>
+        <AllUsers />
       </div>
-    </div>
-  )
+    ) : (
+      <div className="allUsers">
+        <h2>{`Welcome back, ${firstName} ${lastName}`}</h2>
+        <img src={imageUrl} />
+        <h3>
+          <Link to="/products">Shop costumes</Link>
+        </h3>
+
+        <h2>Edit Info</h2>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="firstName">First Name:</label>
+          <input
+            name="firstName"
+            type="text"
+            value={this.state.firstName}
+            onChange={this.handleChange}
+          />
+
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            name="lastName"
+            type="text"
+            value={this.state.lastName}
+            onChange={this.handleChange}
+          />
+
+          <label htmlFor="imageUrl">imageUrl:</label>
+          <input
+            name="imageUrl"
+            type="text"
+            value={this.state.imageUrl}
+            onChange={this.handleChange}
+          />
+
+          <label htmlFor="email">E-mail:</label>
+          <input
+            name="email"
+            type="text"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+
+          <button type="submit">Update Info</button>
+        </form>
+      </div>
+    )
+  }
 }
 
 /**
@@ -57,11 +116,20 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     email: state.user.email,
-    isAdmin: state.user.isAdmin
+    isAdmin: state.user.isAdmin,
+    firstName: state.user.firstName,
+    lastName: state.user.lastName,
+    imageUrl: state.user.imageUrl
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = dispatch => {
+  return {
+    updateUser: (id, stateObj) => dispatch(updateUser(id, stateObj))
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES
