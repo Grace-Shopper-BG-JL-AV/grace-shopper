@@ -1,4 +1,4 @@
-import React from 'react'
+import React from './node_modules/react'
 
 const AddProduct = props => {
   return (
@@ -20,7 +20,7 @@ const AddProduct = props => {
           value={props.description}
           onChange={props.handleChange}
         />
-        {/* 
+        {/*
         <label htmlFor="price">Price:</label>
         <input
           name="price"
