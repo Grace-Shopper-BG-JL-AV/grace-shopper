@@ -93,31 +93,37 @@ export const addToGuestCartInRedux = (product, productId) => {
 }
 
 //thunk to update product quantity
-export const updateQuantity = (orderProductsId, newQuantity) => {
+export const updateQuantity = (orderProductsId, newQuantity, userId) => {
   return async dispatch => {
-    const response = await axios.put(`/api/users/${orderProductsId}`, {
-      quantity: newQuantity
-    })
+    const response = await axios.put(
+      `/api/users/${userId}/${orderProductsId}`,
+      {
+        quantity: newQuantity
+      }
+    )
     dispatch(changeQuantity(response.data))
   }
 }
 
 //thunk to remove products from cart
-export const deleteProducts = (cartId, orderProductsId) => {
+export const deleteProducts = (cartId, orderProductsId, userId) => {
   return async dispatch => {
     const response = await axios.delete(
-      `/api/users/${cartId}/${orderProductsId}`
+      `/api/users/${userId}/${cartId}/${orderProductsId}`
     )
     dispatch(removeProducts(response.data))
   }
 }
 
 //thunk to purchase
-export const makePurchase = cartId => {
+export const makePurchase = (cartId, userId) => {
   return async dispatch => {
-    const response = await axios.put(`/api/users/${cartId}/purchase`, {
-      isActive: false
-    })
+    const response = await axios.put(
+      `/api/users/${userId}/${cartId}/purchase`,
+      {
+        isActive: false
+      }
+    )
     dispatch(purchase(response.data))
   }
 }

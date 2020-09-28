@@ -17,10 +17,11 @@ class Cart extends React.Component {
     this.handleRemove = this.handleRemove.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getUser()
+    console.log('user id: ', this.props.user.id)
     if (this.props.user.id) {
-      this.props.getCartProducts(this.props.user.id)
-      this.props.getUser()
+      await this.props.getCartProducts(this.props.user.id)
     } else {
       const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
       if (storageProducts) {
@@ -31,7 +32,11 @@ class Cart extends React.Component {
 
   handleChange(event) {
     let newQuantity = Number(event.target.value)
-    this.props.changeCartQuantity(Number(event.target.id), newQuantity)
+    this.props.changeCartQuantity(
+      Number(event.target.id),
+      newQuantity,
+      this.props.user.id
+    )
   }
 
   async handleRemove(event) {
@@ -39,7 +44,8 @@ class Cart extends React.Component {
     let orderId = Number(event.target.id)
     console.log('cart: ', this.props.cart)
     let cartId = this.props.cart.id
-    await this.props.deleteProducts(cartId, orderId)
+    console.log('userId: ', this.props.userId)
+    await this.props.deleteProducts(cartId, orderId, this.props.user.id)
     // swal({
     //   title: 'Warning!',
     //   text: 'Your items have been deleted from your cart',
@@ -48,12 +54,17 @@ class Cart extends React.Component {
   }
 
   render() {
-    let cartProducts = this.props.cart.orderProducts || []
+    let cartProducts
+    if (this.props.cart) {
+      cartProducts = this.props.cart.orderProducts || []
+    } else {
+      cartProducts = []
+    }
 
     return (
       <div className="cart">
         <h1>Items in your cart:</h1>
-        {cartProducts ? (
+        {cartProducts.length ? (
           <Link to="/checkout">
             <button type="submit" className="checkoutButton">
               Checkout!
@@ -62,7 +73,7 @@ class Cart extends React.Component {
         ) : (
           <div>No items in your cart right now!</div>
         )}
-        {cartProducts ? (
+        {cartProducts.length ? (
           cartProducts.map(product => {
             console.log('product in map', product)
             return (
@@ -87,7 +98,9 @@ class Cart extends React.Component {
                     label="Quantity: "
                     onChange={this.handleChange}
                   >
-                    <option selected>{product.quantity}</option>
+                    <option defaultValue={product.quantity}>
+                      {product.quantity}
+                    </option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -126,10 +139,10 @@ const mapDispatchToProps = dispatch => {
     getUser: () => dispatch(me()),
     setStorageCartProducts: storageProducts =>
       dispatch(setStorageCartProducts(storageProducts)),
-    changeCartQuantity: (orderProductId, newQuantity) =>
-      dispatch(updateQuantity(orderProductId, newQuantity)),
-    deleteProducts: (cartId, orderProductId) => {
-      dispatch(deleteProducts(cartId, orderProductId))
+    changeCartQuantity: (orderProductId, newQuantity, userId) =>
+      dispatch(updateQuantity(orderProductId, newQuantity, userId)),
+    deleteProducts: (cartId, orderProductId, userId) => {
+      dispatch(deleteProducts(cartId, orderProductId, userId))
     }
   }
 }

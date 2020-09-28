@@ -75,7 +75,7 @@ router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   }
 })
 
-router.put('/:orderProductsId', isUser, async (req, res, next) => {
+router.put('/:userId/:orderProductsId', isUser, async (req, res, next) => {
   try {
     let order = await OrderProducts.findByPk(req.params.orderProductsId)
     await order.update(req.body)
@@ -92,24 +92,30 @@ router.put('/:orderProductsId', isUser, async (req, res, next) => {
   }
 })
 
-router.delete('/:cartId/:orderProductsId', isUser, async (req, res, next) => {
-  try {
-    let orderProducts = await OrderProducts.findByPk(req.params.orderProductsId)
-    await orderProducts.destroy()
-    await orderProducts.save()
-    let cart = await Cart.findByPk(req.params.cartId, {
-      include: {
-        model: OrderProducts,
-        include: [Product]
-      }
-    })
-    res.json(cart)
-  } catch (err) {
-    next(err)
+router.delete(
+  '/:userId/:cartId/:orderProductsId',
+  isUser,
+  async (req, res, next) => {
+    try {
+      let orderProducts = await OrderProducts.findByPk(
+        req.params.orderProductsId
+      )
+      await orderProducts.destroy()
+      await orderProducts.save()
+      let cart = await Cart.findByPk(req.params.cartId, {
+        include: {
+          model: OrderProducts,
+          include: [Product]
+        }
+      })
+      res.json(cart)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
 
-router.put('/:cartId/purchase', isUser, async (req, res, next) => {
+router.put('/:userId/:cartId/purchase', isUser, async (req, res, next) => {
   try {
     let cartId = req.params.cartId
     let currentCart = await Cart.findByPk(cartId, {

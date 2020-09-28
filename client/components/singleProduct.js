@@ -75,20 +75,7 @@ class SingleProduct extends React.Component {
 
         {/* if the user is an admin, show the delete product button, otherwise show add to cart button */}
         {this.props.user.isAdmin ? (
-          <button
-            type="submit"
-            onClick={e => {
-              e.preventDefault()
-              this.props.delete(singleProd.id)
-              swal({
-                title: 'Warning!',
-                text: 'Your item has been deleted from the store',
-                icon: 'warning'
-              })
-            }}
-          >
-            delete
-          </button>
+          <div />
         ) : (
           <button
             value={singleProd.id}

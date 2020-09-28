@@ -3,7 +3,7 @@ import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddProduct from './Forms/addProduct'
-import {add} from '../store/user'
+import {add, me} from '../store/user'
 import swal from 'sweetalert'
 import {addToGuestCartInRedux} from '../store/cart'
 import {fetchProduct} from '../store/singleProduct'
@@ -26,6 +26,7 @@ class AllProducts extends React.Component {
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getProducts()
+    this.props.getUser()
   }
 
   handleChange(event) {
@@ -190,7 +191,8 @@ const mapDispatchToProps = dispatch => {
     addToCart: (userId, productId) => dispatch(add(userId, productId)),
     addToGuestCart: (product, productId) =>
       dispatch(addToGuestCartInRedux(product, productId)),
-    getProduct: productId => dispatch(fetchProduct(productId))
+    getProduct: productId => dispatch(fetchProduct(productId)),
+    getUser: () => dispatch(me())
   }
 }
 
