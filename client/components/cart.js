@@ -1,18 +1,32 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCartProducts, updateQuantity, deleteProducts} from '../store/cart'
+import {
+  fetchCartProducts,
+  setStorageCartProducts,
+  updateQuantity,
+  deleteProducts
+} from '../store/cart'
+import {Link} from 'react-router-dom'
 import {me} from '../store/user'
+import swal from 'sweetalert'
 
 class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
-    //this.handleRemove = this.handleRemove.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.getUser()
-    await this.props.getCartProducts(this.props.user.id)
+  componentDidMount() {
+    if (this.props.user.id) {
+      this.props.getCartProducts(this.props.user.id)
+      this.props.getUser()
+    } else {
+      const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
+      if (storageProducts) {
+        this.props.setStorageCartProducts(JSON.parse(storageProducts))
+      }
+    }
   }
 
   handleChange(event) {
@@ -20,53 +34,79 @@ class Cart extends React.Component {
     this.props.changeCartQuantity(Number(event.target.id), newQuantity)
   }
 
-  // async handleRemove(event) {
-  //   let orderId = Number(event.target.id)
-  //   let cartId = this.props.cart[0].cartId
-  //   await this.props.deleteProducts(cartId, orderId)
-  // }
+  async handleRemove(event) {
+    event.preventDefault()
+    let orderId = Number(event.target.id)
+    console.log('cart: ', this.props.cart)
+    let cartId = this.props.cart.id
+    await this.props.deleteProducts(cartId, orderId)
+    // swal({
+    //   title: 'Warning!',
+    //   text: 'Your items have been deleted from your cart',
+    //   icon: 'warning',
+    // })
+  }
 
   render() {
-    let cartProducts
-    if (this.props.cart.id) {
-      cartProducts = this.props.cart.orderProducts
-    }
-    return (
-      <div>
-        <h1>Items in your cart:</h1>
+    let cartProducts = this.props.cart.orderProducts || []
 
+    return (
+      <div className="cart">
+        <h1>Items in your cart:</h1>
+        {cartProducts ? (
+          <Link to="/checkout">
+            <button type="submit" className="checkoutButton">
+              Checkout!
+            </button>
+          </Link>
+        ) : (
+          <div>No items in your cart right now!</div>
+        )}
         {cartProducts ? (
           cartProducts.map(product => {
+            console.log('product in map', product)
             return (
               // added link to single product view
-              <div key={product.id}>
-                <h2>{product.product.name}</h2>
-                <p>Total Price: ${product.price / 100 * product.quantity}</p>
-                <select
-                  id={product.id}
-                  label="Quantity: "
-                  onChange={this.handleChange}
-                >
-                  <option selected>{product.quantity}</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-                <p>{product.product.description}</p>
-                <img src={product.product.imageUrl} />
+              <div key={product.id} className="product-preview-container">
+                <Link to={`/products/${product.id}`}>
+                  <div className="product-preview-image">
+                    <img
+                      src={product.product.imageUrl}
+                      className="product-preview-image"
+                    />
+                  </div>
+                </Link>
+
+                <div className="product-preview-text">
+                  <h3 id="product">{product.product.name}</h3>
+                  <p>{product.product.description}</p>
+
+                  <p>Total Price: ${product.totalPrice / 100}</p>
+                  <select
+                    id={product.id}
+                    label="Quantity: "
+                    onChange={this.handleChange}
+                  >
+                    <option selected>{product.quantity}</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+
                 <button
                   id={product.id}
-                  //onClick={this.handleRemove}
-                  type="button"
+                  onClick={this.handleRemove}
+                  type="submit"
                 >
-                  Remove all from cart!
+                  Remove this item from cart
                 </button>
               </div>
             )
           })
         ) : (
-          <div>No items in your cart right now!</div>
+          <div />
         )}
       </div>
     )
@@ -84,11 +124,13 @@ const mapDispatchToProps = dispatch => {
   return {
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
     getUser: () => dispatch(me()),
+    setStorageCartProducts: storageProducts =>
+      dispatch(setStorageCartProducts(storageProducts)),
     changeCartQuantity: (orderProductId, newQuantity) =>
-      dispatch(updateQuantity(orderProductId, newQuantity))
-    // deleteProducts: (cartId, orderProductId) => {
-    //   dispatch(deleteProducts(cartId, orderProductId))
-    // },
+      dispatch(updateQuantity(orderProductId, newQuantity)),
+    deleteProducts: (cartId, orderProductId) => {
+      dispatch(deleteProducts(cartId, orderProductId))
+    }
   }
 }
 

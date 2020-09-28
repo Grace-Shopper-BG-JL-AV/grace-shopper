@@ -9,6 +9,8 @@ import history from '../history'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const ADD_TO_CART = 'ADD_TO_CART'
+//edit user
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
@@ -88,6 +90,23 @@ export const logout = () => async dispatch => {
   }
 }
 
+//edit user
+export const updateUser = (id, stateObj) => {
+  return async (dispatch, getState) => {
+    try {
+      await axios.put(`/auth/me`, stateObj)
+      dispatch({
+        type: UPDATE_USER,
+        id,
+        stateObj,
+        state: getState
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 /**
  * REDUCER
  */
@@ -99,6 +118,14 @@ export default function userReducer(state = defaultUser, action) {
       return defaultUser
     case ADD_TO_CART:
       return {...state, user: action.user}
+    case UPDATE_USER:
+      return {
+        ...state,
+        firstName: action.stateObj.firstName,
+        lastName: action.stateObj.lastName,
+        email: action.stateObj.email,
+        imageUrl: action.stateObj.imageUrl
+      }
     default:
       return state
   }

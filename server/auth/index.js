@@ -41,11 +41,33 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', async (req, res) => {
-  const returnUser = await User.findByPk(req.user.id, {
-    include: [Cart]
-  })
-  res.json(returnUser)
+router.get('/me', async (req, res, next) => {
+  try {
+    if (!req.user) {
+      res.json(req.user)
+    } else {
+      const returnUser = await User.findByPk(req.user.id, {
+        include: [Cart]
+      })
+      res.json(returnUser)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+//update a single user's info
+router.put('/me', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.id)
+
+    const updateUser = await user.update(req.body)
+    console.log(req.body)
+
+    res.json(updateUser)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.use('/google', require('./google'))

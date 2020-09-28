@@ -13,6 +13,5 @@ export {default as Checkout} from './checkout'
 export {default as AllUsers} from './allUsers'
 export {default as SingleUser} from './singleUser'
 export {default as PostPurchase} from './post-purchase'
-export {default as EditProduct} from './forms/editProduct'
-export {default as AddProduct} from './forms/addProduct'
-
+export {default as EditProduct} from './editProduct'
+export {default as AddProduct} from './addProduct'
