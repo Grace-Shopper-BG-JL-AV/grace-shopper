@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import swal from 'sweetalert'
 import {fetchProduct, updateProduct} from '../store/singleProduct'
+import {deleteProduct} from '../store/product'
 import EditProduct from './Forms/editProduct'
 import {add} from '../store/user'
 
@@ -72,13 +73,31 @@ class SingleProduct extends React.Component {
           <h3>${singleProd.price / 100}</h3>
         </div>
 
-        <button
-          value={singleProd.id}
-          onClick={this.handleAddToCart}
-          type="submit"
-        >
-          Add to cart
-        </button>
+        {/* if the user is an admin, show the delete product button, otherwise show add to cart button */}
+        {this.props.user.isAdmin ? (
+          <button
+            type="submit"
+            onClick={e => {
+              e.preventDefault()
+              this.props.delete(singleProd.id)
+              swal({
+                title: 'Warning!',
+                text: 'Your item has been deleted from the store',
+                icon: 'warning'
+              })
+            }}
+          >
+            delete
+          </button>
+        ) : (
+          <button
+            value={singleProd.id}
+            onClick={this.handleAddToCart}
+            type="submit"
+          >
+            Add to cart
+          </button>
+        )}
 
         {/* if you're an admin you can edit a product */}
         {this.props.user.isAdmin ? (
@@ -109,6 +128,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getProduct: id => dispatch(fetchProduct(id)),
     updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj)),
+    delete: id => dispatch(deleteProduct(id)),
     addToCart: (userId, productId) => dispatch(add(userId, productId))
   }
 }

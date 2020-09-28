@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {User, Product} = require('../db/models')
 const {Cart, OrderProducts} = require('../db/models/cart')
 const isAdmin = require('../auth/apiRouteMiddleware')
+const isUser = require('../auth/userMiddleware')
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
@@ -17,9 +18,9 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.get('/:id/cart', async (req, res, next) => {
+router.get('/:userId/cart', isUser, async (req, res, next) => {
   try {
-    let id = req.params.id
+    let id = req.params.userId
     const currentCart = await Cart.findOne({
       where: {
         userId: id,
@@ -36,7 +37,7 @@ router.get('/:id/cart', async (req, res, next) => {
   }
 })
 
-router.put('/:userId/:productId/add', async (req, res, next) => {
+router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   try {
     let userId = req.params.userId
     let productId = req.params.productId
@@ -74,7 +75,7 @@ router.put('/:userId/:productId/add', async (req, res, next) => {
   }
 })
 
-router.put('/:orderProductsId', async (req, res, next) => {
+router.put('/:orderProductsId', isUser, async (req, res, next) => {
   try {
     let order = await OrderProducts.findByPk(req.params.orderProductsId)
     await order.update(req.body)
@@ -91,7 +92,7 @@ router.put('/:orderProductsId', async (req, res, next) => {
   }
 })
 
-router.delete('/:cartId/:orderProductsId', async (req, res, next) => {
+router.delete('/:cartId/:orderProductsId', isUser, async (req, res, next) => {
   try {
     let orderProducts = await OrderProducts.findByPk(req.params.orderProductsId)
     await orderProducts.destroy()
@@ -108,7 +109,7 @@ router.delete('/:cartId/:orderProductsId', async (req, res, next) => {
   }
 })
 
-router.put('/:cartId/purchase', async (req, res, next) => {
+router.put('/:cartId/purchase', isUser, async (req, res, next) => {
   try {
     let cartId = req.params.cartId
     let currentCart = await Cart.findByPk(cartId, {
