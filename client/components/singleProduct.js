@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import swal from 'sweetalert'
 import {fetchProduct, updateProduct} from '../store/singleProduct'
-import EditProduct from './forms/editProduct'
+import EditProduct from './editProduct'
 import {add} from '../store/user'
 
 class SingleProduct extends React.Component {
