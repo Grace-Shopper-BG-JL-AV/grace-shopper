@@ -148,7 +148,6 @@ class AllProducts extends React.Component {
 
 //connect to redux store
 const mapStateToProps = state => {
-  console.log('product in state', state.product)
   return {
     products: state.products,
     user: state.user,

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {makePurchase, fetchCartProducts} from '../store/cart'
+import {makePurchase, fetchCartProducts, makeGuestPurchase} from '../store/cart'
 import {me} from '../store/user'
 
 class Checkout extends React.Component {
@@ -11,13 +11,19 @@ class Checkout extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getUser()
-    await this.props.getCartProducts(this.props.user.id)
+    if (this.props.user.id) {
+      await this.props.getUser()
+      await this.props.getCartProducts(this.props.user.id)
+    }
   }
 
   handlePurchase(event) {
     event.preventDefault()
-    this.props.purchase(this.props.cart.id)
+    if (this.props.cart.id) {
+      this.props.purchase(this.props.cart.id)
+    } else {
+      this.props.guestPurchase()
+    }
     this.props.history.replace('/postPurchase')
   }
 
@@ -53,7 +59,8 @@ const mapDispatchToProps = dispatch => {
   return {
     purchase: cartId => dispatch(makePurchase(cartId)),
     getUser: () => dispatch(me()),
-    getCartProducts: userId => dispatch(fetchCartProducts(userId))
+    getCartProducts: userId => dispatch(fetchCartProducts(userId)),
+    guestPurchase: () => dispatch(makeGuestPurchase())
   }
 }
 

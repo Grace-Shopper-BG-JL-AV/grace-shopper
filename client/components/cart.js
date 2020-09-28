@@ -23,9 +23,8 @@ class Cart extends React.Component {
       this.props.getUser()
     } else {
       const storageProducts = localStorage.getItem('storageProducts')
-      if (storageProducts) {
-        this.props.setStorageCartProducts(JSON.parse(storageProducts))
-      }
+      // if (storageProducts) {
+      this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
 
@@ -48,6 +47,7 @@ class Cart extends React.Component {
 
   render() {
     let cartProducts
+
     if (this.props.cart) {
       cartProducts = this.props.cart.orderProducts || []
     }
@@ -55,7 +55,7 @@ class Cart extends React.Component {
     return (
       <div>
         <h1>Items in your cart:</h1>
-        {cartProducts ? (
+        {cartProducts && cartProducts.length ? (
           <Link to="/checkout">
             <button type="button">Checkout!</button>
           </Link>
@@ -64,7 +64,6 @@ class Cart extends React.Component {
         )}
         {cartProducts ? (
           cartProducts.map(product => {
-            console.log('product in map', product)
             return (
               // added link to single product view
               <div key={product.id}>

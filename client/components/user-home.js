@@ -9,7 +9,6 @@ import AllUsers from './allUsers'
  */
 export const UserHome = props => {
   const {email, isLoggedIn, isAdmin} = props
-  console.log('props', props)
 
   return isAdmin ? (
     <div>
