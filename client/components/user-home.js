@@ -12,7 +12,7 @@ export const UserHome = props => {
   console.log('props', props)
 
   return isAdmin ? (
-    <div>
+    <div className="allUsers">
       <h1>{`Welcome back, ${email}`}</h1>
       <h3>Here are all of Hallowoof's users:</h3>
       <AllUsers />
@@ -38,7 +38,7 @@ export const UserHome = props => {
               ranging from magical to downright spooky. Want to try out more of
               these costumes but don't have another special dog in your life? No
               worries! All our handsome dog models are also up for adoption at a
-              pet adoption center near you. Contact us for more information.{' '}
+              pet adoption center near you. Contact us for more information.
             </p>
             <h3>
               <Link to="/products">Shop costumes</Link>

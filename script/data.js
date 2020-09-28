@@ -28,7 +28,7 @@ const admin = [
     password: '456',
     firstName: 'Betsy',
     lastName: 'Groton',
-    isAdmin: true
+    isAdmin: false
   },
   {
     email: 'ashley@gmail.com',
