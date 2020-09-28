@@ -36,7 +36,6 @@ class Cart extends React.Component {
   async handleRemove(event) {
     event.preventDefault()
     let orderId = Number(event.target.id)
-    console.log('cart: ', this.props.cart)
     let cartId = this.props.cart.id
     await this.props.deleteProducts(cartId, orderId)
   }
