@@ -8,6 +8,7 @@ import {auth} from '../store/user'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+
   return (
     <div className="page-wrapper">
       <form onSubmit={handleSubmit} name={name}>
@@ -19,13 +20,23 @@ const AuthForm = props => {
                   <label htmlFor="firstName">
                     <small>First name</small>
                   </label>
-                  <input name="firstName" type="text" />
+                  <input
+                    name="firstName"
+                    type="text"
+                    placeholder="your first name here..."
+                    required
+                  />
                 </div>
                 <div>
                   <label htmlFor="lastName">
                     <small>Last name</small>
                   </label>
-                  <input name="lastName" type="text" />
+                  <input
+                    name="lastName"
+                    type="text"
+                    placeholder="your last name here..."
+                    required
+                  />
                 </div>
               </div>
             </div>
@@ -37,13 +48,23 @@ const AuthForm = props => {
               <label htmlFor="email">
                 <small>Email</small>
               </label>
-              <input name="email" type="text" />
+              <input
+                name="email"
+                type="text"
+                placeholder="your email here..."
+                required
+              />
             </div>
             <div>
               <label htmlFor="password">
                 <small>Password</small>
               </label>
-              <input name="password" type="text" />
+              <input
+                name="password"
+                type="password"
+                placeholder="your password here..."
+                required
+              />
             </div>
           </div>
         </div>

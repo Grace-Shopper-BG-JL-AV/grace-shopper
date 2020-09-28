@@ -56,4 +56,18 @@ router.get('/me', async (req, res, next) => {
   }
 })
 
+//update a single user's info
+router.put('/me', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.id)
+
+    const updateUser = await user.update(req.body)
+    console.log(req.body)
+
+    res.json(updateUser)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.use('/google', require('./google'))

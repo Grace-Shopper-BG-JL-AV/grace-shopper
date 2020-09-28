@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import swal from 'sweetalert'
 import {fetchProduct, updateProduct} from '../store/singleProduct'
-import EditProduct from './Forms/editProduct'
+import EditProduct from './editProduct'
 import {add} from '../store/user'
 
 class SingleProduct extends React.Component {
@@ -49,7 +49,7 @@ class SingleProduct extends React.Component {
     await this.props.addToCart(this.props.user.id, productId)
     swal({
       title: 'Hooray!',
-      text: 'You added a product to your cart!',
+      text: 'Your item has been added to your cart!',
       icon: 'success'
     })
   }
@@ -59,16 +59,23 @@ class SingleProduct extends React.Component {
     const singleProd = this.props.product
 
     return (
-      <div>
+      <div className="product-preview-container">
         {/* render the product created from the redux thunk */}
-        <h2>{singleProd.name}</h2>
-        <h2>${singleProd.price / 100}</h2>
-        <p>{singleProd.description}</p>
-        <img src={singleProd.imageUrl} />
+        <div className="product-preview-image">
+          <img className="product-preview-image" src={singleProd.imageUrl} />
+        </div>
+
+        <div className="product-preview-text">
+          <h3>{singleProd.name}</h3>
+
+          <p>{singleProd.description}</p>
+          <h3>${singleProd.price / 100}</h3>
+        </div>
+
         <button
           value={singleProd.id}
           onClick={this.handleAddToCart}
-          type="button"
+          type="submit"
         >
           Add to cart
         </button>
