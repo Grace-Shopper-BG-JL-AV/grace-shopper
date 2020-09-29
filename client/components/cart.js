@@ -59,7 +59,6 @@ class Cart extends React.PureComponent {
     if (this.props.cart) {
       cartProducts = this.props.cart.orderProducts || []
     }
-    console.log('cart products: ', cartProducts)
     return (
       <div className="cart">
         <h1>Items in your cart:</h1>
