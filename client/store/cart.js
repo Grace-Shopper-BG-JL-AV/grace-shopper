@@ -96,10 +96,31 @@ export const addToGuestCartInRedux = (product, productId) => {
 //thunk to update product quantity
 export const updateQuantity = (orderProductsId, newQuantity) => {
   return async dispatch => {
+    console.log('orderProductsId', orderProductsId)
     const response = await axios.put(`/api/users/${orderProductsId}`, {
       quantity: newQuantity
     })
     dispatch(changeQuantity(response.data))
+  }
+}
+
+export const updateGuestCartQuantity = (newQuantity, productId) => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+    storageProducts = JSON.parse(storageProducts)
+
+    storageProducts.orderProducts = storageProducts.orderProducts.map(
+      product => {
+        if (product.productId === productId) {
+          product.quantity = newQuantity
+        }
+        return product
+      }
+    )
+
+    dispatch(changeQuantity(storageProducts))
+    storageProducts = JSON.stringify(storageProducts)
+    localStorage.setItem('storageProducts', storageProducts)
   }
 }
 

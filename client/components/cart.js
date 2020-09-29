@@ -5,7 +5,8 @@ import {
   setStorageCartProducts,
   updateQuantity,
   deleteProducts,
-  deleteStorageProducts
+  deleteStorageProducts,
+  updateGuestCartQuantity
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
@@ -25,13 +26,19 @@ class Cart extends React.Component {
     } else {
       const storageProducts = localStorage.getItem('storageProducts')
       // if (storageProducts) {
+      console.log(storageProducts, 'storageProducts')
       this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
 
-  handleChange(event) {
+  handleChange(event, productId) {
     let newQuantity = Number(event.target.value)
-    this.props.changeCartQuantity(Number(event.target.id), newQuantity)
+
+    if (this.props.user.id) {
+      this.props.changeCartQuantity(Number(event.target.id), newQuantity)
+    } else {
+      this.props.changeGuestCartQuantity(newQuantity, productId)
+    }
   }
 
   async handleRemove(event) {
@@ -53,10 +60,10 @@ class Cart extends React.Component {
 
   render() {
     let cartProducts
-
     if (this.props.cart) {
       cartProducts = this.props.cart.orderProducts || []
     }
+    console.log('cartProducts', cartProducts)
 
     return (
       <div className="cart">
@@ -72,6 +79,7 @@ class Cart extends React.Component {
         )}
         {cartProducts ? (
           cartProducts.map(product => {
+            console.log('PRODUCT', product.product)
             return (
               // added link to single product view
               <div key={product.id} className="product-preview-container">
@@ -92,7 +100,7 @@ class Cart extends React.Component {
                   <select
                     id={product.id}
                     label="Quantity: "
-                    onChange={this.handleChange}
+                    onChange={event => this.handleChange(event, product.id)}
                   >
                     <option selected>{product.quantity}</option>
                     <option>1</option>
@@ -140,7 +148,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteStorageProducts: orderId => {
       dispatch(deleteStorageProducts(orderId))
-    }
+    },
+    changeGuestCartQuantity: (newQuantity, productId) =>
+      dispatch(updateGuestCartQuantity(newQuantity, productId))
   }
 }
 
