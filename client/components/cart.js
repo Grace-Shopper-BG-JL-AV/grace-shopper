@@ -73,7 +73,7 @@ class Cart extends React.PureComponent {
               return (
                 // added link to single product view
                 <div key={product.id} className="cart-preview-container">
-                  <Link to={`/products/${product.id}`}>
+                  <Link to={`/products/${product.product.id}`}>
                     <div className="cart-preview-image">
                       <img
                         className="cart-preview-image"
