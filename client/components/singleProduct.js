@@ -72,13 +72,18 @@ class SingleProduct extends React.Component {
           <h3>${singleProd.price / 100}</h3>
         </div>
 
-        <button
-          value={singleProd.id}
-          onClick={this.handleAddToCart}
-          type="submit"
-        >
-          Add to cart
-        </button>
+        {/* if the user is an admin, show the delete product button, otherwise show add to cart button */}
+        {this.props.user.isAdmin ? (
+          <div />
+        ) : (
+          <button
+            value={singleProd.id}
+            onClick={this.handleAddToCart}
+            type="submit"
+          >
+            Add to cart
+          </button>
+        )}
 
         {/* if you're an admin you can edit a product */}
         {this.props.user.isAdmin ? (
@@ -109,6 +114,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getProduct: id => dispatch(fetchProduct(id)),
     updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj)),
+    delete: id => dispatch(deleteProduct(id)),
     addToCart: (userId, productId) => dispatch(add(userId, productId))
   }
 }

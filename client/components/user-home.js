@@ -9,6 +9,7 @@ import swal from 'sweetalert'
 /**
  * COMPONENT
  */
+
 class UserHome extends React.Component {
   constructor(props) {
     super(props)
