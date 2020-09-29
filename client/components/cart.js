@@ -76,53 +76,56 @@ class Cart extends React.Component {
         ) : (
           <div>No items in your cart right now!</div>
         )}
-        {cartProducts && cartProducts.length ? (
-          cartProducts.map(product => {
-            return (
-              // added link to single product view
-              <div key={product.id} className="product-preview-container">
-                <Link to={`/products/${product.id}`}>
-                  <div className="product-preview-image">
-                    <img
-                      src={product.product.imageUrl}
-                      className="product-preview-image"
-                    />
+        <div id="cart">
+          {cartProducts && cartProducts.length ? (
+            cartProducts.map(product => {
+              return (
+                // added link to single product view
+                <div key={product.id} className="cart-preview-container">
+                  <Link to={`/products/${product.id}`}>
+                    <div className="cart-preview-image">
+                      <img
+                        className="cart-preview-image"
+                        src={product.product.imageUrl}
+                      />
+                    </div>
+                  </Link>
+
+                  <div className="product-preview-text">
+                    <h3 id="product">{product.product.name}</h3>
+                    <p>{product.product.description}</p>
+
+                    <p>Total Price: ${product.totalPrice / 100}</p>
+                    <select
+                      id={product.id}
+                      label="Quantity: "
+                      onChange={this.handleChange}
+                    >
+                      <option defaultValue={product.quantity}>
+                        {product.quantity}
+                      </option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
                   </div>
-                </Link>
 
-                <div className="product-preview-text">
-                  <h3 id="product">{product.product.name}</h3>
-                  <p>{product.product.description}</p>
-
-                  <p>Total Price: ${product.totalPrice / 100}</p>
-                  <select
+                  <button
+                    className="remove-button"
                     id={product.id}
-                    label="Quantity: "
-                    onChange={this.handleChange}
+                    onClick={this.handleRemove}
+                    type="submit"
                   >
-                    <option defaultValue={product.quantity}>
-                      {product.quantity}
-                    </option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
+                    Remove this item from cart
+                  </button>
                 </div>
-
-                <button
-                  id={product.id}
-                  onClick={this.handleRemove}
-                  type="submit"
-                >
-                  Remove this item from cart
-                </button>
-              </div>
-            )
-          })
-        ) : (
-          <div />
-        )}
+              )
+            })
+          ) : (
+            <div />
+          )}
+        </div>
       </div>
     )
   }

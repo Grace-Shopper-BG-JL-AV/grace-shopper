@@ -7,6 +7,10 @@ const Home = () => {
       <div className="row2">
         <div className="column2">
           <h2>Welcome to Hallowoof! </h2>
+          <img
+            id="home-image"
+            src="https://www.dhresource.com/0x0/f2/albu/g6/M01/E4/44/rBVaSFuaE02AZ_wNAAGNJrvv_zI981.jpg/winter-dog-halloween-costume-christmas-dog.jpg"
+          />
           <h3>Our Mission</h3>
         </div>
         <div className="column2">
@@ -24,7 +28,6 @@ const Home = () => {
             <h3>
               <Link to="/products">Shop costumes</Link>
             </h3>
-            <img src="https://www.dhresource.com/0x0/f2/albu/g6/M01/E4/44/rBVaSFuaE02AZ_wNAAGNJrvv_zI981.jpg/winter-dog-halloween-costume-christmas-dog.jpg" />
           </div>
         </div>
       </div>
