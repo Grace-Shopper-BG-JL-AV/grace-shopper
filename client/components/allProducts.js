@@ -2,8 +2,8 @@ import React from 'react'
 import {fetchProducts, addProductToDb, deleteProduct} from '../store/product'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import AddProduct from './Forms/addProduct'
 import {add, me} from '../store/user'
+import AddProduct from './addProduct'
 import swal from 'sweetalert'
 import {addToGuestCartInRedux} from '../store/cart'
 import {fetchProduct} from '../store/singleProduct'
@@ -175,7 +175,6 @@ class AllProducts extends React.Component {
 
 //connect to redux store
 const mapStateToProps = state => {
-  console.log('products', state.products)
   return {
     products: state.products,
     user: state.user,

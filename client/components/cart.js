@@ -4,7 +4,8 @@ import {
   fetchCartProducts,
   setStorageCartProducts,
   updateQuantity,
-  deleteProducts
+  deleteProducts,
+  deleteStorageProducts
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
@@ -23,10 +24,9 @@ class Cart extends React.Component {
     if (this.props.user.id) {
       await this.props.getCartProducts(this.props.user.id)
     } else {
-      const storageProducts = localStorage.getItem('storageProducts') //storageroducst would be obj
-      if (storageProducts) {
-        this.props.setStorageCartProducts(JSON.parse(storageProducts))
-      }
+      const storageProducts = localStorage.getItem('storageProducts')
+      // if (storageProducts) {
+      this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
 
@@ -42,10 +42,14 @@ class Cart extends React.Component {
   async handleRemove(event) {
     event.preventDefault()
     let orderId = Number(event.target.id)
-    console.log('cart: ', this.props.cart)
     let cartId = this.props.cart.id
-    console.log('userId: ', this.props.userId)
-    await this.props.deleteProducts(cartId, orderId, this.props.user.id)
+
+    if (cartId) {
+      await this.props.deleteProducts(cartId, orderId, this.props.user.id)
+    } else {
+      this.props.deleteStorageProducts(orderId)
+    }
+    
     // swal({
     //   title: 'Warning!',
     //   text: 'Your items have been deleted from your cart',
@@ -57,14 +61,13 @@ class Cart extends React.Component {
     let cartProducts
     if (this.props.cart) {
       cartProducts = this.props.cart.orderProducts || []
-    } else {
-      cartProducts = []
     }
 
     return (
       <div className="cart">
         <h1>Items in your cart:</h1>
-        {cartProducts.length ? (
+
+        {cartProducts && cartProducts.length ? (
           <Link to="/checkout">
             <button type="submit" className="checkoutButton">
               Checkout!
@@ -75,7 +78,6 @@ class Cart extends React.Component {
         )}
         {cartProducts.length ? (
           cartProducts.map(product => {
-            console.log('product in map', product)
             return (
               // added link to single product view
               <div key={product.id} className="product-preview-container">
@@ -142,7 +144,9 @@ const mapDispatchToProps = dispatch => {
     changeCartQuantity: (orderProductId, newQuantity, userId) =>
       dispatch(updateQuantity(orderProductId, newQuantity, userId)),
     deleteProducts: (cartId, orderProductId, userId) => {
-      dispatch(deleteProducts(cartId, orderProductId, userId))
+      dispatch(deleteProducts(cartId, orderProductId, userId)),
+    deleteStorageProducts: orderId => {
+      dispatch(deleteStorageProducts(orderId))
     }
   }
 }
