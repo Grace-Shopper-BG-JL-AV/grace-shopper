@@ -32,7 +32,11 @@ class Cart extends React.PureComponent {
     let newQuantity = Number(event.target.value)
 
     if (this.props.user.id) {
-      this.props.changeCartQuantity(Number(event.target.id), newQuantity, this.props.user.id)
+      this.props.changeCartQuantity(
+        Number(event.target.id),
+        newQuantity,
+        this.props.user.id
+      )
     } else {
       this.props.changeGuestCartQuantity(newQuantity, productId)
     }
@@ -55,7 +59,6 @@ class Cart extends React.PureComponent {
     if (this.props.cart) {
       cartProducts = this.props.cart.orderProducts || []
     }
-
     return (
       <div className="cart">
         <h1>Items in your cart:</h1>
@@ -87,12 +90,15 @@ class Cart extends React.PureComponent {
                     <h3 id="product">{product.product.name}</h3>
                     <p>{product.product.description}</p>
 
-                    <p>Total Price: ${product.totalPrice / 100}</p>
+                    <p>
+                      Total Price: $
+                      {product.quantity * product.product.price / 100}
+                    </p>
                     <p>Quantity: {product.quantity}</p>
                     <select
                       id={product.id}
                       label="Quantity: "
-                    onChange={event => this.handleChange(event, product.id)}
+                      onChange={event => this.handleChange(event, product.id)}
                     >
                       <option>1</option>
                       <option>2</option>

@@ -5,7 +5,11 @@ import {Link} from 'react-router-dom'
 import {add, me} from '../store/user'
 import AddProduct from './addProduct'
 import swal from 'sweetalert'
-import {addToGuestCartInRedux} from '../store/cart'
+import {
+  addToGuestCartInRedux,
+  updateGuestCartQuantity,
+  setStorageCartProducts
+} from '../store/cart'
 import {fetchProduct} from '../store/singleProduct'
 
 class AllProducts extends React.Component {
@@ -23,10 +27,16 @@ class AllProducts extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //dispatch the redux thunk
-    this.props.getProducts()
-    this.props.getUser()
+    await this.props.getProducts()
+    await this.props.getUser()
+    if (this.props.user.id) {
+      await this.props.getCartProducts(this.props.user.id)
+    } else {
+      const storageProducts = localStorage.getItem('storageProducts')
+      this.props.setStorageCartProducts(JSON.parse(storageProducts))
+    }
   }
 
   handleChange(event) {
@@ -60,12 +70,26 @@ class AllProducts extends React.Component {
 
   async handleAddToCart(event) {
     let productId = Number(event.target.value)
-    const product = this.props.product
     await this.props.getProduct(productId)
+    const product = this.props.product
+
     if (this.props.user.id) {
       this.props.addToCart(this.props.user.id, productId)
     } else {
-      this.props.addToGuestCart(product, productId)
+      let current
+      this.props.cart.orderProducts.forEach(orderProduct => {
+        if (orderProduct.id === productId) {
+          current = orderProduct
+        }
+      })
+      if (!current) {
+        this.props.addToGuestCart(product, productId)
+      } else {
+        this.props.changeGuestCartQuantity(
+          current.quantity + 1,
+          current.product.id
+        )
+      }
     }
 
     swal({
@@ -178,7 +202,8 @@ const mapStateToProps = state => {
   return {
     products: state.products,
     user: state.user,
-    product: state.product
+    product: state.product,
+    cart: state.cart
   }
 }
 
@@ -191,7 +216,11 @@ const mapDispatchToProps = dispatch => {
     addToGuestCart: (product, productId) =>
       dispatch(addToGuestCartInRedux(product, productId)),
     getProduct: productId => dispatch(fetchProduct(productId)),
-    getUser: () => dispatch(me())
+    getUser: () => dispatch(me()),
+    changeGuestCartQuantity: (newQuantity, productId) =>
+      dispatch(updateGuestCartQuantity(newQuantity, productId)),
+    setStorageCartProducts: storageProducts =>
+      dispatch(setStorageCartProducts(storageProducts))
   }
 }
 
