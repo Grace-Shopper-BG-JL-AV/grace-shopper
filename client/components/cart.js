@@ -10,7 +10,6 @@ import {
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
-import swal from 'sweetalert'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -19,14 +18,12 @@ class Cart extends React.Component {
     this.handleRemove = this.handleRemove.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getUser()
     if (this.props.user.id) {
-      this.props.getCartProducts(this.props.user.id)
-      this.props.getUser()
+      await this.props.getCartProducts(this.props.user.id)
     } else {
       const storageProducts = localStorage.getItem('storageProducts')
-      // if (storageProducts) {
-      console.log(storageProducts, 'storageProducts')
       this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
@@ -35,7 +32,7 @@ class Cart extends React.Component {
     let newQuantity = Number(event.target.value)
 
     if (this.props.user.id) {
-      this.props.changeCartQuantity(Number(event.target.id), newQuantity)
+      this.props.changeCartQuantity(Number(event.target.id), newQuantity, this.props.user.id)
     } else {
       this.props.changeGuestCartQuantity(newQuantity, productId)
     }
@@ -47,15 +44,10 @@ class Cart extends React.Component {
     let cartId = this.props.cart.id
 
     if (cartId) {
-      await this.props.deleteProducts(cartId, orderId)
+      await this.props.deleteProducts(cartId, orderId, this.props.user.id)
     } else {
       this.props.deleteStorageProducts(orderId)
     }
-    // swal({
-    //   title: 'Warning!',
-    //   text: 'Your items have been deleted from your cart',
-    //   icon: 'warning',
-    // })
   }
 
   render() {
@@ -63,11 +55,11 @@ class Cart extends React.Component {
     if (this.props.cart) {
       cartProducts = this.props.cart.orderProducts || []
     }
-    console.log('cartProducts', cartProducts)
 
     return (
       <div className="cart">
         <h1>Items in your cart:</h1>
+
         {cartProducts && cartProducts.length ? (
           <Link to="/checkout">
             <button type="submit" className="checkoutButton">
@@ -77,52 +69,55 @@ class Cart extends React.Component {
         ) : (
           <div>No items in your cart right now!</div>
         )}
-        {cartProducts ? (
-          cartProducts.map(product => {
-            console.log('PRODUCT', product.product)
-            return (
-              // added link to single product view
-              <div key={product.id} className="product-preview-container">
-                <Link to={`/products/${product.id}`}>
-                  <div className="product-preview-image">
-                    <img
-                      src={product.product.imageUrl}
-                      className="product-preview-image"
-                    />
-                  </div>
-                </Link>
+        <div id="cart">
+          {cartProducts && cartProducts.length ? (
+            cartProducts.map(product => {
+              return (
+                // added link to single product view
+                <div key={product.id} className="cart-preview-container">
+                  <Link to={`/products/${product.id}`}>
+                    <div className="cart-preview-image">
+                      <img
+                        className="cart-preview-image"
+                        src={product.product.imageUrl}
+                      />
+                    </div>
+                  </Link>
+                  <div className="product-preview-text">
+                    <h3 id="product">{product.product.name}</h3>
+                    <p>{product.product.description}</p>
 
-                <div className="product-preview-text">
-                  <h3 id="product">{product.product.name}</h3>
-                  <p>{product.product.description}</p>
-
-                  <p>Total Price: ${product.totalPrice / 100}</p>
-                  <select
-                    id={product.id}
-                    label="Quantity: "
+                    <p>Total Price: ${product.totalPrice / 100}</p>
+                    <select
+                      id={product.id}
+                      label="Quantity: "
                     onChange={event => this.handleChange(event, product.id)}
-                  >
-                    <option selected>{product.quantity}</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
+                    >
+                      <option defaultValue={product.quantity}>
+                        {product.quantity}
+                      </option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
 
-                <button
-                  id={product.id}
-                  onClick={this.handleRemove}
-                  type="submit"
-                >
-                  Remove this item from cart
-                </button>
-              </div>
-            )
-          })
-        ) : (
-          <div />
-        )}
+                  <button
+                    className="remove-button"
+                    id={product.id}
+                    onClick={this.handleRemove}
+                    type="submit"
+                  >
+                    Remove this item from cart
+                  </button>
+                </div>
+              )
+            })
+          ) : (
+            <div />
+          )}
+        </div>
       </div>
     )
   }
@@ -141,10 +136,10 @@ const mapDispatchToProps = dispatch => {
     getUser: () => dispatch(me()),
     setStorageCartProducts: storageProducts =>
       dispatch(setStorageCartProducts(storageProducts)),
-    changeCartQuantity: (orderProductId, newQuantity) =>
-      dispatch(updateQuantity(orderProductId, newQuantity)),
-    deleteProducts: (cartId, orderProductId) => {
-      dispatch(deleteProducts(cartId, orderProductId))
+    changeCartQuantity: (orderProductId, newQuantity, userId) =>
+      dispatch(updateQuantity(orderProductId, newQuantity, userId)),
+    deleteProducts: (cartId, orderProductId, userId) => {
+      dispatch(deleteProducts(cartId, orderProductId, userId))
     },
     deleteStorageProducts: orderId => {
       dispatch(deleteStorageProducts(orderId))
