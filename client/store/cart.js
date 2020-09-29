@@ -44,7 +44,6 @@ export const fetchCartProducts = userId => {
 }
 
 export const setStorageCartProducts = products => {
-  console.log('products in thunk!', products)
   return dispatch => {
     dispatch(setCartProducts(products))
   }
@@ -59,6 +58,7 @@ export const addToGuestCartInRedux = (product, productId) => {
       product.id = productId
       storageProducts = JSON.parse(storageProducts)
       updatedProducts = {
+        isActive: true,
         orderProducts: [
           ...storageProducts.orderProducts,
           {
@@ -75,6 +75,7 @@ export const addToGuestCartInRedux = (product, productId) => {
     } else {
       product.id = productId
       updatedProducts = {
+        isActive: true,
         orderProducts: [
           {
             id: productId,
@@ -93,32 +94,64 @@ export const addToGuestCartInRedux = (product, productId) => {
 }
 
 //thunk to update product quantity
-export const updateQuantity = (orderProductsId, newQuantity) => {
+export const updateQuantity = (orderProductsId, newQuantity, userId) => {
   return async dispatch => {
-    const response = await axios.put(`/api/users/${orderProductsId}`, {
-      quantity: newQuantity
-    })
+    const response = await axios.put(
+      `/api/users/${userId}/${orderProductsId}`,
+      {
+        quantity: newQuantity
+      }
+    )
     dispatch(changeQuantity(response.data))
   }
 }
 
 //thunk to remove products from cart
-export const deleteProducts = (cartId, orderProductsId) => {
+export const deleteProducts = (cartId, orderProductsId, userId) => {
   return async dispatch => {
     const response = await axios.delete(
-      `/api/users/${cartId}/${orderProductsId}`
+      `/api/users/${userId}/${cartId}/${orderProductsId}`
     )
     dispatch(removeProducts(response.data))
   }
 }
 
+//thunk to remove products from guest cart
+export const deleteStorageProducts = orderProductId => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+
+    storageProducts = JSON.parse(storageProducts)
+    storageProducts.orderProducts = storageProducts.orderProducts.filter(
+      product => product.id !== orderProductId
+    )
+    dispatch(removeProducts(storageProducts))
+    storageProducts = JSON.stringify(storageProducts)
+    localStorage.setItem('storageProducts', storageProducts)
+  }
+}
+
 //thunk to purchase
-export const makePurchase = cartId => {
+export const makePurchase = (cartId, userId) => {
   return async dispatch => {
-    const response = await axios.put(`/api/users/${cartId}/purchase`, {
-      isActive: false
-    })
+    const response = await axios.put(
+      `/api/users/${userId}/${cartId}/purchase`,
+      {
+        isActive: false
+      }
+    )
     dispatch(purchase(response.data))
+  }
+}
+
+export const makeGuestPurchase = () => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+
+    storageProducts = JSON.parse(storageProducts)
+    storageProducts.isActive = false
+    dispatch(purchase(storageProducts))
+    localStorage.clear()
   }
 }
 

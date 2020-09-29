@@ -14,7 +14,8 @@ import {
   AllUsers,
   SingleUser,
   PostPurchase,
-  EditProduct
+  EditProduct,
+  NotFound
 } from './components'
 import Home from './components/home'
 import {me} from './store/user'

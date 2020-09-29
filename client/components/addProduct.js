@@ -20,7 +20,7 @@ const AddProduct = props => {
           value={props.description}
           onChange={props.handleChange}
         />
-        {/* 
+        {/*
         <label htmlFor="price">Price:</label>
         <input
           name="price"
