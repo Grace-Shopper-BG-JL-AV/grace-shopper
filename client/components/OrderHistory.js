@@ -35,7 +35,9 @@ class OrderHistory extends React.Component {
               )
             })
           ) : (
-            <div />
+            <div>
+              <h2>You have no order history yet!</h2>
+            </div>
           )}
         </div>
       </div>

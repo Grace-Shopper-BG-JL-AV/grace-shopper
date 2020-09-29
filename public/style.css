@@ -29,7 +29,7 @@ form div {
 
 nav {
   align-items: center;
-  background-color: #fff6f5;
+  background-color: #e6c589;
   z-index: 2;
   color: #ffffff;
   text-decoration: none;
@@ -272,9 +272,9 @@ body {
 #sticky-footer {
   flex-shrink: none;
   text-align: center;
-  margin: 50px;
-  padding: 20px;
-  background-color: #fff6f5;
+  margin: 20px;
+  padding: 10px;
+  background-color: #e6c589;
   position: relative;
 }
 
@@ -322,7 +322,7 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-top: 5%;
-  background-color: #f6e6c3;
+  background-color: #e6c589;
   height: 10%;
   width: 40%;
   border-radius: 15px;
@@ -358,7 +358,7 @@ button .remove-button {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-top: 5%;
-  background-color: #f6e6c3;
+  background-color: #e6c589;
   height: 10%;
   width: 40%;
   border-radius: 15px;
@@ -373,4 +373,8 @@ button .remove-button {
   margin-bottom: 10px;
   border: black;
   border-style: solid;
+}
+
+div {
+  border-radius: 15px;
 }
