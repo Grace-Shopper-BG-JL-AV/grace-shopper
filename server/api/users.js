@@ -37,6 +37,26 @@ router.get('/:userId/cart', isUser, async (req, res, next) => {
   }
 })
 
+router.get('/:userId/orderHistory', isUser, async (req, res, next) => {
+  try {
+    let id = req.params.userId
+    let cartHistory = []
+    cartHistory = await Cart.findAll({
+      where: {
+        userId: id,
+        isActive: false
+      },
+      include: {
+        model: OrderProducts,
+        include: [Product]
+      }
+    })
+    res.json(cartHistory)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   try {
     let userId = req.params.userId

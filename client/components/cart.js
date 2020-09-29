@@ -9,9 +9,8 @@ import {
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
-import swal from 'sweetalert'
 
-class Cart extends React.Component {
+class Cart extends React.PureComponent {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -20,12 +19,10 @@ class Cart extends React.Component {
 
   async componentDidMount() {
     await this.props.getUser()
-    console.log('user id: ', this.props.user.id)
     if (this.props.user.id) {
       await this.props.getCartProducts(this.props.user.id)
     } else {
       const storageProducts = localStorage.getItem('storageProducts')
-      // if (storageProducts) {
       this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
@@ -49,12 +46,6 @@ class Cart extends React.Component {
     } else {
       this.props.deleteStorageProducts(orderId)
     }
-
-    // swal({
-    //   title: 'Warning!',
-    //   text: 'Your items have been deleted from your cart',
-    //   icon: 'warning',
-    // })
   }
 
   render() {
@@ -96,14 +87,12 @@ class Cart extends React.Component {
                     <p>{product.product.description}</p>
 
                     <p>Total Price: ${product.totalPrice / 100}</p>
+                    <p>Quantity: {product.quantity}</p>
                     <select
                       id={product.id}
                       label="Quantity: "
                       onChange={this.handleChange}
                     >
-                      <option defaultValue={product.quantity}>
-                        {product.quantity}
-                      </option>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
