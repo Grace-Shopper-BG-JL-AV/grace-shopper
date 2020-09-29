@@ -49,7 +49,7 @@ class Cart extends React.Component {
     } else {
       this.props.deleteStorageProducts(orderId)
     }
-    
+
     // swal({
     //   title: 'Warning!',
     //   text: 'Your items have been deleted from your cart',
@@ -76,7 +76,7 @@ class Cart extends React.Component {
         ) : (
           <div>No items in your cart right now!</div>
         )}
-        {cartProducts.length ? (
+        {cartProducts && cartProducts.length ? (
           cartProducts.map(product => {
             return (
               // added link to single product view
@@ -144,7 +144,8 @@ const mapDispatchToProps = dispatch => {
     changeCartQuantity: (orderProductId, newQuantity, userId) =>
       dispatch(updateQuantity(orderProductId, newQuantity, userId)),
     deleteProducts: (cartId, orderProductId, userId) => {
-      dispatch(deleteProducts(cartId, orderProductId, userId)),
+      dispatch(deleteProducts(cartId, orderProductId, userId))
+    },
     deleteStorageProducts: orderId => {
       dispatch(deleteStorageProducts(orderId))
     }
