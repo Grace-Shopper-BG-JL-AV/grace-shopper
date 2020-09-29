@@ -20,39 +20,6 @@ const AddProduct = props => {
           value={props.description}
           onChange={props.handleChange}
         />
-        {/*
-        <label htmlFor="price">Price:</label>
-        <input
-          name="price"
-          type="text"
-          value={props.price}
-          onChange={props.handleChange}
-        />
-
-        <label htmlFor="imageUrl">Image Url:</label>
-        <input
-          name="imageUrl"
-          type="text"
-          value={props.imageUrl}
-          onChange={props.handleChange}
-        />
-
-        <label htmlFor="size">Size:</label>
-        <input
-          name="size"
-          type="text"
-          value={props.size}
-          onChange={props.handleChange}
-        />
-
-        <label htmlFor="stars">Stars:</label>
-        <input
-          name="stars"
-          type="text"
-          value={props.stars}
-          onChange={props.handleChange}
-        /> */}
-
         <button type="submit">Add Product</button>
       </form>
     </div>

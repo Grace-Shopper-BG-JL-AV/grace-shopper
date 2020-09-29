@@ -37,7 +37,7 @@ nav {
   height: 50px;
   padding: 5px;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 20px;
   font-family: 'Homemade Apple', cursive;
   margin: 1em;
 }
@@ -65,7 +65,6 @@ h3,
 .signUp {
   text-align: center;
   font-family: 'Homemade Apple', cursive;
-
   font-size: 20px;
   background-color: #fff6f5;
 }
@@ -91,11 +90,16 @@ img {
   margin-right: 10px;
 }
 
+div {
+  border-radius: 15px;
+}
+
 /* trying to do flexbox */
 .page-wrapper {
   display: flex;
   margin: 15px;
   text-align: center;
+  align-items: center;
   background-color: #fff6f5;
 }
 
@@ -212,8 +216,7 @@ button[type='submit']:hover {
   background-color: #ffffff;
 }
 
-/* cant figure this out lol */
-.checkoutButton {
+#checkoutButton {
   background-color: green;
 }
 
@@ -373,8 +376,4 @@ button .remove-button {
   margin-bottom: 10px;
   border: black;
   border-style: solid;
-}
-
-div {
-  border-radius: 15px;
 }

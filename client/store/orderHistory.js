@@ -11,7 +11,7 @@ export const setOrderHistory = orders => {
   }
 }
 
-//thunk to get all of the user cart products
+//thunk to get all of the user's previous carts
 export const fetchOrderHistory = userId => {
   return async dispatch => {
     const response = await axios.get(`/api/users/${userId}/orderHistory`)

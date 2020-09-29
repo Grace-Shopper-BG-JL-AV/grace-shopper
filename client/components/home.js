@@ -23,7 +23,7 @@ const Home = () => {
           also up for adoption at a pet adoption center near you. Contact us for
           more information.
         </p>
-        <h3>
+        <h3 id="shop-costumes">
           <Link to="/products">Shop costumes</Link>
         </h3>
       </div>

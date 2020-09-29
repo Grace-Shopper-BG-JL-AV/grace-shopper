@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AllUsers from './allUsers'
@@ -47,7 +46,7 @@ class UserHome extends React.Component {
   }
 
   render() {
-    const {email, firstName, lastName, imageUrl, isAdmin} = this.props
+    const {firstName, lastName, imageUrl, isAdmin} = this.props
     console.log(this.props)
 
     return isAdmin ? (
@@ -131,10 +130,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}

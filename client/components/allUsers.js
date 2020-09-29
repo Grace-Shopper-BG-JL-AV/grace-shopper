@@ -3,11 +3,6 @@ import {fetchUsers} from '../store/allUsers'
 import {connect} from 'react-redux'
 
 class AllUsers extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {}
-  // }
-
   componentDidMount() {
     //dispatch the redux thunk
     this.props.getUsers()

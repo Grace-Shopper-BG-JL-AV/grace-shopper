@@ -60,7 +60,7 @@ class Cart extends React.PureComponent {
 
         {cartProducts && cartProducts.length ? (
           <Link to="/checkout">
-            <button type="submit" className="checkoutButton">
+            <button type="submit" id="checkoutButton">
               Checkout!
             </button>
           </Link>

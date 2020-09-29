@@ -116,7 +116,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getProduct: id => dispatch(fetchProduct(id)),
     updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj)),
-    delete: id => dispatch(deleteProduct(id)),
     addToCart: (userId, productId) => dispatch(add(userId, productId))
   }
 }

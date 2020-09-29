@@ -18,6 +18,7 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
+//retrieve items in current cart
 router.get('/:userId/cart', isUser, async (req, res, next) => {
   try {
     let id = req.params.userId
@@ -37,6 +38,7 @@ router.get('/:userId/cart', isUser, async (req, res, next) => {
   }
 })
 
+//retrieve previous orders
 router.get('/:userId/orderHistory', isUser, async (req, res, next) => {
   try {
     let id = req.params.userId
@@ -57,6 +59,7 @@ router.get('/:userId/orderHistory', isUser, async (req, res, next) => {
   }
 })
 
+//add item to user cart
 router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   try {
     let userId = req.params.userId
@@ -95,6 +98,7 @@ router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   }
 })
 
+//
 router.put('/:userId/:orderProductsId', isUser, async (req, res, next) => {
   try {
     let order = await OrderProducts.findByPk(req.params.orderProductsId)
