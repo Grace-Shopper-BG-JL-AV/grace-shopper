@@ -60,8 +60,8 @@ class AllProducts extends React.Component {
 
   async handleAddToCart(event) {
     let productId = Number(event.target.value)
-    const product = this.props.product
     await this.props.getProduct(productId)
+    const product = this.props.product
     if (this.props.user.id) {
       this.props.addToCart(this.props.user.id, productId)
     } else {
