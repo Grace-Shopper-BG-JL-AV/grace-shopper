@@ -348,10 +348,10 @@ body {
   margin-right: 10px;
 }
 
-.remove-button {
-  height: 150px;
+button .remove-button {
+  height: 100px;
   width: 100px;
-  font-size: 20px;
+  font-size: 1px;
 }
 
 #single-prod {
