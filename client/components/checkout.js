@@ -20,12 +20,15 @@ class Checkout extends React.Component {
 
   handlePurchase(event) {
     event.preventDefault()
+
     if (this.props.cart.id) {
-      this.props.purchase(this.props.cart.id)
+      this.props.purchase(this.props.cart.id, this.props.user.id)
     } else {
       this.props.guestPurchase()
     }
+    
     this.props.history.replace('/postPurchase')
+    
     swal({
       title: 'Hooray!',
       text: 'Your purchase has been completed!',
@@ -67,7 +70,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    purchase: cartId => dispatch(makePurchase(cartId)),
+    purchase: (cartId, userId) => dispatch(makePurchase(cartId, userId)),
     getUser: () => dispatch(me()),
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
     guestPurchase: () => dispatch(makeGuestPurchase())
