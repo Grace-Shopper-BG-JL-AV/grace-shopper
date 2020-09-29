@@ -1,5 +1,4 @@
 'use strict'
-//const {yellow, green, red} = require('chalk')
 const db = require('../server/db')
 const {User, Product} = require('../server/db/models')
 const {users, products} = require('./data')
@@ -19,15 +18,6 @@ async function seed() {
       })
     )
     console.log(`seeded successfully`)
-    // const user = await User.findByPk(1)
-    // const anotherUser = await User.findByPk(2)
-    // const product = await Product.findByPk(1)
-    // const anotherProduct = await Product.findByPk(2)
-    // const andAnotherProduct = await Product.findByPk(3)
-    // await user.addProduct(product)
-    // await user.addProduct(anotherProduct)
-    // await anotherUser.addProduct(product)
-    // await anotherUser.addProduct(andAnotherProduct)
   } catch (err) {
     console.log(err)
   }

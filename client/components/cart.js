@@ -5,13 +5,13 @@ import {
   setStorageCartProducts,
   updateQuantity,
   deleteProducts,
-  deleteStorageProducts
+  deleteStorageProducts,
+  updateGuestCartQuantity
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
-import swal from 'sweetalert'
 
-class Cart extends React.Component {
+class Cart extends React.PureComponent {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -20,23 +20,22 @@ class Cart extends React.Component {
 
   async componentDidMount() {
     await this.props.getUser()
-    console.log('user id: ', this.props.user.id)
     if (this.props.user.id) {
       await this.props.getCartProducts(this.props.user.id)
     } else {
       const storageProducts = localStorage.getItem('storageProducts')
-      // if (storageProducts) {
       this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
 
-  handleChange(event) {
+  handleChange(event, productId) {
     let newQuantity = Number(event.target.value)
-    this.props.changeCartQuantity(
-      Number(event.target.id),
-      newQuantity,
-      this.props.user.id
-    )
+
+    if (this.props.user.id) {
+      this.props.changeCartQuantity(Number(event.target.id), newQuantity, this.props.user.id)
+    } else {
+      this.props.changeGuestCartQuantity(newQuantity, productId)
+    }
   }
 
   async handleRemove(event) {
@@ -49,12 +48,6 @@ class Cart extends React.Component {
     } else {
       this.props.deleteStorageProducts(orderId)
     }
-
-    // swal({
-    //   title: 'Warning!',
-    //   text: 'Your items have been deleted from your cart',
-    //   icon: 'warning',
-    // })
   }
 
   render() {
@@ -69,7 +62,7 @@ class Cart extends React.Component {
 
         {cartProducts && cartProducts.length ? (
           <Link to="/checkout">
-            <button type="submit" className="checkoutButton">
+            <button type="submit" id="checkoutButton">
               Checkout!
             </button>
           </Link>
@@ -82,7 +75,7 @@ class Cart extends React.Component {
               return (
                 // added link to single product view
                 <div key={product.id} className="cart-preview-container">
-                  <Link to={`/products/${product.id}`}>
+                  <Link to={`/products/${product.product.id}`}>
                     <div className="cart-preview-image">
                       <img
                         className="cart-preview-image"
@@ -90,20 +83,17 @@ class Cart extends React.Component {
                       />
                     </div>
                   </Link>
-
                   <div className="product-preview-text">
                     <h3 id="product">{product.product.name}</h3>
                     <p>{product.product.description}</p>
 
                     <p>Total Price: ${product.totalPrice / 100}</p>
+                    <p>Quantity: {product.quantity}</p>
                     <select
                       id={product.id}
                       label="Quantity: "
-                      onChange={this.handleChange}
+                    onChange={event => this.handleChange(event, product.id)}
                     >
-                      <option defaultValue={product.quantity}>
-                        {product.quantity}
-                      </option>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -151,7 +141,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteStorageProducts: orderId => {
       dispatch(deleteStorageProducts(orderId))
-    }
+    },
+    changeGuestCartQuantity: (newQuantity, productId) =>
+      dispatch(updateGuestCartQuantity(newQuantity, productId))
   }
 }
 

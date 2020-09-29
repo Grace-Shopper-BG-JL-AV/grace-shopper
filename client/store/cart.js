@@ -106,6 +106,26 @@ export const updateQuantity = (orderProductsId, newQuantity, userId) => {
   }
 }
 
+export const updateGuestCartQuantity = (newQuantity, productId) => {
+  return dispatch => {
+    let storageProducts = localStorage.getItem('storageProducts')
+    storageProducts = JSON.parse(storageProducts)
+
+    storageProducts.orderProducts = storageProducts.orderProducts.map(
+      product => {
+        if (product.productId === productId) {
+          product.quantity = newQuantity
+        }
+        return product
+      }
+    )
+
+    dispatch(changeQuantity(storageProducts))
+    storageProducts = JSON.stringify(storageProducts)
+    localStorage.setItem('storageProducts', storageProducts)
+  }
+}
+
 //thunk to remove products from cart
 export const deleteProducts = (cartId, orderProductsId, userId) => {
   return async dispatch => {

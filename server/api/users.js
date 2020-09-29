@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {User, Product} = require('../db/models')
 const {Cart, OrderProducts} = require('../db/models/cart')
-const isAdmin = require('../auth/apiRouteMiddleware')
+const isAdmin = require('../auth/adminMiddleware')
 const isUser = require('../auth/userMiddleware')
 
 router.get('/', isAdmin, async (req, res, next) => {
@@ -18,6 +18,7 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
+//retrieve items in current cart
 router.get('/:userId/cart', isUser, async (req, res, next) => {
   try {
     let id = req.params.userId
@@ -37,6 +38,28 @@ router.get('/:userId/cart', isUser, async (req, res, next) => {
   }
 })
 
+//retrieve previous orders
+router.get('/:userId/orderHistory', isUser, async (req, res, next) => {
+  try {
+    let id = req.params.userId
+    let cartHistory = []
+    cartHistory = await Cart.findAll({
+      where: {
+        userId: id,
+        isActive: false
+      },
+      include: {
+        model: OrderProducts,
+        include: [Product]
+      }
+    })
+    res.json(cartHistory)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//add item to user cart
 router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   try {
     let userId = req.params.userId
@@ -75,6 +98,7 @@ router.put('/:userId/:productId/add', isUser, async (req, res, next) => {
   }
 })
 
+//change quantity of items in user cart
 router.put('/:userId/:orderProductsId', isUser, async (req, res, next) => {
   try {
     let order = await OrderProducts.findByPk(req.params.orderProductsId)
@@ -92,6 +116,7 @@ router.put('/:userId/:orderProductsId', isUser, async (req, res, next) => {
   }
 })
 
+//remove items from user cart
 router.delete(
   '/:userId/:cartId/:orderProductsId',
   isUser,
@@ -115,6 +140,7 @@ router.delete(
   }
 )
 
+//purchase items in user cart
 router.put('/:userId/:cartId/purchase', isUser, async (req, res, next) => {
   try {
     let cartId = req.params.cartId

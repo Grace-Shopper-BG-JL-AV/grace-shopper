@@ -14,10 +14,10 @@ import {
   AllUsers,
   SingleUser,
   PostPurchase,
-  EditProduct,
-  NotFound
+  EditProduct
 } from './components'
 import Home from './components/home'
+import OrderHistory from './components/OrderHistory'
 import {me} from './store/user'
 
 /**
@@ -37,7 +37,6 @@ class Routes extends Component {
         <Route exact path="/" component={Home} />
         <Route exact path="/home" component={Home} />
         <Route path="/login" component={Login} />
-
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
         <Route path="/users" component={AllUsers} />
@@ -52,7 +51,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-
+            <Route path="/orderHistory" component={OrderHistory} />
             <Route path="/userHome" component={UserHome} />
           </Switch>
         )}
