@@ -1,9 +1,6 @@
 const router = require('express').Router()
-//assuming the db model is called Product
-const {Product, User} = require('../db/models')
-const {Cart, OrderProducts} = require('../db/models/cart')
-const {users} = require('../../script/data')
-const isAdmin = require('../auth/apiRouteMiddleware')
+const {Product} = require('../db/models')
+const isAdmin = require('../auth/adminMiddleware')
 
 //all products api route
 router.get('/', async (req, res, next) => {

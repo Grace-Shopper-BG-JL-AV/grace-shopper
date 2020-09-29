@@ -33,14 +33,6 @@ export const fetchProducts = () => {
   }
 }
 
-// export const fetchGuestProducts = () => {
-//   return dispatch => {
-//     let storageProducts = localStorage.getItem('storageProducts')
-//     storageProducts = JSON.parse(storageProducts)
-//     dispatch(setProducts(storageProducts))
-//   }
-// }
-
 //thunk to add product to db
 export const addProductToDb = productObj => {
   return async dispatch => {

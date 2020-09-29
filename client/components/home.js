@@ -13,23 +13,19 @@ const Home = () => {
           />
           <h3>Our Mission</h3>
         </div>
-        <div className="column2">
-          <div className="blue-column2">
-            <p>
-              Here at Hallowoof Costumes we strive to provide the funnest
-              halloween costumes for your furry dog friend while also making a
-              positive impact for these kind creatures by sending half the
-              proceeds to local animal shelters. We have all costume tastes
-              ranging from magical to downright spooky. Want to try out more of
-              these costumes but don't have another special dog in your life? No
-              worries! All our handsome dog models are also up for adoption at a
-              pet adoption center near you. Contact us for more information.
-            </p>
-            <h3>
-              <Link to="/products">Shop costumes</Link>
-            </h3>
-          </div>
-        </div>
+        <p>
+          Here at Hallowoof Costumes we strive to provide the funnest halloween
+          costumes for your furry dog friend while also making a positive impact
+          for these kind creatures by sending half the proceeds to local animal
+          shelters. We have all costume tastes ranging from magical to downright
+          spooky. Want to try out more of these costumes but don't have another
+          special dog in your life? No worries! All our handsome dog models are
+          also up for adoption at a pet adoption center near you. Contact us for
+          more information.
+        </p>
+        <h3 id="shop-costumes">
+          <Link to="/products">Shop costumes</Link>
+        </h3>
       </div>
     </div>
   )

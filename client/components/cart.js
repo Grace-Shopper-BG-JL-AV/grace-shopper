@@ -11,7 +11,7 @@ import {
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
 
-class Cart extends React.Component {
+class Cart extends React.PureComponent {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -62,7 +62,7 @@ class Cart extends React.Component {
 
         {cartProducts && cartProducts.length ? (
           <Link to="/checkout">
-            <button type="submit" className="checkoutButton">
+            <button type="submit" id="checkoutButton">
               Checkout!
             </button>
           </Link>
@@ -75,7 +75,7 @@ class Cart extends React.Component {
               return (
                 // added link to single product view
                 <div key={product.id} className="cart-preview-container">
-                  <Link to={`/products/${product.id}`}>
+                  <Link to={`/products/${product.product.id}`}>
                     <div className="cart-preview-image">
                       <img
                         className="cart-preview-image"
@@ -88,14 +88,12 @@ class Cart extends React.Component {
                     <p>{product.product.description}</p>
 
                     <p>Total Price: ${product.totalPrice / 100}</p>
+                    <p>Quantity: {product.quantity}</p>
                     <select
                       id={product.id}
                       label="Quantity: "
                     onChange={event => this.handleChange(event, product.id)}
                     >
-                      <option defaultValue={product.quantity}>
-                        {product.quantity}
-                      </option>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
