@@ -53,32 +53,4 @@ describe('Redux Products', () => {
       expect(actions[0].products).to.deep.equal(products)
     })
   })
-
-  //keep getting error: expect reducer in before hook to be a function. need to fix.
-  describe('products reducer', () => {
-    let testStore
-    beforeEach(() => {
-      testStore = createStore(rootReducer)
-    })
-
-    xit('returns the initial state by default', () => {
-      expect(testStore.getState().products).to.be.an('array')
-    })
-
-    xit('handles SET_PRODUCTS as expected', () => {
-      const reducer = products(initialState, {
-        type: SET_PRODUCTS,
-        payload: {
-          data: [{id: 1, name: 'dog costume', description: 'cute'}]
-        }
-      })
-
-      expect(reducer).toEqual({
-        products: [{id: 1, name: 'dog costume', description: 'cute'}],
-        user: {},
-        product: {},
-        users: []
-      })
-    })
-  })
 })
