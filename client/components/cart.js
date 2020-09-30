@@ -9,7 +9,6 @@ import {
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 import {me} from '../store/user'
-import swal from 'sweetalert'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -49,12 +48,6 @@ class Cart extends React.Component {
     } else {
       this.props.deleteStorageProducts(orderId)
     }
-
-    // swal({
-    //   title: 'Warning!',
-    //   text: 'Your items have been deleted from your cart',
-    //   icon: 'warning',
-    // })
   }
 
   render() {

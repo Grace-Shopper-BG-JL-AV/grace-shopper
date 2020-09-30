@@ -26,9 +26,9 @@ class Checkout extends React.Component {
     } else {
       this.props.guestPurchase()
     }
-    
+
     this.props.history.replace('/postPurchase')
-    
+
     swal({
       title: 'Hooray!',
       text: 'Your purchase has been completed!',
@@ -38,10 +38,17 @@ class Checkout extends React.Component {
 
   calculateCost() {
     let cost = 0
-    this.props.cart.orderProducts.forEach(product => {
-      cost = cost + product.totalPrice
-    })
-    return cost / 100
+    if (this.props.user.id) {
+      this.props.cart.orderProducts.forEach(product => {
+        cost = cost + product.totalPrice
+      })
+      return cost / 100
+    } else {
+      this.props.cart.orderProducts.forEach(product => {
+        cost = cost + product.product.price * product.quantity
+      })
+      return cost / 100
+    }
   }
 
   render() {
