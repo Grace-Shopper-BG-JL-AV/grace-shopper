@@ -52,7 +52,7 @@ class Checkout extends React.Component {
       return cost / 100
     } else {
       this.props.cart.orderProducts.forEach(product => {
-        cost = cost + product.product.price
+        cost = cost + product.product.price * product.quantity
       })
       return cost / 100
     }
