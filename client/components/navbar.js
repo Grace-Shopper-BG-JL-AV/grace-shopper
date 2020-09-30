@@ -15,15 +15,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <NavLink to="/userHome">Dashboard</NavLink>
-          {/* {isAdmin ? (
-            <div>
-              <Link to="/allUsers">User Information</Link>
-              <Link to="/editProduct">Edit Products</Link>
-              <Link to="/addProduct">Add Products</Link>
-            </div>
-          ) : (
-            <div>{null}</div>
-          )} */}
         </div>
       ) : (
         <div>
@@ -35,6 +26,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <NavLink to="/home">Home</NavLink>
       <NavLink to="/products">Costumes</NavLink>
       <NavLink to="/cart">Cart</NavLink>
+      {isLoggedIn ? <NavLink to="/orderHistory">Order History</NavLink> : ''}
     </nav>
     <hr />
   </div>

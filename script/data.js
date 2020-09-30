@@ -14,7 +14,6 @@ for (let i = 0; i < desiredUsers; i++) {
   users.push(createFakeUser())
 }
 
-//kept the 3 of us as administrators...change your admin functions to test
 const admin = [
   {
     email: 'jroyankfan42@gmail.com',

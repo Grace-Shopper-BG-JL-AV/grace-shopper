@@ -1,6 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {makePurchase, fetchCartProducts, makeGuestPurchase} from '../store/cart'
+import {
+  makePurchase,
+  fetchCartProducts,
+  makeGuestPurchase,
+  setStorageCartProducts
+} from '../store/cart'
 import {me} from '../store/user'
 import swal from 'sweetalert'
 
@@ -15,12 +20,14 @@ class Checkout extends React.Component {
     if (this.props.user.id) {
       await this.props.getUser()
       await this.props.getCartProducts(this.props.user.id)
+    } else {
+      const storageProducts = localStorage.getItem('storageProducts')
+      this.props.setStorageCartProducts(JSON.parse(storageProducts))
     }
   }
 
   handlePurchase(event) {
     event.preventDefault()
-
     if (this.props.cart.id) {
       this.props.purchase(this.props.cart.id, this.props.user.id)
     } else {
@@ -80,7 +87,9 @@ const mapDispatchToProps = dispatch => {
     purchase: (cartId, userId) => dispatch(makePurchase(cartId, userId)),
     getUser: () => dispatch(me()),
     getCartProducts: userId => dispatch(fetchCartProducts(userId)),
-    guestPurchase: () => dispatch(makeGuestPurchase())
+    guestPurchase: () => dispatch(makeGuestPurchase()),
+    setStorageCartProducts: storageProducts =>
+      dispatch(setStorageCartProducts(storageProducts))
   }
 }
 
