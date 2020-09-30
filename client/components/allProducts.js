@@ -72,17 +72,18 @@ class AllProducts extends React.Component {
     let productId = Number(event.target.value)
     await this.props.getProduct(productId)
     const product = this.props.product
-
     if (this.props.user.id) {
       this.props.addToCart(this.props.user.id, productId)
     } else {
-      let current
-      this.props.cart.orderProducts.forEach(orderProduct => {
-        if (orderProduct.id === productId) {
-          current = orderProduct
-        }
-      })
-      if (!current) {
+      let current = {}
+      if (this.props.cart) {
+        this.props.cart.orderProducts.forEach(orderProduct => {
+          if (orderProduct.id === productId) {
+            current = orderProduct
+          }
+        })
+      }
+      if (!current.id) {
         this.props.addToGuestCart(product, productId)
       } else {
         this.props.changeGuestCartQuantity(
