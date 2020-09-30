@@ -143,7 +143,8 @@ class SingleProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     product: state.product,
-    user: state.user
+    user: state.user,
+    cart: state.cart
   }
 }
 
