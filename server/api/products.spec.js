@@ -31,23 +31,4 @@ describe('Product routes', () => {
       expect(res.body[0].name).to.be.equal('dog costume')
     })
   })
-
-  //spec for single product api route
-  describe('/api/products/:productId', () => {
-    beforeEach(() => {
-      Product.create({
-        name: 'dog costume',
-        description: 'a cool costume'
-      })
-    })
-
-    xit('GET /api/products/:productId', async () => {
-      const res = await request(app)
-        .get('/api/products/1')
-        .expect(200)
-
-      expect(res.body).to.be.an('object')
-      expect(res.body.name).to.be.equal('dog costume')
-    })
-  })
 })
