@@ -49,6 +49,7 @@ export const setStorageCartProducts = products => {
   }
 }
 
+//'thunk'
 export const addToGuestCartInRedux = (product, productId) => {
   return dispatch => {
     let storageProducts = localStorage.getItem('storageProducts')
@@ -167,7 +168,6 @@ export const makePurchase = (cartId, userId) => {
 export const makeGuestPurchase = () => {
   return dispatch => {
     let storageProducts = localStorage.getItem('storageProducts')
-
     storageProducts = JSON.parse(storageProducts)
     storageProducts.isActive = false
     dispatch(purchase(storageProducts))

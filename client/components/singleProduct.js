@@ -4,6 +4,11 @@ import swal from 'sweetalert'
 import {fetchProduct, updateProduct} from '../store/singleProduct'
 import EditProduct from './editProduct'
 import {add} from '../store/user'
+import {
+  addToGuestCartInRedux,
+  updateGuestCartQuantity,
+  setStorageCartProducts
+} from '../store/cart'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -21,6 +26,10 @@ class SingleProduct extends React.Component {
     //dispatch the redux thunk
     const num = Number(this.props.match.params.id)
     this.props.getProduct(num)
+    if (!this.props.user.id) {
+      const storageProducts = localStorage.getItem('storageProducts')
+      this.props.setStorageCartProducts(JSON.parse(storageProducts))
+    }
   }
 
   handleChange(event) {
@@ -46,7 +55,28 @@ class SingleProduct extends React.Component {
 
   async handleAddToCart(event) {
     let productId = Number(event.target.value)
-    await this.props.addToCart(this.props.user.id, productId)
+    await this.props.getProduct(productId)
+    const product = this.props.product
+    if (this.props.user.id) {
+      this.props.addToCart(this.props.user.id, productId)
+    } else {
+      let current = {}
+      if (this.props.cart) {
+        this.props.cart.orderProducts.forEach(orderProduct => {
+          if (orderProduct.id === productId) {
+            current = orderProduct
+          }
+        })
+      }
+      if (!current.id) {
+        this.props.addToGuestCart(product, productId)
+      } else {
+        this.props.changeGuestCartQuantity(
+          current.quantity + 1,
+          current.product.id
+        )
+      }
+    }
     swal({
       title: 'Hooray!',
       text: 'Your item has been added to your cart!',
@@ -121,7 +151,13 @@ const mapDispatchToProps = dispatch => {
   return {
     getProduct: id => dispatch(fetchProduct(id)),
     updateProduct: (id, stateObj) => dispatch(updateProduct(id, stateObj)),
-    addToCart: (userId, productId) => dispatch(add(userId, productId))
+    addToCart: (userId, productId) => dispatch(add(userId, productId)),
+    addToGuestCart: (product, productId) =>
+      dispatch(addToGuestCartInRedux(product, productId)),
+    changeGuestCartQuantity: (newQuantity, productId) =>
+      dispatch(updateGuestCartQuantity(newQuantity, productId)),
+    setStorageCartProducts: storageProducts =>
+      dispatch(setStorageCartProducts(storageProducts))
   }
 }
 
