@@ -8,7 +8,8 @@ import swal from 'sweetalert'
 import {
   addToGuestCartInRedux,
   updateGuestCartQuantity,
-  setStorageCartProducts
+  setStorageCartProducts,
+  fetchCartProducts
 } from '../store/cart'
 import {fetchProduct} from '../store/singleProduct'
 
@@ -221,7 +222,8 @@ const mapDispatchToProps = dispatch => {
     changeGuestCartQuantity: (newQuantity, productId) =>
       dispatch(updateGuestCartQuantity(newQuantity, productId)),
     setStorageCartProducts: storageProducts =>
-      dispatch(setStorageCartProducts(storageProducts))
+      dispatch(setStorageCartProducts(storageProducts)),
+    getCartProducts: userId => dispatch(fetchCartProducts(userId))
   }
 }
 
