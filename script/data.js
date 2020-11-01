@@ -43,11 +43,60 @@ admin.map(person => {
   users.push(person)
 })
 
+function costumePic() {
+  let dogCostumes = [
+    'https://partycity1.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P901158_full',
+    'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P890636_full',
+    'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P815191_full',
+    'https://partycity6.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P687539_full',
+    'https://partycity6.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P890656_full',
+    'https://partycity5.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P816029_full',
+    'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P815221_full',
+    'https://partycity4.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P856120_full',
+    'https://partycity3.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P793619_full',
+    'https://partycity.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P858506_full',
+    'https://partycity5.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P815213_full',
+    'https://partycity1.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P871112_full',
+    'https://partycity4.scene7.com/is/image/PartyCity/_sq_?$_500x500_$&$product=PartyCity/P850788_full'
+  ]
+  return dogCostumes[Math.floor(Math.random() * dogCostumes.length)]
+}
+
+function name() {
+  let costumeDescription = [
+    'Cute Puppy Costume',
+    'The Best Dog Costume',
+    'Super Funny Dog Costume',
+    'Movie Dog Costume',
+    'Fluffy Costume',
+    'Costume for Cute Dogs',
+    'Adorable Costume',
+    'Silly Costume'
+  ]
+  return costumeDescription[
+    Math.floor(Math.random() * costumeDescription.length)
+  ]
+}
+
+function description() {
+  let describe = [
+    'Your furry friend will love this costume!',
+    "You'll get a lot of laughs with this costume.",
+    'Your fluffy friend will be the life of the party in this costume!',
+    'If you want a super cute costume for your pet, you should check this one out!',
+    'Your pup will be happy as a clam in this costume!',
+    'This costume is made with 100% cotton so your furry pal will be ultra comfy.',
+    'If you love your pup, check out this costume!',
+    'Everyone is going to love this costume at the pet parade!'
+  ]
+  return describe[Math.floor(Math.random() * describe.length)]
+}
+
 const createFakeProduct = () => ({
-  name: faker.commerce.productName(),
-  description: faker.commerce.productDescription(),
+  name: name(),
+  description: description(),
   price: faker.random.number(),
-  imageUrl: faker.image.cats()
+  imageUrl: costumePic()
 })
 
 const products = []
