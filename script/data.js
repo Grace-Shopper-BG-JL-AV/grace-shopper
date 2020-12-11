@@ -99,6 +99,7 @@ const createFakeProduct = () => ({
   imageUrl: costumePic()
 })
 
+//products array
 const products = []
 
 const puppyCostumes = [
