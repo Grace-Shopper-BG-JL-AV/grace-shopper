@@ -49,6 +49,7 @@ const createFakeProduct = () => ({
   imageUrl: faker.image.cats()
 })
 
+//products array
 const products = []
 
 const puppyCostumes = [
