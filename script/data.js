@@ -79,13 +79,13 @@ function name() {
 
 function description() {
   let describe = [
-    'Your furry friend will love this costume!',
+    'Your furry friend will love this costume!!',
     "You'll get a lot of laughs with this costume.",
-    'Your fluffy friend will be the life of the party in this costume!',
-    'If you want a super cute costume for your pet, you should check this one out!',
-    'Your pup will be happy as a clam in this costume!',
+    'Your fluffy friend will be the life of the party in this costume!!',
+    'If you want a super cute costume for your pet, you should check this one out!!',
+    'Your pup will be happy as a clam in this costume!!',
     'This costume is made with 100% cotton so your furry pal will be ultra comfy.',
-    'If you love your pup, check out this costume!',
+    'If you love your pup, check out this costume!!',
     'Everyone is going to love this costume at the pet parade!'
   ]
   return describe[Math.floor(Math.random() * describe.length)]
